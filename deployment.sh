@@ -170,7 +170,7 @@ if [[ ${#PACKAGES_NAMES[@]} != ${#PACKAGES_FILES[@]} ]]; then
     exit -1
 fi
 
-for ((index=0; index < ${#PACKAGES_NAMES} ; index++)); do
+for ((index=0; index < (${#PACKAGES_NAMES} +1) ; index++)); do
     print_info_package ${PACKAGES_NAMES[$index]} ${PACKAGES_FILES[$index]}
     build_package ${PACKAGES_NAMES[$index]} ${PACKAGES_FILES[$index]}
     if [[ $? != -1 ]]; then
