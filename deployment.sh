@@ -9,8 +9,8 @@ PACKAGES_FILES=()
 ## Functions ##
 
 # add_package: Creates the necessary variables for later usage
-# First parameter is the name of the package
-# Next parameters are the files needed by the package
+# $1: the name of the package
+# $[1:@]:  the files needed by the package
 function add_package {
     files=()
     args=($@)
@@ -71,8 +71,8 @@ function print_tags {
     echo ""
 }
 
-# build_package: Prints information about package being built, and build package
-function build_package {
+# print_info_package: prints information about package
+function print_info_package {
     package_name=$1
     package_image="bureau14/$package_name"
     package_path="../$package_name"
@@ -84,13 +84,29 @@ function build_package {
     echo -n "  - "; print_tags
     echo "  - image: $package_image"
     echo "  - path: $package_path"
-    echo "  - files:"
+    echo "  - required:"
     for file in ${files[@]}; do
         echo "    - $file"
+    done
+}
+
+# build_package: builds package
+function build_package {
+    package_name=$1
+    package_image="bureau14/$package_name"
+    package_path="../$package_name"
+    package_version=${QDB_VERSION}
+    # create array of files from a single line with ';' separator
+    IFS=';' read -ra files <<< "$2"
+    for file in ${files[@]}; do
+        if [[ ! -f ../$file ]]; then
+            echo "Required file $file was not found, aborting build..."
+            return -1
+        fi
         cp ../$file $file
     done
     cp $package_path/* .
-    echo -n "  - "; docker -l "error" build -q -t ${package_image}:build --build-arg QDB_VERSION=${package_version} .
+    echo -n "key :: "; docker -l "error" build -q -t ${package_image}:build --build-arg QDB_VERSION=${package_version} .
 }
 
 # push_package: Attach tags to built image and push package to docker
@@ -112,22 +128,38 @@ fi
 normalize_versions
 
 # Needs to be done after QDB_VERSION has been set
-TAR_QDB="qdb-${QDB_VERSION}-linux-64bit-server.tar.gz"
-TAR_QDB_WEB_BRIDGE="qdb-${QDB_VERSION}-linux-64bit-web-bridge.tar.gz"
-TAR_QDB_PHP="quasardb-${QDB_VERSION}.tgz"
+TARBALL_QDB="qdb-${QDB_VERSION}-linux-64bit-server.tar.gz"
+TARBALL_QDB_WEB_BRIDGE="qdb-${QDB_VERSION}-linux-64bit-web-bridge.tar.gz"
+TARBALL_QDB_PHP="quasardb-${QDB_VERSION}.tgz"
 EGG_QDB_PYTHON="quasardb-${QDB_VERSION}-py2.7-linux-x86_64.egg"
-DEB_QDB="qdb-server_${QDB_VERSION}-${QDB_DEB_VERSION}.deb"
-DEB_QDB_WEB_BRIDGE="qdb-web-bridge_${QDB_VERSION}-${QDB_DEB_VERSION}.deb"
-DEB_QDB_UTILS="qdb-utils_${QDB_VERSION}-${QDB_DEB_VERSION}.deb"
-DEB_QDB_API="qdb-api_${QDB_VERSION}-${QDB_DEB_VERSION}.deb"
+DEBIAN_PACKAGE_QDB="qdb-server_${QDB_VERSION}-${QDB_DEB_VERSION}.deb"
+DEBIAN_PACKAGE_QDB_WEB_BRIDGE="qdb-web-bridge_${QDB_VERSION}-${QDB_DEB_VERSION}.deb"
+DEBIAN_PACKAGE_QDB_UTILS="qdb-utils_${QDB_VERSION}-${QDB_DEB_VERSION}.deb"
+DEBIAN_PACKAGE_QDB_API="qdb-api_${QDB_VERSION}-${QDB_DEB_VERSION}.deb"
 
 create_tags
 print_tags
 
-add_package qdb $TAR_QDB
-add_package qdb-dev $DEB_QDB $DEB_QDB_WEB_BRIDGE $DEB_QDB_UTILS $DEB_QDB_API $EGG_QDB_PYTHON $TAR_QDB_PHP
-add_package qdb-dev-python $DEB_QDB $DEB_QDB_WEB_BRIDGE $DEB_QDB_UTILS $DEB_QDB_API $EGG_QDB_PYTHON
-add_package qdb-http $TAR_QDB_WEB_BRIDGE
+add_package qdb \
+    $TARBALL_QDB
+
+add_package qdb-dev \
+    $DEBIAN_PACKAGE_QDB \
+    $DEBIAN_PACKAGE_QDB_API \
+    $DEBIAN_PACKAGE_QDB_UTILS \
+    $DEBIAN_PACKAGE_QDB_WEB_BRIDGE \
+    $EGG_QDB_PYTHON \
+    $TARBALL_QDB_PHP
+
+add_package qdb-dev-python \
+    $DEBIAN_PACKAGE_QDB \
+    $DEBIAN_PACKAGE_QDB_API \
+    $DEBIAN_PACKAGE_QDB_UTILS \
+    $DEBIAN_PACKAGE_QDB_WEB_BRIDGE \
+    $EGG_QDB_PYTHON
+
+add_package qdb-http \
+    $TARBALL_QDB_WEB_BRIDGE
 
 
 echo "------------------"
@@ -139,7 +171,10 @@ if [[ ${#PACKAGES_NAMES[@]} != ${#PACKAGES_FILES[@]} ]]; then
 fi
 
 for ((index=0; index < ${#PACKAGES_NAMES} ; index++)); do
+    print_info_package ${PACKAGES_NAMES[$index]} ${PACKAGES_FILES[$index]}
     build_package ${PACKAGES_NAMES[$index]} ${PACKAGES_FILES[$index]}
-    push_package ${PACKAGES_NAMES[$index]}
+    if [[ $? != -1 ]]; then
+        push_package ${PACKAGES_NAMES[$index]}
+    fi
     echo "------------------"
 done
