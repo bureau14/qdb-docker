@@ -6,10 +6,9 @@ This repository contains the **Dockerfile** of [QuasarDB](http://www.quasardb.ne
 
 |tag|description|
 |---|---|
-|`latest`, `2.2.0` |latest stable release|
-|`nightly`, `[qdb-nightly]` |bleeding edge|
+|`latest`, `[latest]` |latest stable release|
+|`nightly`, `[nightly]` |bleeding edge|
 
-## Releases
 [release-info]
 
 ### Base Docker Image
@@ -19,10 +18,10 @@ This repository contains the **Dockerfile** of [QuasarDB](http://www.quasardb.ne
 ### Installation
 
 1. Install [Docker](https://www.docker.com/).
+1. Pull from docker: `docker pull bureau14/qdb`
+1. Alternatively: build an image with a [Dockerfile](https://github.com/bureau14/qdb-docker/blob/master/qdb/Dockerfile)
+1. Required files(replace {version} with the version you wish to use): [required-files]
 
-2. Download [automated build](https://registry.hub.docker.com/u/bureau14/qdb/) from public [Docker Hub Registry](https://registry.hub.docker.com/): `docker pull bureau14/qdb`
-
-   (alternatively, you can build an image from Dockerfile: `docker build -t="qdb" github.com/bureau14/qdbd-docker`)
 
 ### Usage
 

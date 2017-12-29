@@ -16,6 +16,7 @@ if [[ $? == 1 ]]; then
 else
     add_release_version
 fi
+update_version_file
 
 # Needs to be done after QDB_VERSION has been set
 TARBALL_QDB="qdb-${QDB_VERSION}-linux-64bit-server.tar.gz"
@@ -33,6 +34,9 @@ print_tags
 add_package qdb \
     $TARBALL_QDB
 
+add_package qdb-http \
+    $TARBALL_QDB_WEB_BRIDGE
+
 add_package qdb-dev \
     $DEBIAN_PACKAGE_QDB \
     $DEBIAN_PACKAGE_QDB_API \
@@ -48,8 +52,6 @@ add_package qdb-dev-python \
     $DEBIAN_PACKAGE_QDB_WEB_BRIDGE \
     $EGG_QDB_PYTHON
 
-add_package qdb-http \
-    $TARBALL_QDB_WEB_BRIDGE
 
 
 echo "Number of package: ${#PACKAGES_NAMES[@]}"
@@ -61,17 +63,15 @@ if [[ ${#PACKAGES_NAMES[@]} != ${#PACKAGES_FILES[@]} ]]; then
     exit -1
 fi
 
-for ((index=0; index < (${#PACKAGES_NAMES} +1) ; index++)); do
+for ((index=0; index < (${#PACKAGES_NAMES[@]} +1) ; index++)); do
     if [[ ! -z "${PACKAGES_NAMES[$index]}" ]]; then
         print_info_package ${PACKAGES_NAMES[$index]} ${PACKAGES_FILES[$index]}
         build_package ${PACKAGES_NAMES[$index]} ${PACKAGES_FILES[$index]}
         if [[ $? != -1 ]]; then
             push_package ${PACKAGES_NAMES[$index]}
+            update_documentation ${PACKAGES_NAMES[$index]} ${PACKAGES_FILES[$index]}
         fi
         echo "------------------"
     fi
 done
 cd -
-
-update_version_file
-update_documentation

@@ -3,6 +3,7 @@
 source "utils.sh"
 
 # function update_releases {
+#     local package=$1
 #     string_qdb_versions=`join_by "," ${QDB_VERSIONS[@]}`
 #     prepared_qdb_versions=`sed -e "s/\([0-9].[0-9].[0-9]\)/ \\\`\1\\\`/g" <<< "$string_qdb_versions"`
 
@@ -10,30 +11,47 @@ source "utils.sh"
 # }
 
 function update_latest {
-    sed "1,/\[qdb-latest\]/{s|\[qdb-latest\]|$QDB_LATEST_VERSION|}" "qdb/README.md.in" > qdb/README.md.tmp
+    local package=$1
+    sed "1,/\[latest\]/{s|\[latest\]|$QDB_LATEST_VERSION|}" "../$package/README.md.in" > README.md.tmp
 }
 
 
 function update_nightly {
-    sed -i "1,/\[qdb-nightly\]/{s|\[qdb-nightly\]|$QDB_CLEAN_VERSION|}" "qdb/README.md.tmp"
+    sed -i "1,/\[nightly\]/{s|\[nightly\]|$QDB_CLEAN_VERSION|}" "README.md.tmp"
 }
 
 function update_releases_info {
-    local release_info="|release|last update|\n"
+    local release_info="|release tag|last update|\n"
     release_info+="|---|---|\n"
-    for ((index=0; index < (${#QDB_VERSIONS[@]} +1) ; ++index)); do
-        if [[ ! -z ${QDB_VERSIONS[$index]} ]]; then
-            release_info+="|${QDB_VERSIONS[$index]}|${QDB_VERSIONS_DATE[$index]}|\n"
+    for ((idx=0; idx < (${#QDB_VERSIONS[@]} +1) ; ++idx)); do
+        if [[ ! -z ${QDB_VERSIONS[$idx]} ]]; then
+            release_info+="|${QDB_VERSIONS[$idx]}|${QDB_VERSIONS_DATE[$idx]}|\n"
         fi
     done
-    sed -i "1,/\[release-info\]/{s/\[release-info\]/$release_info/}" "qdb/README.md.tmp"
+    sed -i "1,/\[release-info\]/{s/\[release-info\]/$release_info/}" "README.md.tmp"
+}
+
+function update_required_files {
+    # create array of files from a single line with ';' separator
+    IFS=';' read -ra fs <<< "$1"
+    if [ ${#fs[@]} != 0 ]; then
+        local required_files="\n"
+        for file in ${fs[@]}; do
+            f=`sed -e "s/$QDB_VERSION/{version}/g" <<< "$file"`
+            required_files+="\t1. $f\n"
+        done
+    fi
+    sed -i "1,/\[required-files\]/{s/\[required-files\]/$required_files/}" "README.md.tmp"
 }
 
 function update_documentation {
-    update_latest
+    local package=$1
+    local files=$2
+    update_latest $package
     if [[ $NIGHTLY == 1 ]]; then
         update_nightly
     fi
     update_releases_info
-    mv "qdb/README.md.tmp" "qdb/README.md"
+    update_required_files $files
+    mv "README.md.tmp" "../$package/README.md"
 }

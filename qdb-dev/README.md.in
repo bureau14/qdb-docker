@@ -1,0 +1,38 @@
+## QuasarDB test development Dockerfile
+
+This repository contains the **Dockerfile** of [QuasarDB](http://www.quasardb.net/) development evaluation toolkit published to the public [Docker Hub Registry](https://registry.hub.docker.com/).
+
+It contains:
+
+ * A quasardb daemon
+ * A quasardb shell
+ * C API
+ * Python API
+
+It is not **meant for production use**.
+
+### Supported tags
+
+|tag|description|
+|---|---|
+|`latest`, `[latest]` |latest stable release|
+|`nightly`, `[nightly]` |bleeding edge|
+
+[release-info]
+
+### Base Docker Image
+
+* [dockerfile/ubuntu](http://dockerfile.github.io/#/ubuntu)
+
+### Installation
+
+1. Install [Docker](https://www.docker.com/).
+1. Pull from docker: `docker pull bureau14/qdb-dev`
+1. Alternatively: build an image with a [Dockerfile](https://github.com/bureau14/qdb-docker/blob/master/qdb-dev/Dockerfile)
+1. Required files(replace {version} with the version you wish to use): [required-files]
+
+### Usage
+
+    docker run -i -t --name qdb-dev bureau14/qdb-dev
+
+Exiting the shell will stop the container.
