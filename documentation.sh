@@ -19,8 +19,8 @@ function update_nightly {
 }
 
 function update_releases_info {
-release_info="|release|last update|\n"
-release_info+="|---|---|\n"
+    local release_info="|release|last update|\n"
+    release_info+="|---|---|\n"
     for ((index=0; index < (${#QDB_VERSIONS[@]} +1) ; ++index)); do
         if [[ ! -z ${QDB_VERSIONS[$index]} ]]; then
             release_info+="|${QDB_VERSIONS[$index]}|${QDB_VERSIONS_DATE[$index]}|\n"

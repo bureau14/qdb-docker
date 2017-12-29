@@ -7,11 +7,11 @@ QDB_CLEAN_VERSION=
 QDB_DEB_VERSION=1
 QDB_LATEST_VERSION=2.2.0
 QDB_VERSIONS=(2.1.0 2.2.0 2.3.0)
-QDB_VERSIONS_DATE=(17-12-29T14:06:26 17-12-29T14:06:33 17-12-29T15:10:05)
+QDB_VERSIONS_DATE=(17-12-29T14:06:26 17-12-29T14:06:33 17-12-29T15:22:34)
 
 # detect_version: Detects qdb version
 function detect_version {
-    server_file=`ls qdb-server_*-1.deb`
+    local server_file=`ls qdb-server_*-1.deb`
     if [[ ${server_file} =~ (qdb-server_(.+)-1.deb$) ]]; then
         QDB_VERSION=${BASH_REMATCH[2]}
         if [[ ${QDB_VERSION} =~ (^([0-9].[0-9].[0-9]).*) ]]; then
@@ -29,11 +29,11 @@ function detect_version {
 
 # normalize_versions: Changes names for php tarball and python egg to match the other files 
 function normalize_versions {
-    php_tar=`ls quasardb-*.tgz`
+    local php_tar=`ls quasardb-*.tgz`
     if [[ $php_tar != "quasardb-${QDB_VERSION}.tgz" ]];then
         mv $php_tar quasardb-${QDB_VERSION}.tgz
     fi
-    python_egg=`ls quasardb-*-py2.7-linux-x86_64.egg`
+    local python_egg=`ls quasardb-*-py2.7-linux-x86_64.egg`
     if [[ $python_egg != "quasardb-${QDB_VERSION}-py2.7-linux-x86_64.egg" ]];then
         mv $python_egg quasardb-${QDB_VERSION}-py2.7-linux-x86_64.egg
     fi
@@ -56,7 +56,7 @@ function add_release_version {
 
 # update_release_version: updates QDB_VERSIONS and QDB_VERSIONS_DATE arrays
 function update_release_version {
-    version=$1
+    local version=$1
     for ((index=1; index < (${#QDB_VERSIONS[@]} +1) ; ++index)); do
         if [ "${QDB_VERSIONS[$index]}" == "$version" ]; then
             # somehow we need to change the index of the previous element
@@ -67,9 +67,9 @@ function update_release_version {
 
 # update_version_file: rewrites versions.sh file with current settings
 function update_version_file {
-    new_qdb_versions=`join_by " " ${QDB_VERSIONS[@]}`
+    local new_qdb_versions=`join_by " " ${QDB_VERSIONS[@]}`
     sed -i "1,/QDB_VERSIONS=/{s|QDB_VERSIONS=.*).*|QDB_VERSIONS=($new_qdb_versions)|}" `basename "versions.sh"`
 
-    new_qdb_versions_date=`join_by " " ${QDB_VERSIONS_DATE[@]}`
+    local new_qdb_versions_date=`join_by " " ${QDB_VERSIONS_DATE[@]}`
     sed -i "1,/QDB_VERSIONS_DATE=/{s|QDB_VERSIONS_DATE=.*|QDB_VERSIONS_DATE=($new_qdb_versions_date)|}" `basename "versions.sh"`
 }

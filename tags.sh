@@ -18,7 +18,7 @@ function create_tags {
 # print_tags: Prints the tags separated by a ','
 function print_tags {
     echo -n "tags: "
-    sep=""
+    local sep=""
     for tag in ${TAGS[@]}; do
         printf "%s%s" $sep $tag
         sep=","
