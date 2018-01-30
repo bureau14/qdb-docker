@@ -34,23 +34,23 @@ print_tags
 add_package qdb \
     $TARBALL_QDB
 
-add_package qdb-http \
-    $TARBALL_QDB_WEB_BRIDGE
+# add_package qdb-http \
+#     $TARBALL_QDB_WEB_BRIDGE
 
-add_package qdb-dev \
-    $DEBIAN_PACKAGE_QDB \
-    $DEBIAN_PACKAGE_QDB_API \
-    $DEBIAN_PACKAGE_QDB_UTILS \
-    $DEBIAN_PACKAGE_QDB_WEB_BRIDGE \
-    $EGG_QDB_PYTHON \
-    $TARBALL_QDB_PHP
+# add_package qdb-dev \
+#     $DEBIAN_PACKAGE_QDB \
+#     $DEBIAN_PACKAGE_QDB_API \
+#     $DEBIAN_PACKAGE_QDB_UTILS \
+#     $DEBIAN_PACKAGE_QDB_WEB_BRIDGE \
+#     $EGG_QDB_PYTHON \
+#     $TARBALL_QDB_PHP
 
-add_package qdb-dev-python \
-    $DEBIAN_PACKAGE_QDB \
-    $DEBIAN_PACKAGE_QDB_API \
-    $DEBIAN_PACKAGE_QDB_UTILS \
-    $DEBIAN_PACKAGE_QDB_WEB_BRIDGE \
-    $EGG_QDB_PYTHON
+# add_package qdb-dev-python \
+#     $DEBIAN_PACKAGE_QDB \
+#     $DEBIAN_PACKAGE_QDB_API \
+#     $DEBIAN_PACKAGE_QDB_UTILS \
+#     $DEBIAN_PACKAGE_QDB_WEB_BRIDGE \
+#     $EGG_QDB_PYTHON
 
 
 
