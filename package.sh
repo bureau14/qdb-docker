@@ -24,7 +24,7 @@ function add_package {
 # print_info_package: prints information about package
 function print_info_package {
     local package_name=$1
-    local package_image="bureau14/$package_name"
+    local package_image="bureau14/${package_name}d"
     local package_path="../$package_name"
     local package_version=${QDB_VERSION}
     # create array of files from a single line with ';' separator
@@ -43,7 +43,7 @@ function print_info_package {
 # build_package: builds package
 function build_package {
     local package_name=$1
-    local package_image="bureau14/${package_name}"
+    local package_image="bureau14/${package_name}d"
     local package_path="../$package_name"
     local package_version=${QDB_VERSION}
     # create array of files from a single line with ';' separator
@@ -62,9 +62,9 @@ function build_package {
 # push_package: Attach tags to built image and push package to docker
 function push_package {
     local package_name=$1
-    local package_image="bureau14/${package_name}"
+    local package_image="bureau14/${package_name}d"
     for TAG in ${TAGS[@]}; do
         docker tag ${package_image}:build ${package_image}:$TAG
-        # docker push ${package_image}:$TAG
+        docker push ${package_image}:$TAG
     done
 }
