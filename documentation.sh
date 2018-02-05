@@ -2,24 +2,6 @@
 
 source "utils.sh"
 
-# function update_releases {
-#     local package=$1
-#     string_qdb_versions=`join_by "," ${QDB_VERSIONS[@]}`
-#     prepared_qdb_versions=`sed -e "s/\([0-9].[0-9].[0-9]\)/ \\\`\1\\\`/g" <<< "$string_qdb_versions"`
-
-#     sed "1,/\[qdb-releases\]/{s|\[qdb-releases\]|$prepared_qdb_versions|}" "qdb/README.md.in" > qdb/README.md.tmp
-# }
-
-function update_latest {
-    local package=$1
-    sed "1,/\[latest\]/{s|\[latest\]|$QDB_LATEST_VERSION|}" "../$package/README.md.in" > README.md.tmp
-}
-
-
-function update_nightly {
-    sed -i "1,/\[nightly\]/{s|\[nightly\]|$QDB_CLEAN_VERSION|}" "README.md.tmp"
-}
-
 function update_releases_info {
     local release_info="|tag|version|\n"
     release_info+="|---|---|\n"
