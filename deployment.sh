@@ -18,7 +18,7 @@ if [[ $? != 1 ]]; then
     add_release_version
 fi
 
-create_most_recents
+create_most_recents_versions
 create_nightly_version
 
 # needs to be done after the QDB_VERSION has been set

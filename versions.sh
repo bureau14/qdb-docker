@@ -68,11 +68,11 @@ function add_release_version {
     QDB_VERSIONS+=("$detected_version")
 }
 
-#create_most_recents: create an array with the most recent versions of each [x.y].z version
+#create_most_recents_versions: create an array with the most recent versions of each [x.y].z version
 #example:
 #versions             - 2.0.2, 2.0.3, 2.1.0, 2.2.0, 2.2.1
 #most_recent_versions -        2.0.3, 2.1.0       , 2.2.1
-function create_most_recents {
+function create_most_recents_versions {
     for ((index_i=0; index_i < (${#QDB_VERSIONS[@]}) ; ++index_i)); do
         local success=1
         local version=${QDB_VERSIONS[index_i]}
