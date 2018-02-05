@@ -7,9 +7,9 @@ PACKAGES_FILES=()
 # $1: the name of the package
 # $[1:@]:  the files needed by the package
 function add_package {
-    files=()
-    args=($@)
-    sep=
+    local files=()
+    local args=($@)
+    local sep=
     for ((index=1; index < ${#args} ; index++)); do
         if [[ ! -z "${args[$index]}" ]]; then
             files+=$sep
@@ -23,10 +23,10 @@ function add_package {
 
 # print_info_package: prints information about package
 function print_info_package {
-    package_name=$1
-    package_image="bureau14/$package_name"
-    package_path="../$package_name"
-    package_version=${QDB_VERSION}
+    local package_name=$1
+    local package_image="bureau14/$package_name"
+    local package_path="../$package_name"
+    local package_version=${QDB_VERSION}
     # create array of files from a single line with ';' separator
     IFS=';' read -ra files <<< "$2"
     echo "package: $package_name"
@@ -42,10 +42,10 @@ function print_info_package {
 
 # build_package: builds package
 function build_package {
-    package_name=$1
-    package_image="bureau14/${package_name}"
-    package_path="../$package_name"
-    package_version=${QDB_VERSION}
+    local package_name=$1
+    local package_image="bureau14/${package_name}"
+    local package_path="../$package_name"
+    local package_version=${QDB_VERSION}
     # create array of files from a single line with ';' separator
     IFS=';' read -ra files <<< "$2"
     for file in ${files[@]}; do
@@ -61,8 +61,8 @@ function build_package {
 
 # push_package: Attach tags to built image and push package to docker
 function push_package {
-    package_name=$1
-    package_image="bureau14/${package_name}"
+    local package_name=$1
+    local package_image="bureau14/${package_name}"
     for TAG in ${TAGS[@]}; do
         docker tag ${package_image}:build ${package_image}:$TAG
         # docker push ${package_image}:$TAG
