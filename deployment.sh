@@ -4,6 +4,7 @@ source "versions.sh"
 source "tags.sh"
 source "package.sh"
 source "documentation.sh"
+source "files.sh"
 
 get_versions qdb
 
@@ -20,16 +21,8 @@ fi
 create_most_recents
 create_nightly_version
 
-
-# Needs to be done after QDB_VERSION has been set
-TARBALL_QDB="qdb-${QDB_VERSION}-linux-64bit-server.tar.gz"
-TARBALL_QDB_WEB_BRIDGE="qdb-${QDB_VERSION}-linux-64bit-web-bridge.tar.gz"
-TARBALL_QDB_PHP="quasardb-${QDB_VERSION}.tgz"
-EGG_QDB_PYTHON="quasardb-${QDB_VERSION}-py2.7-linux-x86_64.egg"
-DEBIAN_PACKAGE_QDB="qdb-server_${QDB_VERSION}-${QDB_DEB_VERSION}.deb"
-DEBIAN_PACKAGE_QDB_WEB_BRIDGE="qdb-web-bridge_${QDB_VERSION}-${QDB_DEB_VERSION}.deb"
-DEBIAN_PACKAGE_QDB_UTILS="qdb-utils_${QDB_VERSION}-${QDB_DEB_VERSION}.deb"
-DEBIAN_PACKAGE_QDB_API="qdb-api_${QDB_VERSION}-${QDB_DEB_VERSION}.deb"
+# needs to be done after the QDB_VERSION has been set
+set_files
 
 create_tags
 create_documentation_tags
