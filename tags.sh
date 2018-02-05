@@ -6,18 +6,6 @@ ALL_TAGS_VERSIONS=()
 
 # create_tags: Creates tags based on the version detected
 function create_tags {
-    add_tag latest $QDB_LATEST_VERSION
-    add_tag nightly $QDB_NIGHTLY_VERSION
-    for version in ${QDB_MOST_RECENT_VERSIONS[@]}; do
-        if [[ $version =~ (^([0-9].[0-9]).[0-9].*) ]]; then
-            local version_prefix=${BASH_REMATCH[2]}
-            add_tag $version_prefix $version
-        fi
-    done
-    for version in ${QDB_VERSIONS[@]}; do
-        add_tag $version $version
-    done
-
     TAGS+=($QDB_CLEAN_VERSION)
     if [[ ${QDB_CLEAN_VERSION} == $QDB_LATEST_VERSION ]]; then
         TAGS+=("latest")
@@ -30,6 +18,21 @@ function create_tags {
     if [[ $? == 1 ]]; then
         TAGS+=($QDB_VERSION_PREFIX)
     fi
+}
+
+#create_documentation_tags: Creates all tags for documentation purpose
+function create_documentation_tags {
+    add_tag latest $QDB_LATEST_VERSION
+    add_tag nightly $QDB_NIGHTLY_VERSION
+    for version in ${QDB_MOST_RECENT_VERSIONS[@]}; do
+        if [[ $version =~ (^([0-9].[0-9]).[0-9].*) ]]; then
+            local version_prefix=${BASH_REMATCH[2]}
+            add_tag $version_prefix $version
+        fi
+    done
+    for version in ${QDB_VERSIONS[@]}; do
+        add_tag $version $version
+    done
 }
 
 function add_tag {

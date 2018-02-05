@@ -32,6 +32,7 @@ DEBIAN_PACKAGE_QDB_UTILS="qdb-utils_${QDB_VERSION}-${QDB_DEB_VERSION}.deb"
 DEBIAN_PACKAGE_QDB_API="qdb-api_${QDB_VERSION}-${QDB_DEB_VERSION}.deb"
 
 create_tags
+create_documentation_tags
 print_tags
 
 add_package qdb \
