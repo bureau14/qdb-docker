@@ -25,19 +25,15 @@ function update_required_files {
 }
 
 function create_tmp_readme {
-    local package=$1
-    cp ../$package/README.md.in README.md.tmp
+    local container=$1
+    cp ../$container/README.md.in README.md.tmp
 }
 
 function update_documentation {
-    local package=$1
+    local container=$1
     local files=$2
-    update_latest $package
-    if [[ $NIGHTLY == 1 ]]; then
-        update_nightly
-    fi
-    create_tmp_readme $package
+    create_tmp_readme $container
     update_releases_info
     update_required_files $files
-    mv "README.md.tmp" "../$package/README.md"
+    mv "README.md.tmp" "../$container/README.md"
 }

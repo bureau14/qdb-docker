@@ -2,7 +2,7 @@
 
 source "versions.sh"
 source "tags.sh"
-source "package.sh"
+source "container.sh"
 source "documentation.sh"
 source "files.sh"
 
@@ -28,13 +28,13 @@ create_tags
 create_documentation_tags
 print_tags
 
-add_package qdb \
+add_container qdb \
     $TARBALL_QDB
 
-# add_package qdb-http \
+# add_container qdb-http \
 #     $TARBALL_QDB_WEB_BRIDGE
 
-# add_package qdb-dev \
+# add_container qdb-dev \
 #     $DEBIAN_PACKAGE_QDB \
 #     $DEBIAN_PACKAGE_QDB_API \
 #     $DEBIAN_PACKAGE_QDB_UTILS \
@@ -42,7 +42,7 @@ add_package qdb \
 #     $EGG_QDB_PYTHON \
 #     $TARBALL_QDB_PHP
 
-# add_package qdb-dev-python \
+# add_container qdb-dev-python \
 #     $DEBIAN_PACKAGE_QDB \
 #     $DEBIAN_PACKAGE_QDB_API \
 #     $DEBIAN_PACKAGE_QDB_UTILS \
@@ -51,22 +51,22 @@ add_package qdb \
 
 
 
-echo "Number of package: ${#PACKAGES_NAMES[@]}"
+echo "Number of container: ${#CONTAINERS_NAMES[@]}"
 echo "------------------"
 mkdir -p build
 cd build
-if [[ ${#PACKAGES_NAMES[@]} != ${#PACKAGES_FILES[@]} ]]; then
+if [[ ${#CONTAINERS_NAMES[@]} != ${#CONTAINERS_FILES[@]} ]]; then
     echo "Wrong number of names or files bundle. Aborting..."
     exit -1
 fi
 
-for ((index=0; index < (${#PACKAGES_NAMES[@]} +1) ; index++)); do
-    if [[ ! -z "${PACKAGES_NAMES[$index]}" ]]; then
-        print_info_package ${PACKAGES_NAMES[$index]} ${PACKAGES_FILES[$index]}
-        build_package ${PACKAGES_NAMES[$index]} ${PACKAGES_FILES[$index]}
+for ((index=0; index < (${#CONTAINERS_NAMES[@]} +1) ; index++)); do
+    if [[ ! -z "${CONTAINERS_NAMES[$index]}" ]]; then
+        print_info_container ${CONTAINERS_NAMES[$index]} ${CONTAINERS_FILES[$index]}
+        build_container ${CONTAINERS_NAMES[$index]} ${CONTAINERS_FILES[$index]}
         if [[ $? != -1 ]]; then
-            push_package ${PACKAGES_NAMES[$index]}
-            update_documentation ${PACKAGES_NAMES[$index]} ${PACKAGES_FILES[$index]}
+            # push_container ${CONTAINERS_NAMES[$index]}
+            update_documentation ${CONTAINERS_NAMES[$index]} ${CONTAINERS_FILES[$index]}
         fi
         echo "------------------"
     fi
