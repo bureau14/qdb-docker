@@ -42,6 +42,11 @@ function update_required_files {
     sed -i "1,/\[required-files\]/{s/\[required-files\]/$required_files/}" "README.md.tmp"
 }
 
+function create_tmp_readme {
+    local package=$1
+    cp ../$package/README.md.in README.md.tmp
+}
+
 function update_documentation {
     local package=$1
     local files=$2
@@ -49,6 +54,7 @@ function update_documentation {
     if [[ $NIGHTLY == 1 ]]; then
         update_nightly
     fi
+    create_tmp_readme $package
     update_releases_info
     update_required_files $files
     mv "README.md.tmp" "../$package/README.md"
