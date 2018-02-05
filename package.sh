@@ -43,7 +43,7 @@ function print_info_package {
 # build_package: builds package
 function build_package {
     package_name=$1
-    package_image="bureau14/${package_name}d"
+    package_image="bureau14/${package_name}"
     package_path="../$package_name"
     package_version=${QDB_VERSION}
     # create array of files from a single line with ';' separator
@@ -62,9 +62,9 @@ function build_package {
 # push_package: Attach tags to built image and push package to docker
 function push_package {
     package_name=$1
-    package_image="bureau14/${package_name}d"
+    package_image="bureau14/${package_name}"
     for TAG in ${TAGS[@]}; do
         docker tag ${package_image}:build ${package_image}:$TAG
-        docker push ${package_image}:$TAG
+        # docker push ${package_image}:$TAG
     done
 }

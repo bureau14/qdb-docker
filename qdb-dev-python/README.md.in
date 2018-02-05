@@ -14,11 +14,7 @@ It is not **meant for production use**.
 
 ### Supported tags
 
-|tag|description|
-|---|---|
-|`latest`|latest stable release|
-|`beta`|latest beta release|
-|`nightly`|bleeding edge|
+[release-info]
 
 ### Base Docker Image
 

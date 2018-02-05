@@ -13,11 +13,6 @@ It is not **meant for production use**.
 
 ### Supported tags
 
-|tag|description|
-|---|---|
-|`latest`, `[latest]` |latest stable release|
-|`nightly`, `[nightly]` |bleeding edge|
-
 [release-info]
 
 ### Base Docker Image

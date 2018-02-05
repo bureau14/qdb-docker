@@ -21,12 +21,10 @@ function update_nightly {
 }
 
 function update_releases_info {
-    local release_info="|release tag|last update|\n"
+    local release_info="|tag|version|\n"
     release_info+="|---|---|\n"
-    for ((idx=0; idx < (${#QDB_VERSIONS[@]} +1) ; ++idx)); do
-        if [[ ! -z ${QDB_VERSIONS[$idx]} ]]; then
-            release_info+="|${QDB_VERSIONS[$idx]}|${QDB_VERSIONS_DATE[$idx]}|\n"
-        fi
+    for ((index_i=0; index_i < (${#ALL_TAGS[@]}) ; ++index_i)); do
+        release_info+="|\`${ALL_TAGS[$index_i]}\`|${ALL_TAGS_VERSIONS[$index_i]}|\n"
     done
     sed -i "1,/\[release-info\]/{s/\[release-info\]/$release_info/}" "README.md.tmp"
 }

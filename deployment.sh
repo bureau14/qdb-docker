@@ -5,18 +5,21 @@ source "tags.sh"
 source "package.sh"
 source "documentation.sh"
 
+get_versions qdb
+
 detect_version
 if [[ $? != 1 ]]; then
     exit -1
 fi
 normalize_versions
 check_released_versions
-if [[ $? == 1 ]]; then
-    update_release_version
-else
+if [[ $? != 1 ]]; then
     add_release_version
 fi
-update_version_file
+
+create_most_recents
+create_nightly_version
+
 
 # Needs to be done after QDB_VERSION has been set
 TARBALL_QDB="qdb-${QDB_VERSION}-linux-64bit-server.tar.gz"
