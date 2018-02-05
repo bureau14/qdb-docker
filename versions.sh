@@ -112,6 +112,7 @@ function is_most_recent_version {
 
 #create_nightly_version: create nightly version variable by picking up the highest version the most recents
 function create_nightly_version {
+    QDB_MOST_RECENT_VERSIONS+=("2.2.0")
     for ((index_i=0; index_i < (${#QDB_MOST_RECENT_VERSIONS[@]}) ; ++index_i)); do
         local success=1
         local version=${QDB_MOST_RECENT_VERSIONS[index_i]}
@@ -120,14 +121,14 @@ function create_nightly_version {
             local second_part=${BASH_REMATCH[3]}
             local third_part=${BASH_REMATCH[4]}
         fi
-        for ((index_j=$index_i+1; index_j < (${#QDB_MOST_RECENT_VERSIONS[@]}) ; ++index_j)); do
+        for ((index_j=0; index_j < (${#QDB_MOST_RECENT_VERSIONS[@]}) ; ++index_j)); do
             local r_version=${QDB_MOST_RECENT_VERSIONS[index_j]}
             if [[ ${r_version} =~ (^([0-9]).([0-9]).([0-9])$) ]]; then
                 local r_first_part=${BASH_REMATCH[2]}
                 local r_second_part=${BASH_REMATCH[3]}
                 local r_third_part=${BASH_REMATCH[4]}
             fi
-            if ((($first_part < $r_first_part) ||($second_part < $r_second_part) || ($third_part < $r_third_part) ));then
+            if ((($first_part < $r_first_part) || ($second_part < $r_second_part) || ($third_part < $r_third_part) ));then
                 success=0
             fi
         done
@@ -135,4 +136,5 @@ function create_nightly_version {
             QDB_NIGHTLY_VERSION=$version
         fi
     done
+    echo "nightly: $QDB_NIGHTLY_VERSION"
 }
