@@ -24,7 +24,7 @@ function add_container {
 # print_info_container: prints information about container
 function print_info_container {
     local container_name=$1
-    local container_image="bureau14/${container_name}d"
+    local container_image="bureau14/${container_name}"
     local container_path="../$container_name"
     local container_version=${QDB_VERSION}
     # create array of files from a single line with ';' separator
@@ -43,7 +43,7 @@ function print_info_container {
 # build_container: builds container
 function build_container {
     local container_name=$1
-    local container_image="bureau14/${container_name}d"
+    local container_image="bureau14/${container_name}"
     local container_path="../$container_name"
     local container_version=${QDB_VERSION}
     # create array of files from a single line with ';' separator
@@ -62,7 +62,7 @@ function build_container {
 # push_container: Attach tags to built image and push container to docker
 function push_container {
     local container_name=$1
-    local container_image="bureau14/${container_name}d"
+    local container_image="bureau14/${container_name}"
     for TAG in ${TAGS[@]}; do
         docker tag ${container_image}:build ${container_image}:$TAG
         docker push ${container_image}:$TAG

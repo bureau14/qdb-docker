@@ -112,7 +112,6 @@ function is_most_recent_version {
 
 #create_nightly_version: create nightly version variable by picking up the highest version the most recents
 function create_nightly_version {
-    QDB_MOST_RECENT_VERSIONS+=("2.2.0")
     for ((index_i=0; index_i < (${#QDB_MOST_RECENT_VERSIONS[@]}) ; ++index_i)); do
         local success=1
         local version=${QDB_MOST_RECENT_VERSIONS[index_i]}
