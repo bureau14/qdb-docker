@@ -65,7 +65,7 @@ for ((index=0; index < (${#CONTAINERS_NAMES[@]} +1) ; index++)); do
         print_info_container ${CONTAINERS_NAMES[$index]} ${CONTAINERS_FILES[$index]}
         build_container ${CONTAINERS_NAMES[$index]} ${CONTAINERS_FILES[$index]}
         if [[ $? != -1 ]]; then
-            # push_container ${CONTAINERS_NAMES[$index]}
+            push_container ${CONTAINERS_NAMES[$index]}
             update_documentation ${CONTAINERS_NAMES[$index]} ${CONTAINERS_FILES[$index]}
         fi
         echo "------------------"
