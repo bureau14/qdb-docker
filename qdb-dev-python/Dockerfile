@@ -3,10 +3,6 @@ FROM       ubuntu:xenial
 ARG        QDB_VERSION=
 ENV        QDB_DEB_VERSION=1
 ENV        TERM=dumb
-ENV        DEB_QDB=
-ENV        DEB_QDB_WEB_BRIDGE=
-ENV        DEB_QDB_UTILS=
-ENV        DEB_QDB_API=
 
 RUN apt-get clean && apt-get update \
     && apt-get install -y locales net-tools iproute2 vim wget

@@ -29,10 +29,10 @@ create_documentation_tags
 print_tags
 
 add_container qdb \
-    $TARBALL_QDB
+    $DEBIAN_PACKAGE_QDB
 
 add_container qdb-http \
-    $TARBALL_QDB_WEB_BRIDGE
+    $DEBIAN_PACKAGE_QDB_WEB_BRIDGE
 
 add_container qdb-dev \
     $DEBIAN_PACKAGE_QDB \

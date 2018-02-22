@@ -1,5 +1,8 @@
 FROM       ubuntu:xenial
 
+ARG        QDB_VERSION=
+ENV        QDB_DEB_VERSION=1
+
 # Fixing debconf warning about TREM
 ENV        DEBIAN_FRONTEND teletype
 
@@ -8,8 +11,9 @@ ENV        DEBIAN_FRONTEND teletype
 RUN        apt-get clean && apt-get update && apt-get install -y --no-install-recommends apt-utils locales iproute
 RUN        locale-gen en_US.UTF-8
 
-# Decompress the tarball in the container
-ADD        ${QDB_TAR} /usr/
+# Install qdb-server package
+COPY    qdb-server_${QDB_VERSION}-${QDB_DEB_VERSION}.deb .
+RUN     dpkg -i qdb-server_${QDB_VERSION}-${QDB_DEB_VERSION}.deb
 
 # Add the wrapper script
 ADD        qdbd-docker-wrapper.sh /usr/bin/

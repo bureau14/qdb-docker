@@ -1,7 +1,8 @@
 FROM       ubuntu:xenial
 
-# Decompress the tarball in the container
-ADD        ${TAR_QDB_WEB_BRIDGE} /usr/
+# Install qdb-web-bridge package 
+COPY    qdb-web-bridge_${QDB_VERSION}-${QDB_DEB_VERSION}.deb .
+RUN     dpkg -i qdb-web-bridge_${QDB_VERSION}-${QDB_DEB_VERSION}.deb
 
 # Add the wrapper script
 ADD        qdb-httpd-docker-wrapper.sh /usr/bin/
