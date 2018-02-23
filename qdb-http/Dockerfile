@@ -1,5 +1,8 @@
 FROM       ubuntu:xenial
 
+ARG        QDB_VERSION=
+ENV        QDB_DEB_VERSION=1
+
 # Install qdb-web-bridge package 
 COPY    qdb-web-bridge_${QDB_VERSION}-${QDB_DEB_VERSION}.deb .
 RUN     dpkg -i qdb-web-bridge_${QDB_VERSION}-${QDB_DEB_VERSION}.deb
