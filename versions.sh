@@ -14,7 +14,7 @@ QDB_MOST_RECENT_VERSIONS=()
 # get_versions: Get versions already uploaded to docker
 function get_versions {
     container_name=$1
-    local docker_tags=(`wget -q https://registry.hub.docker.com/v1/repositories/bureau14/${container_name}d/tags -O -  | sed -e 's/[][]//g' -e 's/"//g' -e 's/ //g' | tr '}' '\n' | awk -F: '{print $3}'`)
+    local docker_tags=(`wget -q https://registry.hub.docker.com/v1/repositories/bureau14/${container_name}/tags -O -  | sed -e 's/[][]//g' -e 's/"//g' -e 's/ //g' | tr '}' '\n' | awk -F: '{print $3}'`)
     for ((index=0; index < (${#docker_tags[@]}) ; ++index)); do
         local version=${docker_tags[$index]}
         if [[ ${version} =~ (^([0-9].[0-9].[0-9])$) ]]; then

@@ -6,7 +6,7 @@ source "container.sh"
 source "documentation.sh"
 source "files.sh"
 
-get_versions qdb
+get_versions qdb-dev-python
 
 detect_version
 if [[ $? != 1 ]]; then
