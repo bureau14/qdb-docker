@@ -31,6 +31,9 @@ print_tags
 add_container qdb \
     $DEBIAN_PACKAGE_QDB
 
+add_container qdbsh \
+    $DEBIAN_PACKAGE_QDB_UTILS
+
 add_container qdb-http \
     $DEBIAN_PACKAGE_QDB_WEB_BRIDGE
 
