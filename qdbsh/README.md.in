@@ -22,5 +22,18 @@ This repository contains the **Dockerfile** of [QuasarDB](http://www.quasardb.ne
 
 #### Run `qdbsh` with a `qdb` container
 
-    docker run -d --name qdb-server bureau14/qdb --security=0
-    docker run -ti --link qdb-server:qdb-server bureau14/qdbsh --cluster qdb://qdb-server:2836
+    mkdir /db1 && cp license.txt /db1/license.txt
+    mkdir /db2 && cp license.txt /db2/license.txt
+    mkdir /db3 && cp license.txt /db3/license.txt
+
+    docker run -d --name qdb-server1 bureau14/qdb -v /db1:/var/lib/qdb --security=0 --log-level=debug
+    docker run -d --name qdb-server2 --link qdb-server1:successor -v /db2:/var/lib/qdb bureau14/qdb --peer successor:2836 --security=0 --log-level=debug
+    docker run -d --name qdb-server3 --link qdb-server2:successor bureau14/qdb -v /db3:/var/lib/qdb --peer successor:2836 --security=0 --log-level=debug
+    docker run -ti --link qdb-server1:qdb-server bureau14/qdbsh --cluster qdb://qdb-server:2836
+
+
+    docker logs  qdb-server1 | grep successor
+    07:18:10.967661999    38        debug   ring stabilization for 172.17.0.2:2836 changed successor from 172.17.0.2:2836 to 172.17.0.3:2836
+    07:18:10.967867477    38        info    cached 1 new successor(s)
+    07:18:23.650560746    38        debug   ring stabilization for 172.17.0.2:2836 changed successor from 172.17.0.3:2836 to 172.17.0.4:2836
+    07:18:23.650939296    38        info    cached 1 new successor(s)
