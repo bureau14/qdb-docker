@@ -1,9 +1,11 @@
 FROM       ubuntu:xenial
 
 ARG        QDB_VERSION=
-ENV        QDB_DEB_VERSION=1
+ARG        QDB_DEB_VERSION=1
 
-# Fixing debconf warning about TREM
+ENV        QDB_PORT=2836
+
+# Fixing debconf warning about TERM
 ENV        DEBIAN_FRONTEND teletype
 
 # Latest Ubuntu doesn't have pre-installed locales package (locale-gen) and 'ip' from iproute

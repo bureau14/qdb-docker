@@ -3,10 +3,13 @@
 QDB_SERVER=`which qdbd`
 IP=`which ip`
 AWK=`which awk`
-PORT=2836
+
+# The QDB_PORT variable is set in the dockerfile
+PORT="${QDB_PORT:-2836}"
 
 IP=`${IP} route get 8.8.8.8 | ${AWK} 'NR==1 {print $NF}'`
 
+echo "Launching qdbd bound to ${IP}:${PORT}"
 
 # Detects the presence of a license file, and provides it as an
 # argument to `qdbd` if found.
