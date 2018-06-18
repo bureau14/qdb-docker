@@ -21,7 +21,7 @@ RUN     dpkg -i qdb-server_${QDB_VERSION}-${QDB_DEB_VERSION}.deb
 ADD        qdbd-docker-wrapper.sh /usr/bin/
 
 # Define mountable directory
-VOLUME     ["/var/lib/qdb/db"]
+VOLUME     ["/var/lib/qdb"]
 
 # Define working directory
 WORKDIR    /var/lib/qdb
