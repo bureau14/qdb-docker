@@ -1,8 +1,9 @@
 #!/bin/bash
 
 TAGS=()
-ALL_TAGS=()
-ALL_TAGS_VERSIONS=()
+
+CURRENT_DOC_TAG=""
+DOC_TAGS=()
 
 # create_tags: Creates tags based on the version detected
 function create_tags {
@@ -22,22 +23,32 @@ function create_tags {
 
 #create_documentation_tags: Creates all tags for documentation purpose
 function create_documentation_tags {
-    add_tag latest $QDB_LATEST_VERSION
-    add_tag nightly $QDB_NIGHTLY_VERSION
-    for version in ${QDB_MOST_RECENT_VERSIONS[@]}; do
-        if [[ $version =~ (^([0-9].[0-9]).[0-9].*) ]]; then
-            local version_prefix=${BASH_REMATCH[2]}
-            add_tag $version_prefix $version
-        fi
-    done
     for version in ${QDB_VERSIONS[@]}; do
-        add_tag $version $version
+        CURRENT_DOC_TAG=""
+        add_doc_tag $version
+        for recent_version in ${QDB_MOST_RECENT_VERSIONS[@]}; do
+            if [[ $recent_version == $version ]]; then
+                if [[ $recent_version =~ (^([0-9].[0-9]).[0-9].*) ]]; then
+                    local version_prefix=${BASH_REMATCH[2]}
+                    add_doc_tag $version_prefix
+                fi
+            fi
+        done
+        if [[ $version == $QDB_LATEST_VERSION ]]; then
+            add_doc_tag "latest"
+        fi
+        if [[ $version == $QDB_NIGHTLY_VERSION ]]; then
+            add_doc_tag "nightly"
+        fi
+        DOC_TAGS+=($CURRENT_DOC_TAG)
     done
 }
 
-function add_tag {
-    ALL_TAGS+=($1)
-    ALL_TAGS_VERSIONS+=($2)
+function add_doc_tag {
+    if [[ ${#CURRENT_DOC_TAG} -ne 0 ]]; then
+        CURRENT_DOC_TAG="${CURRENT_DOC_TAG},"
+    fi
+    CURRENT_DOC_TAG="$CURRENT_DOC_TAG\t$1"
 }
 
 # print_tags: Prints the tags separated by a ','
