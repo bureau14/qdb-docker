@@ -3,10 +3,10 @@
 source "utils.sh"
 
 function update_releases_info {
-    local release_info="|tag|version|\n"
+    local release_info="|version|tags|\n"
     release_info+="|---|---|\n"
-    for ((index_i=0; index_i < (${#ALL_TAGS[@]}) ; ++index_i)); do
-        release_info+="|\`${ALL_TAGS[$index_i]}\`|${ALL_TAGS_VERSIONS[$index_i]}|\n"
+    for ((index_i=0; index_i < (${#QDB_VERSIONS[@]}) ; ++index_i)); do
+        release_info+="|\`${QDB_VERSIONS[$index_i]}\`|${DOC_TAGS[$index_i]}|\n"
     done
     sed -i "1,/\[release-info\]/{s/\[release-info\]/$release_info/}" "README.md.tmp"
 }
