@@ -1,0 +1,3 @@
+Any subdirectory in this dir will be considered a dataset and should include:
+ * A config.json file compatible with railgun
+ * A data.csv file with a header
