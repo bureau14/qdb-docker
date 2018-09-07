@@ -35,9 +35,6 @@ add_container qdbsh \
     $DEBIAN_PACKAGE_QDB_API \
     $DEBIAN_PACKAGE_QDB_UTILS
 
-add_container qdb-http \
-    $DEBIAN_PACKAGE_QDB_WEB_BRIDGE
-
 add_container qdb-dev \
     $DEBIAN_PACKAGE_QDB \
     $DEBIAN_PACKAGE_QDB_API \

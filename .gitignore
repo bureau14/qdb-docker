@@ -2,7 +2,6 @@ build/
 qdb/README.md
 qdbsh/README.md
 qdb-dev/README.md
-qdb-http/README.md
 qdb-dev-python/README.md
 *.deb
 *.tar.gz
