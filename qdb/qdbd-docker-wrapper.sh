@@ -1,24 +1,25 @@
 #!/usr/bin/env sh
 
 QDB_SERVER=`which qdbd`
-IP=`which ip`
-AWK=`which awk`
+QDB_LAUNCH_ARGS=""
 
-# The QDB_PORT variable is set in the dockerfile
-PORT="${QDB_PORT:-2836}"
-
-IP=`${IP} route get 8.8.8.8 | ${AWK} 'NR==1 {print $NF}'`
-
-echo "Launching qdbd bound to ${IP}:${PORT}"
+echo "Launching qdbd bound to eth0:2836"
+QDB_LAUNCH_ARGS="${QDB_LAUNCH_ARGS} -a eth0:2836"
 
 # Detects the presence of a license file, and provides it as an
 # argument to `qdbd` if found.
 POTENTIAL_LICENSE_FILE="/var/lib/qdb/license.txt"
-LICENSE_FILE_PARAMETER=""
 
 if [ -f ${POTENTIAL_LICENSE_FILE} ]; then
     echo "license file found! ${POTENTIAL_LICENSE_FILE}"
-    LICENSE_FILE_PARAMETER="--license-file ${POTENTIAL_LICENSE_FILE}"
+    QDB_LAUNCH_ARGS="${QDB_LAUNCH_ARGS} --license-file ${POTENTIAL_LICENSE_FILE}"
 fi
 
-${QDB_SERVER} ${LICENSE_FILE_PARAMETER} -a ${IP}:${PORT} $@
+if [ "${QDB_DISABLE_SECURITY}" = "true" ]
+then
+    QDB_LAUNCH_ARGS="${QDB_LAUNCH_ARGS} --security=0"
+fi
+
+echo "Launching qdb with arguments: ${QDB_LAUNCH_ARGS}"
+
+${QDB_SERVER} ${QDB_LAUNCH_ARGS} $@
