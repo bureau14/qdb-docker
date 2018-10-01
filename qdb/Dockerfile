@@ -1,4 +1,4 @@
-FROM       ubuntu:xenial
+FROM       ubuntu:bionic
 
 ARG        QDB_VERSION=
 ARG        QDB_DEB_VERSION=1
