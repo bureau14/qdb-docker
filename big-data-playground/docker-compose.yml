@@ -18,9 +18,11 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
   qdb:
-    build: qdb/
+    image: bureau14/qdb
     ports:
       - "2836:2836"
+    environment:
+      QDB_DISABLE_SECURITY: "true"
 
   kafka-connect-qdb:
     build: kafka-connect-qdb/
