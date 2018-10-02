@@ -18,16 +18,24 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
   qdb-server:
-    image: bureau14/qdb
+    image: bureau14/qdb:3.0
     ports:
       - "2836:2836"
     environment:
       QDB_DISABLE_SECURITY: "true"
 
-  qdbsh:
-    image: bureau14/qdbsh
+  qdb-dashboard:
+    image: bureau14/qdb-dashboard:3.0
+    ports:
+      - "40000:40000"
     links:
       - qdb-server
+
+  qdbsh:
+    image: bureau14/qdbsh:3.0
+    links:
+      - qdb-server
+    entrypoint: qdbsh --cluster qdb://qdb-server:2836
 
   kafka-connect-qdb:
     build: kafka-connect-qdb/
