@@ -1,4 +1,12 @@
-FROM wurstmeister/kafka
+FROM openjdk:8u171-jre
+
+RUN apt-get update \
+        && apt-get install -y wget \
+        && mkdir -p /opt \
+        && cd /opt \
+        && wget http://apache.40b.nl/kafka/2.0.0/kafka_2.12-2.0.0.tgz \
+        && tar -xzf ./kafka* \
+        && ln -s /opt/kafka_2.12-2.0.0 /opt/kafkaq
 
 COPY kafka-connect-qdb-3.0.0-SNAPSHOT-standalone.jar /usr/local/share/kafka/plugins/
 COPY worker.properties /opt/kafka/config/worker.properties
