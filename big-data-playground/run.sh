@@ -14,9 +14,9 @@ cd kafka-connect-qdb && \
 
 docker-compose build --no-cache
 
-echo "Launching QuasarDB"
+echo "Launching QuasarDB and Kafka"
 
-docker-compose up -d qdb-server
+docker-compose up -d qdb-server kafka
 
 echo "Waiting 3 seconds.."
 
@@ -24,9 +24,6 @@ sleep 3
 
 echo "Creating 'test' table.."
 docker-compose run qdbsh -c "CREATE TABLE test(col1 INT64, col2 DOUBLE, col3 BLOB)"
-
-echo "Launching kafka"
-docker-compose up -d kafka
 
 echo "Waiting for kafka to come online.."
 sleep 10
@@ -36,9 +33,9 @@ docker-compose up -d kafka-connect-qdb
 
 echo "Sending 3 test rows to Kafka"
 
-echo '{"col1": 1234, "col2": 5.432, "col3": "hello, world!"}' | docker-compose exec kafka /opt/kafka/bin/kafka-console-producer.sh --topic test --broker-list kafka:9092
-echo '{"col1": 2345, "col2": 6.543, "col3": "hello, second world!"}' | docker-compose exec kafka /opt/kafka/bin/kafka-console-producer.sh --topic test --broker-list kafka:9092
-echo '{"col1": 3456, "col2": 7.654, "col3": "bye, world!"}' | docker-compose exec kafka /opt/kafka/bin/kafka-console-producer.sh --topic test --broker-list kafka:9092
+echo '{"col1": 1234, "col2": 5.432, "col3": "hello, world!"}' | docker-compose exec -T kafka /opt/kafka/bin/kafka-console-producer.sh --topic test --broker-list kafka:9092
+echo '{"col1": 2345, "col2": 6.543, "col3": "hello, second world!"}' | docker-compose exec -T kafka /opt/kafka/bin/kafka-console-producer.sh --topic test --broker-list kafka:9092
+echo '{"col1": 3456, "col2": 7.654, "col3": "bye, world!"}' | docker-compose exec -T kafka /opt/kafka/bin/kafka-console-producer.sh --topic test --broker-list kafka:9092
 
 sleep 3
 
