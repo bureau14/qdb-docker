@@ -5,13 +5,14 @@ COPY qdb-rest*.deb .
 COPY qdb-dashboard*.deb .
 
 RUN apt-get update && \
-    apt-get install -y jq \
-                       locales \
-                       nano \
-                       net-tools \
-                       openssl \
-                       wget && \
-    apt-get clean
+        apt-get upgrade -y && \
+        apt-get install -y jq \
+                           locales \
+                           nano \
+                           net-tools \
+                           openssl \
+                           wget && \
+        apt-get clean
 
 RUN dpkg -i qdb-api*.deb
 RUN dpkg -i qdb-rest*.deb
