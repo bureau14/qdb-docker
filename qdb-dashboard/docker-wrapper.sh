@@ -21,7 +21,11 @@ cat /etc/qdb/qdb_rest.conf \
     | jq ".allowed_origins = [\"${ALLOWED_ORIGIN}\"]" \
     | jq ".assets = \"/var/lib/qdb/assets\"" \
     | jq ".cluster_uri = \"${URI}\"" \
-    | jq ".tls_host = \"0.0.0.0\"" \
+    | jq ".host = \"0.0.0.0\"" \
+    | jq ".port = \"40000\"" \
+    | jq ".tls_certificate = \"\"" \
+    | jq "del(.tls_key, .tls_host, .tls_port)"  \
+    | jq "del(.cluster_public_key_file)" \
     > /tmp/qdb_rest.conf.new && \
     mv /tmp/qdb_rest.conf.new /etc/qdb/qdb_rest.conf && \
     chown qdb:qdb /etc/qdb/qdb_rest.conf
