@@ -35,6 +35,11 @@ add_container qdbsh \
     $DEBIAN_PACKAGE_QDB_API \
     $DEBIAN_PACKAGE_QDB_UTILS
 
+add_container qdb-dashboard \
+    $DEBIAN_PACKAGE_QDB_API \
+    $DEBIAN_PACKAGE_QDB_REST \
+    $DEBIAN_PACKAGE_QDB_DASHBOARD
+
 add_container qdb-dev \
     $DEBIAN_PACKAGE_QDB \
     $DEBIAN_PACKAGE_QDB_API \
