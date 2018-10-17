@@ -2,17 +2,17 @@
 
 set -e
 
-echo "Pulling existing containers.."
+# echo "Pulling existing containers.."
 
-docker-compose pull
+# docker-compose pull
 
 echo "Building Kafka connector"
 
-cd kafka-connect-qdb && \
-    wget https://download.quasardb.net/quasardb/nightly/api/c/qdb-3.0.0master-linux-64bit-c-api.tar.gz && \
-    wget https://download.quasardb.net/quasardb/nightly/api/kafka/kafka-connect-qdb-3.0.0-SNAPSHOT-standalone.jar
+# cd kafka-connect-qdb && \
+#     wget https://download.quasardb.net/quasardb/nightly/api/c/qdb-3.0.0master-linux-64bit-c-api.tar.gz && \
+#     wget https://download.quasardb.net/quasardb/nightly/api/kafka/kafka-connect-qdb-3.0.0-SNAPSHOT-standalone.jar
 
-docker-compose build --no-cache
+# docker-compose build --no-cache
 
 echo "Launching QuasarDB and Kafka"
 

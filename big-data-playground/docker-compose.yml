@@ -38,7 +38,8 @@ services:
     entrypoint: qdbsh --cluster qdb://qdb-server:2836
 
   kafka-connect-qdb:
-    build: kafka-connect-qdb/
+    #build: kafka-connect-qdb/
+    image: bureau14/kafka-connect-qdb:3.0
     links:
       - zookeeper
       - kafka
