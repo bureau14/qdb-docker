@@ -6,7 +6,8 @@ COPY qdb-dashboard*.deb .
 
 RUN apt-get update && \
         apt-get upgrade -y && \
-        apt-get install -y jq \
+        apt-get install -y iproute2 \
+                           jq \
                            locales \
                            nano \
                            net-tools \

@@ -2,13 +2,14 @@
 
 set -e
 
-URI="qdb://qdb-server:2836"
-
-if [ "${QDB_URI}" != "" ]
-then
-    echo "Using cluster uri: ${QDB_URI}"
-    URI=${QDB_URI}
+if [ -z ${QDB_URI} ]; then
+    IP=`which ip`
+    AWK=`which awk`
+    QDB_IP=`${IP} route get 8.8.8.8 | grep -oh 'src [0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+' | awk '{print $2}'`
+    QDB_URI="qdb://${QDB_IP}:2836"
 fi
+
+echo "Using cluster uri: ${QDB_URI}"
 
 ALLOWED_ORIGIN="http://0.0.0.0:3449"
 if [ "${QDB_ALLOWED_ORIGIN}" != "" ]
@@ -20,7 +21,7 @@ fi
 cat /etc/qdb/qdb_rest.conf \
     | jq ".allowed_origins = [\"${ALLOWED_ORIGIN}\"]" \
     | jq ".assets = \"/var/lib/qdb/assets\"" \
-    | jq ".cluster_uri = \"${URI}\"" \
+    | jq ".cluster_uri = \"${QDB_URI}\"" \
     | jq ".host = \"0.0.0.0\"" \
     | jq ".port = 40000" \
     | jq ".tls_certificate = \"\"" \
