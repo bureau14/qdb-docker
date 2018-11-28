@@ -14,3 +14,5 @@ RUN     ./preloader.sh
 # Cleanup
 RUN rm -R /datasets ./preloader.sh
 RUN dpkg -r qdb-api qdb-utils
+
+CMD ["--root", "/data"]
