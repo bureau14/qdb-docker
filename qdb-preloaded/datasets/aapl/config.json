@@ -9,27 +9,27 @@
     {
       "id": "Open",
       "parser": "double",
-      "into": "aapl_timeseries"
+      "into": "stocks.apple"
     },
     {
       "id": "High",
       "parser": "double",
-      "into": "aapl_timeseries"
+      "into": "stocks.apple"
     },
     {
       "id": "Low",
       "parser": "double",
-      "into": "aapl_timeseries"
+      "into": "stocks.apple"
     },
     {
       "id": "Close",
       "parser": "double",
-      "into": "aapl_timeseries"
+      "into": "stocks.apple"
     },
     {
       "id": "Volume",
       "parser": "int64",
-      "into": "aapl_timeseries"
+      "into": "stocks.apple"
     }
   ]
 }
