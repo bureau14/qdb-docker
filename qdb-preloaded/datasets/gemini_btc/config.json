@@ -1,0 +1,35 @@
+{
+  "shard_size": "1d",
+  "columns": [
+    {
+      "id": "timestamp",
+      "parser": "iso_8601",
+      "into": "$timestamp"
+    },
+    {
+      "id": "open",
+      "parser": "double",
+      "into": "btcusd"
+    },
+    {
+      "id": "high",
+      "parser": "double",
+      "into": "btcusd"
+    },
+    {
+      "id": "low",
+      "parser": "double",
+      "into": "btcusd"
+    },
+    {
+      "id": "close",
+      "parser": "double",
+      "into": "btcusd"
+    },
+    {
+      "id": "volume",
+      "parser": "double",
+      "into": "btcusd"
+    }
+  ]
+}
