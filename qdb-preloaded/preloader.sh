@@ -12,12 +12,16 @@ grep -m 1 "successfully started quasardb daemon" <(tail -F ./qdbd.log)
 
 for DATASET_DIR in `ls -d /datasets/*/`
 do
-    echo "Loading $DATASET_DIR..."
-
-    qdb_railgun \
-        --with-header 1 \
-        --config "$DATASET_DIR./config.json" \
-        --file "$DATASET_DIR./data.csv"
+    if [[ -f ${DATASET_DIR}/config.json && -f ${DATASET_DIR}/data.csv ]]
+    then
+        echo "Loading $DATASET_DIR..."
+        qdb_railgun \
+            --with-header 1 \
+            --config "$DATASET_DIR./config.json" \
+            --file "$DATASET_DIR./data.csv"
+    else
+        echo "Skipping $DATASET_DIR -- does not contain both config.json and data.csv"
+    fi
 done
 
 grep -m 1 "stable" <(tail -F ./qdbd.log)
