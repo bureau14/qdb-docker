@@ -1,0 +1,35 @@
+{
+  "shard_size": "1d",
+  "columns": [
+    {
+      "id": "timestamp",
+      "parser": "iso_8601",
+      "into": "$timestamp"
+    },
+    {
+      "id": "Open",
+      "parser": "double",
+      "into": "stocks.apple"
+    },
+    {
+      "id": "High",
+      "parser": "double",
+      "into": "stocks.apple"
+    },
+    {
+      "id": "Low",
+      "parser": "double",
+      "into": "stocks.apple"
+    },
+    {
+      "id": "Close",
+      "parser": "double",
+      "into": "stocks.apple"
+    },
+    {
+      "id": "Volume",
+      "parser": "int64",
+      "into": "stocks.apple"
+    }
+  ]
+}
