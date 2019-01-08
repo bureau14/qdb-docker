@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -ex
+
 wget https://www.cryptodatadownload.com/cdd/gemini_BTCUSD_2018_1min.csv
 wget https://www.cryptodatadownload.com/cdd/gemini_BTCUSD_2017_1min.csv
 wget https://www.cryptodatadownload.com/cdd/gemini_BTCUSD_2016_1min.csv
