@@ -15,7 +15,6 @@ function set_files {
     TARBALL_QDB_WEB_BRIDGE="qdb-${QDB_VERSION}-linux-64bit-web-bridge.tar.gz"
     TARBALL_QDB_PHP="quasardb-${QDB_VERSION}.tgz"
     EGG_QDB_PYTHON="quasardb-${QDB_VERSION}-py2.7-linux-x86_64.egg"
-    DEBIAN_PACKAGE_QDB="qdb-server_${QDB_VERSION}-${QDB_DEB_VERSION}.deb"
     DEBIAN_PACKAGE_QDB_UTILS="qdb-utils_${QDB_VERSION}-${QDB_DEB_VERSION}.deb"
     DEBIAN_PACKAGE_QDB_API="qdb-api_${QDB_VERSION}-${QDB_DEB_VERSION}.deb"
     DEBIAN_PACKAGE_QDB_REST="qdb-rest_${QDB_VERSION}-${QDB_DEB_VERSION}.deb"

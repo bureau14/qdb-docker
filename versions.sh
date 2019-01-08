@@ -26,8 +26,8 @@ function get_versions {
 
 # detect_version: Detects qdb version
 function detect_version {
-    local server_file=`ls qdb-server_*-1.deb`
-    if [[ ${server_file} =~ (qdb-server_(.+)-1.deb$) ]]; then
+    local server_file=`ls qdb-*-server.tar.gz`
+    if [[ ${server_file} =~ (qdb-(.+)-server.tar.gz$) ]]; then
         QDB_VERSION=${BASH_REMATCH[2]}
         if [[ ${QDB_VERSION} =~ (^(([0-9].[0-9]).[0-9]).*) ]]; then
             QDB_CLEAN_VERSION=(${BASH_REMATCH[2]})
