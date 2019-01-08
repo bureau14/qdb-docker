@@ -1,0 +1,18 @@
+## QuasarDB Dashboard Dockerfile
+
+This repository contains the **Dockerfile** of [QuasarDB](http://www.quasardb.net/) shell for [Docker](https://www.docker.com/)'s [automated build](https://registry.hub.docker.com/u/bureau14/qdb-dashboard/) published to the public [Docker Hub Registry](https://registry.hub.docker.com/).
+
+### Supported tags
+
+[release-info]
+
+### Base Docker Image
+
+* [dockerfile/ubuntu](http://dockerfile.github.io/#/ubuntu)
+
+### Installation
+
+1. Install [Docker](https://www.docker.com/).
+1. Pull from docker: `docker pull bureau14/qdbsh`
+1. Alternatively: build an image with a [Dockerfile](https://hub.docker.com/r/bureau14/qdb-dashboard/~/dockerfile/)
+1. Required files(replace {version} with the version you wish to use): [required-files]
