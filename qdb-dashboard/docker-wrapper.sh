@@ -20,7 +20,7 @@ fi
 
 cat /etc/qdb/qdb_rest.conf \
     | jq ".allowed_origins = [\"${ALLOWED_ORIGIN}\"]" \
-    | jq ".assets = \"/var/lib/qdb/assets\"" \
+    | jq ".assets = \"/opt/qdb/assets\"" \
     | jq ".cluster_uri = \"${QDB_URI}\"" \
     | jq ".host = \"0.0.0.0\"" \
     | jq ".port = 40000" \
@@ -31,4 +31,4 @@ cat /etc/qdb/qdb_rest.conf \
     mv /tmp/qdb_rest.conf.new /etc/qdb/qdb_rest.conf && \
     chown qdb:qdb /etc/qdb/qdb_rest.conf
 
-/usr/bin/qdb_rest --config-file /etc/qdb/qdb_rest.conf
+/opt/qdb/bin/qdb_rest --config-file /etc/qdb/qdb_rest.conf

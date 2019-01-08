@@ -6,7 +6,7 @@ QDB_VERSION=
 QDB_VERSION_PREFIX=
 QDB_CLEAN_VERSION=
 QDB_DEB_VERSION=1
-QDB_LATEST_VERSION=3.1.0
+QDB_LATEST_VERSION=3.0.0
 QDB_NIGHTLY_VERSION=
 QDB_VERSIONS=()
 QDB_MOST_RECENT_VERSIONS=()
@@ -27,7 +27,7 @@ function get_versions {
 # detect_version: Detects qdb version
 function detect_version {
     local server_file=`ls qdb-*-server.tar.gz`
-    if [[ ${server_file} =~ (qdb-(.+)-server.tar.gz$) ]]; then
+    if [[ ${server_file} =~ (qdb-(.+)-linux-64bit-server.tar.gz$) ]]; then
         QDB_VERSION=${BASH_REMATCH[2]}
         if [[ ${QDB_VERSION} =~ (^(([0-9].[0-9]).[0-9]).*) ]]; then
             QDB_CLEAN_VERSION=(${BASH_REMATCH[2]})
@@ -35,9 +35,10 @@ function detect_version {
         fi
         echo "version: $QDB_VERSION"
         echo "clean version: $QDB_CLEAN_VERSION"
-        return 1
+        return 0
     else
         echo "version not found, aborting..."
+        return 1
     fi
 }
 
@@ -57,7 +58,7 @@ function normalize_versions {
 function check_released_versions {
     for version in ${QDB_VERSIONS[@]}; do
         if [ "$QDB_CLEAN_VERSION" == "$version" ]; then
-            return 1
+            return 0
         fi
     done
 }
@@ -73,28 +74,36 @@ function add_release_version {
 #versions             - 2.0.2, 2.0.3, 2.1.0, 2.2.0, 2.2.1
 #most_recent_versions -        2.0.3, 2.1.0       , 2.2.1
 function create_most_recents_versions {
-    for ((index_i=0; index_i < (${#QDB_VERSIONS[@]}) ; ++index_i)); do
-        local success=1
+    for ((index_i=0; index_i < (${#QDB_VERSIONS[@]}) ; ++index_i))
+    do
+        local success=0
         local version=${QDB_VERSIONS[index_i]}
-        if [[ ${version} =~ (^([0-9]).([0-9]).([0-9])$) ]]; then
+        if [[ ${version} =~ (^([0-9]).([0-9]).([0-9])$) ]]
+        then
             local first_part=${BASH_REMATCH[2]}
             local second_part=${BASH_REMATCH[3]}
             local third_part=${BASH_REMATCH[4]}
         fi
-        for ((index_j=$index_i+1; index_j < (${#QDB_VERSIONS[@]}) ; ++index_j)); do
+        for ((index_j=$index_i+1; index_j < (${#QDB_VERSIONS[@]}) ; ++index_j))
+        do
             local r_version=${QDB_VERSIONS[index_j]}
-            if [[ ${r_version} =~ (^([0-9]).([0-9]).([0-9])$) ]]; then
+            if [[ ${r_version} =~ (^([0-9]).([0-9]).([0-9])$) ]]
+            then
                 local r_first_part=${BASH_REMATCH[2]}
                 local r_second_part=${BASH_REMATCH[3]}
                 local r_third_part=${BASH_REMATCH[4]}
             fi
-            if (( ($first_part == $r_first_part) && ($second_part == $r_second_part) ));then
-                if (($third_part < $r_third_part)); then
-                    success=0
+            if (( ($first_part == $r_first_part) && ($second_part == $r_second_part) ))
+            then
+                if (($third_part < $r_third_part))
+                then
+                    success=1
                 fi
             fi
         done
-        if (($success == 1));then
+
+        if (($success == 0))
+        then
             QDB_MOST_RECENT_VERSIONS+=($version)
         fi
     done
@@ -102,36 +111,52 @@ function create_most_recents_versions {
 
 #is_most_recent_version: test if the current version is in the most recent version array
 function is_most_recent_version {
-    for most_recent_version in ${QDB_MOST_RECENT_VERSIONS[@]}; do
-        if [[ $most_recent_version == $QDB_CLEAN_VERSION ]];then
-            return 1
+    for most_recent_version in ${QDB_MOST_RECENT_VERSIONS[@]}
+    do
+        if [[ $most_recent_version == $QDB_CLEAN_VERSION ]]
+        then
+            echo "${QDB_CLEAN_VERSION}"
         fi
     done
-    return 0
 }
 
 #create_nightly_version: create nightly version variable by picking up the highest version the most recents
 function create_nightly_version {
-    for ((index_i=0; index_i < (${#QDB_MOST_RECENT_VERSIONS[@]}) ; ++index_i)); do
-        local success=1
+    for ((index_i=0; index_i < (${#QDB_MOST_RECENT_VERSIONS[@]}) ; ++index_i))
+    do
+        local success=0
         local version=${QDB_MOST_RECENT_VERSIONS[index_i]}
-        if [[ ${version} =~ (^([0-9]).([0-9]).([0-9])$) ]]; then
+
+        echo "version = ${version}"
+
+        if [[ ${version} =~ (^([0-9]).([0-9]).([0-9])$) ]]
+        then
             local first_part=${BASH_REMATCH[2]}
             local second_part=${BASH_REMATCH[3]}
             local third_part=${BASH_REMATCH[4]}
         fi
-        for ((index_j=0; index_j < (${#QDB_MOST_RECENT_VERSIONS[@]}) ; ++index_j)); do
+        for ((index_j=0; index_j < (${#QDB_MOST_RECENT_VERSIONS[@]}) ; ++index_j))
+        do
             local r_version=${QDB_MOST_RECENT_VERSIONS[index_j]}
-            if [[ ${r_version} =~ (^([0-9]).([0-9]).([0-9])$) ]]; then
+            if [[ ${r_version} =~ (^([0-9]).([0-9]).([0-9])$) ]]
+            then
                 local r_first_part=${BASH_REMATCH[2]}
                 local r_second_part=${BASH_REMATCH[3]}
                 local r_third_part=${BASH_REMATCH[4]}
             fi
-            if ((($first_part < $r_first_part) || ($second_part < $r_second_part) || ($third_part < $r_third_part) ));then
-                success=0
+
+            echo "first part $r_first_part"
+            echo "second part $r_second_part"
+            echo "third part $r_third_part"
+
+            if ((($first_part < $r_first_part) || ($second_part < $r_second_part) || ($third_part < $r_third_part) ))
+            then
+                success=1
             fi
         done
-        if (($success == 1));then
+
+        if (($success == 0))
+        then
             QDB_NIGHTLY_VERSION=$version
         fi
     done

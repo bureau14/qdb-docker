@@ -1,7 +1,6 @@
 FROM       ubuntu:xenial
 
 ARG        QDB_VERSION=
-ENV        QDB_DEB_VERSION=1
 
 # Fixing debconf warning about TREM
 ENV        DEBIAN_FRONTEND teletype
@@ -12,9 +11,8 @@ RUN        apt-get clean && apt-get update && apt-get install -y --no-install-re
 RUN        locale-gen en_US.UTF-8
 
 # Install qdb-server package
-COPY    qdb-utils_${QDB_VERSION}-${QDB_DEB_VERSION}.deb .
-RUN     dpkg -i qdb-utils_${QDB_VERSION}-${QDB_DEB_VERSION}.deb \
-        && rm qdb-utils_${QDB_VERSION}-${QDB_DEB_VERSION}.deb
+ADD     qdb-${QDB_VERSION}-linux-64bit-utils.tar.gz /opt/qdb/
+ADD     qdb-${QDB_VERSION}-linux-64bit-c-api.tar.gz /opt/qdb/
 
 # Always launch qdb process
-ENTRYPOINT ["qdbsh"]
+ENTRYPOINT ["/opt/qdb/bin/qdbsh"]

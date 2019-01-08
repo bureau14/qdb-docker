@@ -10,6 +10,8 @@ function add_container {
     local files=()
     local args=($@)
     local sep=
+    local index=
+
     for ((index=1; index < ${#args} ; index++)); do
         if [[ ! -z "${args[$index]}" ]]; then
             files+=$sep
@@ -48,15 +50,17 @@ function build_container {
     local container_version=${QDB_VERSION}
     # create array of files from a single line with ';' separator
     IFS=';' read -ra files <<< "$2"
-    for file in ${files[@]}; do
-        if [[ ! -f ../$file ]]; then
+    for file in ${files[@]}
+    do
+        if [[ ! -f ../$file ]]
+        then
             echo "Required file $file was not found, aborting build..."
             return -1
         fi
         cp ../$file $file
     done
     cp $container_path/* .
-    echo -n "key :: "; docker -l "error" build -q -t ${container_image}:build --build-arg QDB_VERSION=${container_version} .
+    echo -n "key :: "; docker -l "error" build -t ${container_image}:build --build-arg QDB_VERSION=${container_version} .
 }
 
 # push_container: Attach tags to built image and push container to docker

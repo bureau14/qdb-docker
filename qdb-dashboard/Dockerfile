@@ -1,8 +1,5 @@
 FROM ubuntu:bionic
 
-COPY qdb-api*.deb .
-COPY qdb-rest*.deb .
-COPY qdb-dashboard*.deb .
 
 RUN apt-get update && \
         apt-get upgrade -y && \
@@ -15,9 +12,9 @@ RUN apt-get update && \
                            wget && \
         apt-get clean
 
-RUN dpkg -i qdb-api*.deb
-RUN dpkg -i qdb-rest*.deb
-RUN dpkg -i qdb-dashboard*.deb
+# Install our C api and dashboard
+ADD     qdb-*-linux-64bit-c-api.tar.gz /opt/qdb/
+ADD     qdb-*-linux-64bit-rest.tar.gz /opt/qdb/
 
 COPY docker-wrapper.sh /docker-wrapper.sh
 

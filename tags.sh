@@ -8,15 +8,19 @@ DOC_TAGS=()
 # create_tags: Creates tags based on the version detected
 function create_tags {
     TAGS+=($QDB_CLEAN_VERSION)
-    if [[ ${QDB_CLEAN_VERSION} == $QDB_LATEST_VERSION ]]; then
+    if [[ ${QDB_CLEAN_VERSION} == $QDB_LATEST_VERSION ]]
+    then
         TAGS+=("latest")
     fi
-    if [[ ${QDB_CLEAN_VERSION} == $QDB_NIGHTLY_VERSION ]]; then
+
+    if [[ ${QDB_CLEAN_VERSION} == $QDB_NIGHTLY_VERSION ]]
+    then
         TAGS+=("nightly")
     fi
 
-    is_most_recent_version
-    if [[ $? == 1 ]]; then
+    local result=$(is_most_recent_version)
+    if [[ "${result}" == "true" ]]
+    then
         TAGS+=($QDB_VERSION_PREFIX)
     fi
 }
