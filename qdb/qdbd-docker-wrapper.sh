@@ -3,7 +3,7 @@
 set -e
 set -x
 
-QDB_SERVER=`which qdbd`
+QDB_SERVER="/opt/qdb/bin/qdbd"
 QDB_LAUNCH_ARGS=""
 IP=`which ip`
 AWK=`which awk`

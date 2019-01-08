@@ -17,11 +17,10 @@ RUN        apt-get clean \
 RUN        locale-gen en_US.UTF-8
 
 # Install qdb-server package
-COPY    qdb-server_${QDB_VERSION}-${QDB_DEB_VERSION}.deb .
-RUN     dpkg -i qdb-server_${QDB_VERSION}-${QDB_DEB_VERSION}.deb
+ADD     qdb-${QDB_VERSION}-linux-64bit-server.tar.gz /opt/qdb/
 
 # Add the wrapper script
-ADD        qdbd-docker-wrapper.sh /usr/bin/
+ADD        qdbd-docker-wrapper.sh /opt/qdb/scripts/
 
 # Define mountable directory
 VOLUME     ["/var/lib/qdb"]
@@ -30,7 +29,7 @@ VOLUME     ["/var/lib/qdb"]
 WORKDIR    /var/lib/qdb
 
 # Always launch qdb process
-ENTRYPOINT ["/usr/bin/qdbd-docker-wrapper.sh"]
+ENTRYPOINT ["/opt/qdb/scripts/qdbd-docker-wrapper.sh"]
 
 # Expose the port qdbd is listening at
 EXPOSE     2836
