@@ -6,7 +6,7 @@ QDB_VERSION=
 QDB_VERSION_PREFIX=
 QDB_CLEAN_VERSION=
 QDB_DEB_VERSION=1
-QDB_LATEST_VERSION=3.0.0
+QDB_LATEST_VERSION=3.1.0
 QDB_NIGHTLY_VERSION=
 QDB_VERSIONS=()
 QDB_MOST_RECENT_VERSIONS=()
@@ -41,7 +41,7 @@ function detect_version {
     fi
 }
 
-# normalize_versions: Changes names for php tarball and python egg to match the other files 
+# normalize_versions: Changes names for php tarball and python egg to match the other files
 function normalize_versions {
     local php_tar=`ls quasardb-*.tgz`
     if [[ $php_tar != "quasardb-${QDB_VERSION}.tgz" ]];then
