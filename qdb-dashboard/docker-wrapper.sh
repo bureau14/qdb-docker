@@ -18,7 +18,7 @@ then
     ALLOWED_ORIGIN=${QDB_ALLOWED_ORIGIN}
 fi
 
-cat /etc/qdb/qdb_rest.conf \
+cat /opt/qdb/etc/qdb_rest.conf.sample \
     | jq ".allowed_origins = [\"${ALLOWED_ORIGIN}\"]" \
     | jq ".assets = \"/opt/qdb/assets\"" \
     | jq ".cluster_uri = \"${QDB_URI}\"" \
@@ -27,8 +27,6 @@ cat /etc/qdb/qdb_rest.conf \
     | jq ".tls_certificate = \"\"" \
     | jq "del(.tls_key)"  \
     | jq "del(.cluster_public_key_file)" \
-    > /tmp/qdb_rest.conf.new && \
-    mv /tmp/qdb_rest.conf.new /etc/qdb/qdb_rest.conf && \
-    chown qdb:qdb /etc/qdb/qdb_rest.conf
+    >  /opt/qdb/etc/qdb_rest.conf
 
-/opt/qdb/bin/qdb_rest --config-file /etc/qdb/qdb_rest.conf
+LD_LIBRARY_PATH=/opt/qdb/lib/ /opt/qdb/bin/qdb_rest --config-file /opt/qdb/etc/qdb_rest.conf
