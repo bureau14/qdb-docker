@@ -29,7 +29,7 @@ create_documentation_tags
 print_tags
 
 add_container qdb \
-    $DEBIAN_PACKAGE_QDB
+    $TARBALL_QDB
 
 add_container qdbsh \
     $DEBIAN_PACKAGE_QDB_API \
