@@ -6,7 +6,7 @@
 set -e
 
 touch ./qdbd.log                 # avoid tail complaining about a non-existing file
-qdbd -d --security=false --root /data -l .
+/opt/qdb/bin/qdbd -d --security=false --rocksdb-root /data -l .
 echo "Waiting for qdbd..."
 grep -m 1 "successfully started quasardb daemon" <(tail -F ./qdbd.log)
 
@@ -15,8 +15,7 @@ do
     if [[ -f ${DATASET_DIR}/config.json && -f ${DATASET_DIR}/data.csv ]]
     then
         echo "Loading $DATASET_DIR..."
-        qdb_railgun \
-            --with-header 1 \
+        LD_LIBRARY_PATH=/opt/qdb/lib/ /opt/qdb/bin/qdb_railgun \
             --config "$DATASET_DIR./config.json" \
             --file "$DATASET_DIR./data.csv"
     else
