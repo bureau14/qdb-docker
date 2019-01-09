@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # First argument is the docker tag used for all the images tested (and tester)
-TAG=$1
+TAG=${1:-build}
 shift
 
 # Setup SUT
