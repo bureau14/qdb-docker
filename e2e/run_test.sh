@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 # First argument is the docker tag used for all the images tested (and tester)
+TAG=$1
+shift
 
 # Setup SUT
-docker-compose -f sut/docker-compose.yml up -d
+sut/stop.sh
+sut/start.sh ${TAG}
 
-# Build tester image
-TESTER_IMAGE=$(docker build -q tester)
+TESTER_IMAGE="e2e-tester:$TAG"
 
 # Run E2E tests
 ARTIFACTS_DIR=`pwd`/artifacts
@@ -14,3 +16,6 @@ docker run --network host                                               \
            --volume  "$ARTIFACTS_DIR/screenshots:/cypress/screenshots"  \
            --volume  "$ARTIFACTS_DIR/videos:/cypress/videos"            \
            ${TESTER_IMAGE} $@
+
+# Stop SUT
+sut/stop.sh
