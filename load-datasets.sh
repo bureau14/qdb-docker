@@ -21,7 +21,7 @@ do
         IDENTIFIER=${BASH_REMATCH[2]}
         ${AWSCLI} s3 cp ${S3_PATH}/${IDENTIFIER}.csv ${DS_PATH}/${IDENTIFIER}/data.csv || warn "Dataset does not exist on S3: ${IDENTIFIER}"
         echo "current path: $(pwd)"
-        cd ${DS_PATH}/${IDENTIFIER}/ && ./download.sh || warn "No downloader exists: ${IDENTIFIER}"
+        # cd ${DS_PATH}/${IDENTIFIER}/ && ./download.sh || warn "No downloader exists: ${IDENTIFIER}"
         cd ${BASEDIR}
     fi
 
