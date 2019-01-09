@@ -48,6 +48,13 @@ function build_container {
     local container_image="bureau14/${container_name}"
     local container_path="../$container_name"
     local container_version=${QDB_VERSION}
+
+    local build_args=""
+    if [[ "${container_name}" == "qdb-preloaded" ]]
+    then
+        build_args="${build_args} --build-arg BASE_IMAGE=bureau14/qdb:build"
+    fi
+
     # create array of files from a single line with ';' separator
     IFS=';' read -ra files <<< "$2"
     for file in ${files[@]}
@@ -59,8 +66,8 @@ function build_container {
         fi
         cp ../$file $file
     done
-    cp $container_path/* .
-    echo -n "key :: "; docker -l "error" build -t ${container_image}:build --build-arg QDB_VERSION=${container_version} .
+    cp -R $container_path/* .
+    echo -n "key :: "; docker -l "error" build -t ${container_image}:build --build-arg QDB_VERSION=${container_version} ${build_args} .
 }
 
 # push_container: Attach tags to built image and push container to docker

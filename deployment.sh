@@ -30,6 +30,10 @@ print_tags
 add_container qdb \
     $TARBALL_QDB
 
+add_container qdb-preloaded \
+    $TARBALL_QDB_API \
+    $TARBALL_QDB_UTILS
+
 add_container qdbsh \
     $TARBALL_QDB_API \
     $TARBALL_QDB_UTILS
