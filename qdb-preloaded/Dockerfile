@@ -1,16 +1,18 @@
-FROM bureau14/qdb
+ARG        BASE_IMAGE="bureau14/qdb"
 
-# Install build-time dependencies
-COPY qdb-api_${QDB_VERSION}-${QDB_DEB_VERSION}.deb .
-COPY qdb-utils_${QDB_VERSION}-${QDB_DEB_VERSION}.deb .
+FROM ${BASE_IMAGE}
+
+ARG        QDB_VERSION=
+
+
+# Install qdb-server package
+ADD     qdb-${QDB_VERSION}-linux-64bit-utils.tar.gz /opt/qdb/
+ADD     qdb-${QDB_VERSION}-linux-64bit-c-api.tar.gz /opt/qdb/
 
 ADD     ./datasets /datasets
 ADD     preloader.sh .
 
-RUN  dpkg -i qdb-api_${QDB_VERSION}-${QDB_DEB_VERSION}.deb && \
-     dpkg -i qdb-utils_${QDB_VERSION}-${QDB_DEB_VERSION}.deb && \
-     ./preloader.sh && \
-     rm -R /datasets ./preloader.sh && \
-     dpkg -r qdb-api qdb-utils
+RUN  ./preloader.sh && \
+     rm -R /datasets ./preloader.sh
 
-CMD ["--root", "/data"]
+CMD ["--rocksdb-root", "/data"]
