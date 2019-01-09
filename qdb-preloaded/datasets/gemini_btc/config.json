@@ -1,35 +1,32 @@
 {
-  "shard_size": "1d",
   "columns": [
     {
-      "id": "timestamp",
-      "parser": "iso_8601",
-      "into": "$timestamp"
+      "into": "$timestamp",
+      "parser": "iso_8601"
     },
     {
-      "id": "open",
-      "parser": "double",
-      "into": "btcusd"
+      "into": "open",
+      "parser": "double"
     },
     {
-      "id": "high",
-      "parser": "double",
-      "into": "btcusd"
+      "into": "high",
+      "parser": "double"
     },
     {
-      "id": "low",
-      "parser": "double",
-      "into": "btcusd"
+      "into": "low",
+      "parser": "double"
     },
     {
-      "id": "close",
-      "parser": "double",
-      "into": "btcusd"
+      "into": "close",
+      "parser": "double"
     },
     {
-      "id": "volume",
-      "parser": "double",
-      "into": "btcusd"
+      "into": "volume",
+      "parser": "double"
     }
-  ]
+  ],
+  "default_timeseries": "fx.btcusd",
+  "delimiter": ",",
+  "has_header": true,
+  "shard_size": "1d"
 }
