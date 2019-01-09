@@ -1,0 +1,6 @@
+artifacts/reports
+artifacts/screenshots
+artifacts/videos
+tester/cypress/reports
+tester/cypress/screenshots
+tester/cypress/videos
