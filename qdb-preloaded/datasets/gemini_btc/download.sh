@@ -2,10 +2,10 @@
 
 set -ex
 
-wget https://www.cryptodatadownload.com/cdd/gemini_BTCUSD_2018_1min.csv
-wget https://www.cryptodatadownload.com/cdd/gemini_BTCUSD_2017_1min.csv
-wget https://www.cryptodatadownload.com/cdd/gemini_BTCUSD_2016_1min.csv
-wget https://www.cryptodatadownload.com/cdd/gemini_BTCUSD_2015_1min.csv
+wget --no-check-certificate https://www.cryptodatadownload.com/cdd/gemini_BTCUSD_2018_1min.csv
+wget --no-check-certificate https://www.cryptodatadownload.com/cdd/gemini_BTCUSD_2017_1min.csv
+wget --no-check-certificate https://www.cryptodatadownload.com/cdd/gemini_BTCUSD_2016_1min.csv
+wget --no-check-certificate https://www.cryptodatadownload.com/cdd/gemini_BTCUSD_2015_1min.csv
 
 # Combine in one file, removing headers
 echo "unix_time,timestamp,symbol,open,high,low,close,volume" > btcusd_1min.csv
