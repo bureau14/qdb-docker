@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
+
 # First argument is the docker tag used for all the images tested (and tester)
 TAG=${1:-build}
 shift
+
+set -e
 
 # Setup SUT
 sut/stop.sh
