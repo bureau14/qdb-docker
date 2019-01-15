@@ -18,9 +18,12 @@ XYZ_VERSION="${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}"
 cd $(dirname -- $0)
 cd ${PWD}/../..
 
-sed -i -e 's/QDB_LATEST_VERSION=.*/QDB_LATEST_VERSION='${XYZ_VERSION}'/' versions.sh
-
-MINOR_VERSION=$((MINOR_VERSION+1))
-XYZ_VERSION="${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}"
-
-sed -i -e 's/QDB_NIGHTLY_VERSION=.*/QDB_NIGHTLY_VERSION='${XYZ_VERSION}'/' versions.sh
+if [[ "${INPUT_VERSION}" == *-* ]] ; then
+    # nightly
+    # QDB_NIGHTLY_VERSION=2.2.0
+    sed -i -e 's/\(QDB_NIGHTLY_VERSION\)=.*/\1='${XYZ_VERSION}'/' versions.sh
+else
+    # stable release
+    # QDB_LATEST_VERSION=2.2.0
+    sed -i -e 's/\(QDB_LATEST_VERSION\)=.*/\1='${XYZ_VERSION}'/' versions.sh
+fi
