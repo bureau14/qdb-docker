@@ -66,7 +66,6 @@ do
         elif [[ "${ACTION}" == "push" ]]
         then
             push_container ${CONTAINERS_NAMES[$index]}
-            update_documentation ${CONTAINERS_NAMES[$index]} ${CONTAINERS_FILES[$index]}
         else
             echo "Invalid action: ${ACTION}"
             echo "Needs to be either 'build' or 'push'"
