@@ -14,7 +14,6 @@ ACTION=$1
 get_versions qdb-dev-python
 
 detect_version
-normalize_versions
 check_released_versions
 
 create_most_recents_versions

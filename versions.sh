@@ -42,18 +42,6 @@ function detect_version {
     fi
 }
 
-# normalize_versions: Changes names for php tarball and python egg to match the other files
-function normalize_versions {
-    local php_tar=`ls quasardb-*.tgz`
-    if [[ $php_tar != "quasardb-${QDB_VERSION}.tgz" ]];then
-        mv $php_tar quasardb-${QDB_VERSION}.tgz
-    fi
-    local python_egg=`ls quasardb-*-py2.7-linux-x86_64.egg`
-    if [[ $python_egg != "quasardb-${QDB_VERSION}-py2.7-linux-x86_64.egg" ]];then
-        mv $python_egg quasardb-${QDB_VERSION}-py2.7-linux-x86_64.egg
-    fi
-}
-
 # check_released_versions: check if detected version matches an already released version
 function check_released_versions {
     for version in ${QDB_VERSIONS[@]}; do
