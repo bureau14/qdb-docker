@@ -6,24 +6,15 @@ set -o pipefail
 source "versions.sh"
 source "tags.sh"
 source "container.sh"
-source "documentation.sh"
 source "files.sh"
 
 ACTION=$1
 
-get_versions qdb-dev-python
-
 detect_version
-check_released_versions
-
-create_most_recents_versions
-create_nightly_version
 
 # needs to be done after the QDB_VERSION has been set
 set_files
 
-create_tags
-create_documentation_tags
 print_tags
 
 add_container qdb \
@@ -40,22 +31,6 @@ add_container qdbsh \
 add_container qdb-dashboard \
     $TARBALL_QDB_API \
     $TARBALL_QDB_REST
-
-# add_container qdb-dev \
-#     $DEBIAN_PACKAGE_QDB \
-#     $DEBIAN_PACKAGE_QDB_API \
-#     $DEBIAN_PACKAGE_QDB_UTILS \
-#     $DEBIAN_PACKAGE_QDB_WEB_BRIDGE \
-#     $EGG_QDB_PYTHON \
-#     $TARBALL_QDB_PHP
-
-# add_container qdb-dev-python \
-#     $DEBIAN_PACKAGE_QDB \
-#     $DEBIAN_PACKAGE_QDB_API \
-#     $DEBIAN_PACKAGE_QDB_UTILS \
-#     $DEBIAN_PACKAGE_QDB_WEB_BRIDGE \
-#     $EGG_QDB_PYTHON
-
 
 
 echo "Number of container: ${#CONTAINERS_NAMES[@]}"
@@ -81,7 +56,6 @@ do
         elif [[ "${ACTION}" == "push" ]]
         then
             push_container ${CONTAINERS_NAMES[$index]}
-            update_documentation ${CONTAINERS_NAMES[$index]} ${CONTAINERS_FILES[$index]}
         else
             echo "Invalid action: ${ACTION}"
             echo "Needs to be either 'build' or 'push'"
