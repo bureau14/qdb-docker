@@ -15,7 +15,6 @@ detect_version
 # needs to be done after the QDB_VERSION has been set
 set_files
 
-create_tags
 print_tags
 
 add_container qdb \
