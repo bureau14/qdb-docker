@@ -19,7 +19,7 @@ This repository contains the **Dockerfile** of [QuasarDB](http://www.quasardb.ne
 1. Install [Docker](https://www.docker.com/).
 1. Pull from docker: `docker pull bureau14/qdb-preloaded`
 1. Alternatively: build an image with a [Dockerfile](https://hub.docker.com/r/bureau14/qdb-preloaded/~/dockerfile/)
-1. Required files(replace {version} with the version you wish to use):  
+1. Required files (replace {version} with the version you wish to use):  
 	1. qdb-api_{version}-1.deb
 	1. qdb-utils_{version}-1.deb
 

@@ -27,7 +27,7 @@ This repository contains the **Dockerfile** of [QuasarDB](http://www.quasardb.ne
 1. Install [Docker](https://www.docker.com/).
 1. Pull from docker: `docker pull bureau14/qdb`
 1. Alternatively: build an image with a [Dockerfile](https://hub.docker.com/r/bureau14/qdb/~/dockerfile/)
-1. Required files(replace {version} with the version you wish to use):
+1. Required files (replace {version} with the version you wish to use):
 	1. qdb-{version}-linux-64bit-server.tar.gz
 
 
