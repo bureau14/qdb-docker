@@ -42,22 +42,6 @@ add_container qdb-dashboard \
     $TARBALL_QDB_API \
     $TARBALL_QDB_REST
 
-# add_container qdb-dev \
-#     $DEBIAN_PACKAGE_QDB \
-#     $DEBIAN_PACKAGE_QDB_API \
-#     $DEBIAN_PACKAGE_QDB_UTILS \
-#     $DEBIAN_PACKAGE_QDB_WEB_BRIDGE \
-#     $EGG_QDB_PYTHON \
-#     $TARBALL_QDB_PHP
-
-# add_container qdb-dev-python \
-#     $DEBIAN_PACKAGE_QDB \
-#     $DEBIAN_PACKAGE_QDB_API \
-#     $DEBIAN_PACKAGE_QDB_UTILS \
-#     $DEBIAN_PACKAGE_QDB_WEB_BRIDGE \
-#     $EGG_QDB_PYTHON
-
-
 
 echo "Number of container: ${#CONTAINERS_NAMES[@]}"
 echo "------------------"
