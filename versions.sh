@@ -7,7 +7,7 @@ QDB_VERSION_PREFIX=
 QDB_CLEAN_VERSION=
 QDB_DEB_VERSION=1
 QDB_LATEST_VERSION=3.1.0
-QDB_NIGHTLY_VERSION=
+QDB_NIGHTLY_VERSION=3.2.0
 QDB_VERSIONS=()
 QDB_MOST_RECENT_VERSIONS=()
 
@@ -160,7 +160,7 @@ function create_nightly_version {
 
         if (($success == 0))
         then
-            QDB_NIGHTLY_VERSION=$version
+            QDB_NIGHTLY_VERSION=3.2.0
         fi
     done
     echo "nightly: $QDB_NIGHTLY_VERSION"
