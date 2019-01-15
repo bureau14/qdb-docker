@@ -6,24 +6,16 @@ set -o pipefail
 source "versions.sh"
 source "tags.sh"
 source "container.sh"
-source "documentation.sh"
 source "files.sh"
 
 ACTION=$1
 
-get_versions qdb-dev-python
-
 detect_version
-check_released_versions
-
-create_most_recents_versions
-create_nightly_version
 
 # needs to be done after the QDB_VERSION has been set
 set_files
 
 create_tags
-create_documentation_tags
 print_tags
 
 add_container qdb \
