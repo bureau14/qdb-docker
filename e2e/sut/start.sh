@@ -9,6 +9,7 @@ echo "Starting SUT containers with tag $TAG..."
 
 docker run \
        -d \
+       -p 2836:2836 \
        --name sut-qdb-preloaded \
        --rm \
        --env QDB_DISABLE_SECURITY=true\
@@ -16,6 +17,7 @@ docker run \
 
 docker run \
        -d \
+       -p 40000:40000 \
        --name sut-qdb-dashboard \
        --rm \
        --link sut-qdb-preloaded:sut-qdb-preloaded \
