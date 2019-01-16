@@ -3,14 +3,13 @@
 set -ex
 set -o pipefail
 
-source "versions.sh"
 source "tags.sh"
 source "container.sh"
 source "files.sh"
 
 ACTION=$1
 
-detect_version
+# detect_version
 
 # needs to be done after the QDB_VERSION has been set
 set_files
