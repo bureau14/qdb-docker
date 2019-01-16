@@ -3,14 +3,41 @@
 set -ex
 set -o pipefail
 
-source "tags.sh"
 source "container.sh"
 source "files.sh"
+
+##
+# Parse command line args
+#
+# Stackoverflow driven programming:
+#   https://stackoverflow.com/a/14203146
+##
+POSITIONAL=()
+TAGS=()
+while [[ $# -gt 0 ]]
+do
+    key="$1"
+
+    case $key in
+        -t|--tag)
+            TAGS+=($2)
+            shift # past argument
+            shift # past value
+            ;;
+        *)
+            POSITIONAL+=("$1") # save it in an array for later
+            shift # past argument
+            ;;
+    esac
+done
+set -- "${POSITIONAL[@]}" # restore positional parameters
+##
+# / end parse
+##
 
 ACTION=$1
 
 set_files
-print_tags
 
 add_container qdb \
     $TARBALL_QDB
@@ -50,6 +77,12 @@ do
             build_container ${CONTAINERS_NAMES[$index]} ${CONTAINERS_FILES[$index]}
         elif [[ "${ACTION}" == "push" ]]
         then
+            if [ "${#TAGS[@]}" -eq "0" ]
+            then
+                echo "Need to provide at least one tag when pushing"
+                exit 1
+            fi
+
             push_container ${CONTAINERS_NAMES[$index]}
         else
             echo "Invalid action: ${ACTION}"
