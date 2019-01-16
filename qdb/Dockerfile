@@ -1,6 +1,5 @@
 FROM       ubuntu:bionic
 
-ARG        QDB_VERSION=
 ARG        QDB_DEB_VERSION=1
 
 ENV        QDB_PORT=2836
@@ -17,7 +16,7 @@ RUN        apt-get clean \
 RUN        locale-gen en_US.UTF-8
 
 # Install qdb-server package
-ADD     qdb-${QDB_VERSION}-linux-64bit-server.tar.gz /opt/qdb/
+ADD     qdb-*-linux-64bit-server.tar.gz /opt/qdb/
 
 # Add the wrapper script
 ADD        qdbd-docker-wrapper.sh /opt/qdb/scripts/

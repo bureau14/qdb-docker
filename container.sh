@@ -3,6 +3,17 @@
 CONTAINERS_NAMES=()
 CONTAINERS_FILES=()
 
+# print_tags: Prints the tags separated by a ','
+function print_tags {
+    echo -n "tags: "
+    local sep=""
+    for tag in ${TAGS[@]}; do
+        printf "%s%s" $sep $tag
+        sep=","
+    done
+    echo ""
+}
+
 # add_container: Creates the necessary variables for later usage
 # $1: the name of the container
 # $[1:@]:  the files needed by the container
@@ -28,11 +39,9 @@ function print_info_container {
     local container_name=$1
     local container_image="bureau14/${container_name}"
     local container_path="../$container_name"
-    local container_version=${QDB_VERSION}
     # create array of files from a single line with ';' separator
     IFS=';' read -ra files <<< "$2"
     echo "container: $container_name"
-    echo "  - version: $container_version"
     echo -n "  - "; print_tags
     echo "  - image: $container_image"
     echo "  - path: $container_path"
@@ -47,7 +56,6 @@ function build_container {
     local container_name=$1
     local container_image="bureau14/${container_name}"
     local container_path="../$container_name"
-    local container_version=${QDB_VERSION}
 
     local build_args=""
     if [[ "${container_name}" == "qdb-preloaded" ]]
@@ -67,14 +75,15 @@ function build_container {
         cp ../$file $file
     done
     cp -R $container_path/* .
-    echo -n "key :: "; docker -l "error" build -t ${container_image}:build --build-arg QDB_VERSION=${container_version} ${build_args} .
+    echo -n "key :: "; docker -l "error" build -t ${container_image}:build  ${build_args} .
 }
 
 # push_container: Attach tags to built image and push container to docker
 function push_container {
     local container_name=$1
     local container_image="bureau14/${container_name}"
-    for TAG in ${TAGS[@]}; do
+    for TAG in ${TAGS[@]}
+    do
         docker tag ${container_image}:build ${container_image}:$TAG
         docker push ${container_image}:$TAG
     done
