@@ -9,11 +9,7 @@ source "files.sh"
 
 ACTION=$1
 
-# detect_version
-
-# needs to be done after the QDB_VERSION has been set
 set_files
-
 print_tags
 
 add_container qdb \
