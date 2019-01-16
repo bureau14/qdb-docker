@@ -4,7 +4,7 @@
 TAG=${1:-build}
 shift
 
-set -e
+set -xe
 
 # Setup SUT
 sut/stop.sh
