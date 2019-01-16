@@ -14,7 +14,8 @@ TESTER_IMAGE="e2e-tester:$TAG"
 
 # Run E2E tests
 ARTIFACTS_DIR=`pwd`/artifacts
-docker run --network host                                               \
+docker run --link sut-qdb-preloaded:sut-qdb-preloaded                   \
+           --link sut-qdb-dashboard:sut-qdb-dashboard                   \
            --volume  "$ARTIFACTS_DIR/reports:/cypress/reports"          \
            --volume  "$ARTIFACTS_DIR/screenshots:/cypress/screenshots"  \
            --volume  "$ARTIFACTS_DIR/videos:/cypress/videos"            \

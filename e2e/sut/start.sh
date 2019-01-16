@@ -7,5 +7,18 @@ TAG=$1
 
 echo "Starting SUT containers with tag $TAG..."
 
-docker run --name sut-qdb-preloaded --rm --network host --env QDB_DISABLE_SECURITY=true "bureau14/qdb-preloaded:$TAG" &
-docker run --name sut-qdb-dashboard --rm --network host --env DEBUG=true "bureau14/qdb-dashboard:$TAG" &
+docker run \
+       -d \
+       --name sut-qdb-preloaded \
+       --rm \
+       --env QDB_DISABLE_SECURITY=true\
+       "bureau14/qdb-preloaded:$TAG"
+
+docker run \
+       -d \
+       --name sut-qdb-dashboard \
+       --rm \
+       --link sut-qdb-preloaded:sut-qdb-preloaded \
+       --env DEBUG=true \
+       --env QDB_URI=qdb://sut-qdb-preloaded:2836 \
+       "bureau14/qdb-dashboard:$TAG"
