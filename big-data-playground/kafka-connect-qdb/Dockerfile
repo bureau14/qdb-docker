@@ -1,4 +1,4 @@
-FROM openjdk:8u171-jre
+FROM openjdk:latest
 
 RUN apt-get update \
         && apt-get install -y wget \
@@ -8,10 +8,10 @@ RUN apt-get update \
         && tar -xzf ./kafka* \
         && ln -s /opt/kafka_2.12-2.0.0 /opt/kafka
 
-COPY kafka-connect-qdb-3.0.0-SNAPSHOT-standalone.jar /usr/local/share/kafka/plugins/
+COPY kafka-connect-qdb-3.2.0-SNAPSHOT-standalone.jar /usr/local/share/kafka/plugins/
 COPY worker.properties /opt/kafka/config/worker.properties
 COPY connector.properties /opt/kafka/config/connector.properties
 
-COPY qdb-3.0.0master-linux-64bit-c-api.tar.gz /usr
-RUN cd /usr && tar -xzf ./qdb-3.0.0master-linux-64bit-c-api.tar.gz
+COPY qdb-3.1.0-linux-64bit-c-api.tar.gz /usr
+RUN cd /usr && tar -xzf ./qdb-3.1.0-linux-64bit-c-api.tar.gz
 ENTRYPOINT /opt/kafka/bin/connect-standalone.sh /opt/kafka/config/worker.properties /opt/kafka/config/connector.properties
