@@ -15,7 +15,7 @@ do
     if [[ -f ${DATASET_DIR}/config.json && -f ${DATASET_DIR}/data.csv ]]
     then
         echo "Loading $DATASET_DIR..."
-        LD_LIBRARY_PATH=/opt/qdb/lib/ /opt/qdb/bin/qdb_railgun \
+        LD_LIBRARY_PATH=/opt/qdb/lib/ /opt/qdb/bin/qdb_import \
             --config "$DATASET_DIR./config.json" \
             --file "$DATASET_DIR./data.csv"
     else
