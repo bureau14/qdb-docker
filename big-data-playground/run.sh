@@ -43,5 +43,5 @@ echo "Showing data in QuasarDB:"
 docker-compose run qdbsh -c "SELECT * FROM test"
 
 
-echo "Launching dashboard at https://localhost:40000.."
+echo "Launching dashboard at https://localhost:40080.."
 docker-compose up -d qdb-dashboard

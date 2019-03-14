@@ -5,7 +5,7 @@ set -e
 WAIT_ON=node_modules/wait-on/bin/wait-on
 CYPRESS=node_modules/cypress/bin/cypress
 
-DASHBOARD_URI=http://sut-qdb-dashboard:40000
+DASHBOARD_URI=http://sut-qdb-dashboard:40080
 
 echo "Waiting for dashboard at $DASHBOARD_URI"
 ${WAIT_ON} --log -t 10000 ${DASHBOARD_URI}

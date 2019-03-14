@@ -50,9 +50,9 @@ This repository contains the **Dockerfile** of [QuasarDB](http://www.quasardb.ne
 #### Run `qdbd` and connect with the dashboard
 
     docker run -d -p 2836:2836 --name qdb-server -e QDB_DISABLE_SECURITY=true bureau14/qdb
-    docker run -ti -p 40000:40000 --link qdb-server:qdb-server -e QDB_URI=qdb://qdb-server:2836/ bureau14/qdb-dashboard
+    docker run -ti -p 40080:40080 --link qdb-server:qdb-server -e QDB_URI=qdb://qdb-server:2836/ bureau14/qdb-dashboard
 
-    You can now navigate to http://localhost:40000/#anonymous to log in into the dashboard.
+    You can now navigate to http://localhost:40080/#anonymous to log in into the dashboard.
 
 #### Run `qdbd` w/ persistent directory
 

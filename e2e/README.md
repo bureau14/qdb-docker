@@ -30,4 +30,4 @@ Dependency: docker, cypress (install via npm: `npm install -g cypress`)
 ```
 
 The cypress launcher will start and reload test specs automatically, rerunning the tests as necessary.
-The dashboard will be available at port 40000.
+The dashboard will be available at port 40080.

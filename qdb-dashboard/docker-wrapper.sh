@@ -23,7 +23,7 @@ cat /opt/qdb/etc/qdb_rest.conf.sample \
     | jq ".assets = \"/opt/qdb/assets\"" \
     | jq ".cluster_uri = \"${QDB_URI}\"" \
     | jq ".host = \"0.0.0.0\"" \
-    | jq ".port = 40000" \
+    | jq ".port = 40080" \
     | jq ".tls_certificate = \"\"" \
     | jq "del(.tls_key)"  \
     | jq "del(.cluster_public_key_file)" \

@@ -17,7 +17,7 @@ docker run \
 
 docker run \
        -d \
-       -p 40000:40000 \
+       -p 40080:40080 \
        --name sut-qdb-dashboard \
        --rm \
        --link sut-qdb-preloaded:sut-qdb-preloaded \
