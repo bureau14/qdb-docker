@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-const btcusd_query = "select * from \"fx.btcusd\" in range(2016-01-09T13:55:00Z, 2016-01-09T14:10:00Z);";
+const btcusd_query = "select * from 'fx.btcusd' in range(2016-01-09T13:55:00, 2016-01-09T14:10:00);";
 
 context("Performing btcusd Query, view as chart", () => {
   before(() => {
