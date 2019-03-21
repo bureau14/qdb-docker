@@ -12,7 +12,7 @@ docker run \
        -p 2836:2836 \
        --name sut-qdb-preloaded \
        --rm \
-       --env QDB_DISABLE_SECURITY=true\
+       --env QDB_DISABLE_SECURITY=true \
        "bureau14/qdb-preloaded:$TAG"
 
 docker run \
