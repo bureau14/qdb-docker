@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-const btcusd_query = "select * from fx.btcusd in range(2016-01-09T13:55:00Z, 2016-01-09T14:10:00Z);";
+const btcusd_query = "select * from \"fx.btcusd\" in range(2016-01-09T13:55:00Z, 2016-01-09T14:10:00Z);";
 
 context("Performing btcusd Query, view as chart", () => {
   before(() => {
@@ -8,9 +8,9 @@ context("Performing btcusd Query, view as chart", () => {
     cy.get("#navbar-item-query")
       .click();
     cy.get("#charted-cb")
-      .check({force: true});
+      .check({ force: true });
     cy.get(".CodeMirror textarea")
-      .type(btcusd_query, {force: true}); // because textarea is covered
+      .type(btcusd_query, { force: true }); // because textarea is covered
     cy.contains("Submit")
       .click();
   });

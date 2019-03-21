@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-const btcusd_query = "select close, high, low, open, volume from fx.btcusd in range(2016-01-09T13:55:00Z, 2016-01-09T16:00:00Z);";
+const btcusd_query = "select close, high, low, open, volume from \"fx.btcusd\" in range(2016-01-09T13:55:00Z, 2016-01-09T16:00:00Z);";
 
 context("Performing btcusd Query", () => {
   before(() => {
@@ -8,7 +8,7 @@ context("Performing btcusd Query", () => {
     cy.get("#navbar-item-query")
       .click();
     cy.get(".CodeMirror textarea")
-      .type(btcusd_query, {force: true}); // because textarea is covered
+      .type(btcusd_query, { force: true }); // because textarea is covered
     cy.contains("Submit")
       .click();
   });
@@ -80,7 +80,7 @@ context("Performing btcusd Query & expanding", () => {
     cy.get("#navbar-item-query")
       .click();
     cy.get(".CodeMirror textarea")
-      .type(btcusd_query, {force: true}); // because textarea is covered
+      .type(btcusd_query, { force: true }); // because textarea is covered
     cy.contains("Submit")
       .click();
     cy.contains("a", "expand")
