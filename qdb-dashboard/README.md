@@ -7,8 +7,8 @@ This repository contains the **Dockerfile** of [QuasarDB](http://www.quasardb.ne
 |version|tags|
 |---|---|
 |`3.0.0`|	3.0.0,	3.0|
-|`3.1.0`|	3.1.0,	3.1,	latest|
-|`3.2.0`|	3.2.0,	3.2,	nightly|
+|`3.1.0`|	3.1.0,	3.1|
+|`3.2.0`|	3.2.0,	3.2,	latest|
 
 
 ### Base Docker Image
@@ -20,7 +20,7 @@ This repository contains the **Dockerfile** of [QuasarDB](http://www.quasardb.ne
 1. Install [Docker](https://www.docker.com/).
 1. Pull from docker: `docker pull bureau14/qdb-dashboard`
 1. Alternatively: build an image with a [Dockerfile](https://hub.docker.com/r/bureau14/qdb-dashboard/~/dockerfile/)
-1. Required files (replace {version} with the version you wish to use): 
+1. Required files (replace {version} with the version you wish to use):
 	1. qdb-{version}-linux-64bit-c-api.tar.gz
 	1. qdb-{version}-linux-64bit-rest.tar.gz
 
