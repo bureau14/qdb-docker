@@ -27,6 +27,11 @@ then
     QDB_LAUNCH_ARGS="${QDB_LAUNCH_ARGS} --security=0"
 fi
 
+if [ "${QDB_CONFIG_PATH}" != "" ]
+then
+    QDB_LAUNCH_ARGS="${QDB_LAUNCH_ARGS} --config=${QDB_CONFIG_PATH}"
+fi
+
 echo "Launching qdb with arguments: ${QDB_LAUNCH_ARGS}"
 
 ${QDB_SERVER} ${QDB_LAUNCH_ARGS} $@
