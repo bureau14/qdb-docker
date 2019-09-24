@@ -1,5 +1,6 @@
 {
   "baseUrl": "http://sut-qdb-dashboard:40000",
   "viewportWidth": 1200,
-  "viewportHeight": 900
+  "viewportHeight": 900,
+  "defaultCommandTimeout": 15000
 }
