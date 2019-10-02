@@ -3,6 +3,7 @@
 set -e
 set -x
 
+QDB_CONFIG=${QDB_CONFIG_PATH:-"/opt/qdb/etc/qdbd.conf"}
 QDB_SERVER="/opt/qdb/bin/qdbd"
 QDB_LAUNCH_ARGS=""
 IP=`which ip`
@@ -25,4 +26,4 @@ fi
 
 echo "Launching qdb with arguments: ${QDB_LAUNCH_ARGS}"
 
-${QDB_SERVER} ${QDB_LAUNCH_ARGS} $@
+${QDB_SERVER} --config ${QDB_CONFIG} ${QDB_LAUNCH_ARGS} $@
