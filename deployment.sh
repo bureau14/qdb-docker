@@ -53,7 +53,9 @@ add_container qdb-preloaded \
     $TARBALL_QDB_UTILS
 
 add_container qdbsh \
-    $TARBALL_QDB_API \
+    $TARBALL_QDB_UTILS
+
+add_container qdb-replicate \
     $TARBALL_QDB_UTILS
 
 add_container qdb-dashboard \
