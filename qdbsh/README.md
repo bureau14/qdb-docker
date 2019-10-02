@@ -14,7 +14,7 @@ This repository contains the **Dockerfile** of [QuasarDB](http://www.quasardb.ne
 |`3.2.0`|	3.2.0,	3.2|
 |`3.3.0`|	3.3.0,	3.3|
 |`3.4.2`|	3.4.2,	3.4,	latest|
-|`3.3.0`|	3.5.0,	3.5,	nightly|
+|`3.5.0`|	3.5.0,	3.5,	nightly|
 
 
 ### Base Docker Image
