@@ -27,7 +27,6 @@ This repository contains the **Dockerfile** of [QuasarDB](http://www.quasardb.ne
 1. Pull from docker: `docker pull bureau14/qdbsh`
 1. Alternatively: build an image with a [Dockerfile](https://hub.docker.com/r/bureau14/qdbsh/~/dockerfile/)
 1. Required files (replace {version} with the version you wish to use):
-	1. qdb-api_{version}.tar.gz
 	1. qdb-utils_{version}.tar.gz
 
 ### Usage
