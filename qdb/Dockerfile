@@ -3,7 +3,7 @@ FROM       ubuntu:bionic
 ARG        QDB_DEB_VERSION=1
 
 ENV        QDB_PORT=2836
-ENV        QDB_DISABLE_SECURITY="false"
+ENV        QDB_DISABLE_SECURITY="true"
 
 # Fixing debconf warning about TERM
 ENV        DEBIAN_FRONTEND teletype

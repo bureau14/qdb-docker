@@ -15,8 +15,10 @@ This repository contains the **Dockerfile** of [QuasarDB](http://www.quasardb.ne
 |`2.8.0`|	2.8.0,	2.8|
 |`3.0.0`|	3.0.0,	3.0|
 |`3.1.0`|	3.1.0,	3.1|
-|`3.2.0`|	3.2.0,	3.2,	latest|
-|`3.3.0`|	3.3.0,	3.3,	nightly|
+|`3.2.0`|	3.2.0,	3.2|
+|`3.3.0`|	3.3.0,	3.3|
+|`3.4.2`|	3.4.2,	3.4,	latest|
+|`3.5.0`|	3.5.0,	3.5,	nightly|
 
 
 ### Base Docker Image
@@ -35,22 +37,22 @@ This repository contains the **Dockerfile** of [QuasarDB](http://www.quasardb.ne
 
 ### Usage
 
-#### Run `qdbd`
+#### Run `qdbd` with security disabled:
 
     docker run -d -p 2836:2836 --name qdb-server bureau14/qdb
 
-#### Run `qdbd` without security
+#### Run `qdbd` with security
 
-    docker run -d -p 2836:2836 --name qdb-server -e QDB_DISABLE_SECURITY=true bureau14/qdb
+    docker run -d -p 2836:2836 --name qdb-server -e QDB_DISABLE_SECURITY=false bureau14/qdb
 
 #### Run `qdbd` and connect with `qdbsh`
 
-    docker run -d -p 2836:2836 --name qdb-server -e QDB_DISABLE_SECURITY=true bureau14/qdb
+    docker run -d -p 2836:2836 --name qdb-server bureau14/qdb
     docker run -ti --link qdb-server:qdb-server bureau14/qdbsh --cluster qdb://qdb-server:2836
 
 #### Run `qdbd` and connect with the dashboard
 
-    docker run -d -p 2836:2836 --name qdb-server -e QDB_DISABLE_SECURITY=true bureau14/qdb
+    docker run -d -p 2836:2836 --name qdb-server bureau14/qdb
     docker run -ti -p 40000:40000 --link qdb-server:qdb-server -e QDB_URI=qdb://qdb-server:2836/ bureau14/qdb-dashboard
 
     You can now navigate to http://localhost:40000/#anonymous to log in into the dashboard.
