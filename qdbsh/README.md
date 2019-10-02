@@ -11,8 +11,10 @@ This repository contains the **Dockerfile** of [QuasarDB](http://www.quasardb.ne
 |`2.8.0`|	2.8.0,	2.8|
 |`3.0.0`|	3.0.0,	3.0|
 |`3.1.0`|	3.1.0,	3.1|
-|`3.2.0`|	3.2.0,	3.2,	latest|
-|`3.3.0`|	3.3.0,	3.3,	nightly|
+|`3.2.0`|	3.2.0,	3.2|
+|`3.3.0`|	3.3.0,	3.3|
+|`3.4.2`|	3.4.2,	3.4,	latest|
+|`3.3.0`|	3.5.0,	3.5,	nightly|
 
 
 ### Base Docker Image
@@ -25,10 +27,8 @@ This repository contains the **Dockerfile** of [QuasarDB](http://www.quasardb.ne
 1. Pull from docker: `docker pull bureau14/qdbsh`
 1. Alternatively: build an image with a [Dockerfile](https://hub.docker.com/r/bureau14/qdbsh/~/dockerfile/)
 1. Required files (replace {version} with the version you wish to use):
-	1. qdb-api_{version}-1.deb
-	1. qdb-utils_{version}-1.deb
-
-
+	1. qdb-api_{version}.tar.gz
+	1. qdb-utils_{version}.tar.gz
 
 ### Usage
 
