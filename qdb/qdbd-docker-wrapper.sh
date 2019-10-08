@@ -1,11 +1,11 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 set -e
 
 QDB_CONFIG="/tmp/qdbd.conf"
 cp -v ${QDB_CONFIG_PATH} ${QDB_CONFIG}
 
-QDB_SERVER="/home/lmergen/.local/bin/qdbd"
+QDB_SERVER="/opt/qdb/bin/qdbd"
 QDB_LAUNCH_ARGS=""
 IP=`which ip`
 AWK=`which awk`
