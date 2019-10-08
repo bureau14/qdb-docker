@@ -1,9 +1,18 @@
 FROM       ubuntu:bionic
 
+RUN        groupadd -r qdb && useradd -r -g qdb qdb
+
 ARG        QDB_DEB_VERSION=1
 
 ENV        QDB_PORT=2836
-ENV        QDB_DISABLE_SECURITY="true"
+ENV        QDB_ENABLE_SECURITY="false"
+ENV        QDB_CONFIG_PATH="/opt/qdb/etc/qdbd.conf"
+ENV        QDB_CLUSTER_PUBLIC_KEY=""
+ENV        QDB_CLUSTER_PUBLIC_KEY_FILE=""
+ENV        QDB_CLUSTER_PRIVATE_KEY=""
+ENV        QDB_CLUSTER_PRIVATE_KEY_FILE=""
+ENV        QDB_USER_LIST=""
+ENV        QDB_USER_LIST_FILE=""
 
 # Fixing debconf warning about TERM
 ENV        DEBIAN_FRONTEND teletype
@@ -16,16 +25,13 @@ RUN        apt-get clean \
 RUN        locale-gen en_US.UTF-8
 
 # Install qdb-server package
-ADD     qdb-*-linux-64bit-server.tar.gz /opt/qdb/
+ADD        qdb-*-linux-64bit-server.tar.gz /opt/qdb/
 
 # Add the wrapper script
 ADD        qdbd-docker-wrapper.sh /opt/qdb/scripts/
 
-# Define mountable directory
-VOLUME     ["/var/lib/qdb"]
-
 # Define working directory
-WORKDIR    /var/lib/qdb
+WORKDIR    /opt/qdb
 
 # Always launch qdb process
 ENTRYPOINT ["/opt/qdb/scripts/qdbd-docker-wrapper.sh"]
@@ -35,3 +41,7 @@ EXPOSE     2836
 
 # Add default qdbd.conf
 ADD        qdbd.conf /opt/qdb/etc/
+
+RUN        mkdir /opt/qdb/db
+RUN        chown -R qdb:qdb /opt/qdb
+USER       qdb
