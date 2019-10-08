@@ -7,12 +7,12 @@ ARG        QDB_DEB_VERSION=1
 ENV        QDB_PORT=2836
 ENV        QDB_ENABLE_SECURITY="false"
 ENV        QDB_CONFIG_PATH="/opt/qdb/etc/qdbd.conf"
-ENV        QDB_CLUSTER_PUBLIC_KEY=""
-ENV        QDB_CLUSTER_PUBLIC_KEY_FILE=""
 ENV        QDB_CLUSTER_PRIVATE_KEY=""
 ENV        QDB_CLUSTER_PRIVATE_KEY_FILE=""
 ENV        QDB_USER_LIST=""
 ENV        QDB_USER_LIST_FILE=""
+ENV        QDB_LICENSE=""
+ENV        QDB_LICENSE_FILE=""
 
 # Fixing debconf warning about TERM
 ENV        DEBIAN_FRONTEND teletype

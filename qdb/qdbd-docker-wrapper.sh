@@ -65,6 +65,16 @@ then
     patch_conf ".global.security.user_list" "\"${ULIST}\""
 fi
 
+if [[ ! -z ${QDB_LICENSE} ]]
+then
+    echo "Enabling license"
+    patch_conf ".local.user.license_key" "\"${QDB_LICENSE}\""
+elif [[ ! -z ${QDB_LICENSE_FILE} ]]
+then
+    echo "Enabling license file: ${QDB_LICENSE_FILE}"
+    patch_conf ".local.user.license_file" "\"${QDB_LICENSE_FILE}\""
+fi
+
 echo "Launching qdb with arguments: ${QDB_LAUNCH_ARGS}"
 
 ${QDB_SERVER} --config ${QDB_CONFIG} ${QDB_LAUNCH_ARGS} $@
