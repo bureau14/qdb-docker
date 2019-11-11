@@ -17,5 +17,3 @@ ADD     preloader.sh .
 RUN  ./preloader.sh
 RUN  rm -rf /opt/qdb/datasets
 RUN  rm -f ./preloader.sh
-
-CMD ["--rocksdb-root", "/data"]
