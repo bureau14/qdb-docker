@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-const btcusd_query = "select close, high, low, open, volume from fx.btcusd in range(2016-01-09T13:55:00Z, 2016-01-09T16:00:00Z);";
+const btcusd_query = "select $timestamp, close, high, low, open, volume from fx.btcusd in range(2016-01-09T13:55:00Z, 2016-01-09T16:00:00Z);";
 
 context("Performing btcusd Query", () => {
   before(() => {
@@ -19,13 +19,8 @@ context("Performing btcusd Query", () => {
       .should("be.visible");
   });
 
-  it("shows table label", () => {
-    cy.get(".ui.ribbon.label")
-      .should("contain", "btcusd");
-  });
-
   it("shows table header", () => {
-    const expected_headers = ["timestamp", "close", "high", "low", "open", "volume"];
+    const expected_headers = ["$timestamp", "close", "high", "low", "open", "volume"];
     cy.get(".ui.table thead tr")
       .children()
       .each(($th, ix) => {
@@ -64,13 +59,6 @@ context("Performing btcusd Query", () => {
     cy.get(".ui.read-only .CodeMirror")
       .contains(btcusd_query)
       .should("be.visible");
-  });
-
-  it("shows chart header", () => {
-    cy.contains("Show results as chart")
-      .click();
-    cy.get(".ui.ribbon.label")
-      .should("contain", "btcusd");
   });
 });
 

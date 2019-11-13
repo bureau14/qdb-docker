@@ -21,11 +21,6 @@ context("Performing btcusd Query, view as chart", () => {
       .should("be.visible");
   });
 
-  it("shows chart header", () => {
-    cy.get(".ui.ribbon.label")
-      .should("contain", "btcusd");
-  });
-
   it("shows chart", () => {
     cy.get("svg .recharts-layer.recharts-line")
       .should("be.visible");
