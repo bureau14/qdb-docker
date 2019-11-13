@@ -4,8 +4,9 @@ TAG=$1
 shift
 
 # Setup SUT
+sut/stop.sh
 sut/start.sh ${TAG}
 
 # Start cypress in interactive mode
 # Requires local cypress install
-cypress open -P tester $@
+cypress open -c baseUrl=http://localhost:40000 -P tester $@
