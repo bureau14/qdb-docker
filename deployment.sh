@@ -13,23 +13,12 @@ source "files.sh"
 #   https://stackoverflow.com/a/14203146
 ##
 POSITIONAL=()
-TAGS=()
+TAGS=("3" "3.6" "3.6.0" "nightly")
 while [[ $# -gt 0 ]]
 do
     key="$1"
 
     case $key in
-        -t|--tag)
-            TAGS+=($2)
-            shift # past argument
-            shift # past value
-            ;;
-        --tags)
-            xs=(${2//,/ })
-            TAGS=("${TAGS[@]}" "${xs[@]}")
-            shift # past argument
-            shift # past value
-            ;;
         *)
             POSITIONAL+=("$1") # save it in an array for later
             shift # past argument
