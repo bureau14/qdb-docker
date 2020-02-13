@@ -37,6 +37,9 @@ spec:
 
 ---
 
+# create secret:
+# kubectl create secret generic qdb-secrets --from-file=./qube.key
+
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -57,6 +60,10 @@ spec:
         app: qdb
 
     spec:
+      volumes:
+      - name: secrets
+        secret:
+          secretName: qdb-secrets
       containers:
       - name: qdbd
         image: bureau14/qdb:k8s
@@ -68,11 +75,16 @@ spec:
             name: control
         resources:
           limits:
-            memory: "2Gi"
+            memory: "64Gi"
         volumeMounts:
           - name: datadir
             mountPath: /opt/qdb/db
+          - name: secrets
+            mountPath: "/var/secret/"
+            readOnly: true
         env:
+          - name: QDB_LICENSE_FILE
+            value: "/var/secret/qube.key"
           - name: K8S_REPLICA_COUNT
             value: "3"
 
