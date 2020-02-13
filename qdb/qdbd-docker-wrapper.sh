@@ -53,6 +53,48 @@ function file_or_string {
     echo ${F}
 }
 
+function die {
+    >&2 echo $1
+    exit 1
+}
+
+function host_to_ip {
+    # QuasarDB does not support bootstrapping with hostnames, only IPs. This function
+    # translates hostnames to ips.
+    IP=$(getent hosts $1 | awk '{ print $1 }')
+    if [[ "${IP}" == "" ]]
+    then
+        die "FATAL: Unable to resolve host name of peer: $1"
+    fi
+
+    echo ${IP}
+}
+
+function bootstrap_peers {
+    DOMAIN=$1
+    HOSTNAME=$2
+    THIS_REPLICA=$3
+
+    # Our strategy for bootstrapping is to just add all the nodes 'before' the current
+    # one, i.e. node quasardb-2 connects to quasardb-1 and quasardb-0.
+
+    RET="["
+    for ((i=(${THIS_REPLICA} - 1); i>=0; i--))
+    do
+        if [[ ! "${RET}" == "[" ]]
+        then
+            RET="${RET}, "
+        fi
+
+        THIS_HOST="${HOSTNAME}-${i}.${DOMAIN}"
+        THIS_IP=$(host_to_ip ${THIS_HOST})
+        RET="${RET}\"${THIS_IP}:2836\""
+    done
+    RET="${RET}]"
+
+    echo ${RET}
+}
+
 if [ "${QDB_ENABLE_SECURITY}" = "true" ]
 then
     echo "Enabling security"
@@ -73,6 +115,48 @@ elif [[ ! -z ${QDB_LICENSE_FILE} ]]
 then
     echo "Enabling license file: ${QDB_LICENSE_FILE}"
     patch_conf ".local.user.license_file" "\"${QDB_LICENSE_FILE}\""
+fi
+
+
+if [[ ! -z ${K8S_REPLICA_COUNT} ]]
+then
+    # Logic below inspired by official kubernetes Zookeeper image:
+    #
+    #  https://github.com/kow3ns/kubernetes-zookeeper/blob/master/docker/scripts/start-zookeeper
+    #
+    # Essentially, per StatefulSet documentation, we assume we operate in a StatefulSet, and
+    # can rely on the other node hostnames following a certain pattern. We seed all the bootstrap
+    # peers for all previous nodes.
+    #
+    # Example: if our current hostname is `quasardb-2`, the bootstrap peers will become
+    # ["quasardb-1:2836", "quasardb-0:2836"].
+    #
+    # This also implies that node quasardb-0 will not have any bootstrapping peers, which is
+    # exactly the behavior we want in the case of QuasarDB.
+    HOST=$(hostname -s)
+    DOMAIN=$(hostname -d)
+
+    echo "Host = ${HOST}, Domain = ${DOMAIN}"
+
+    if [[ $HOST =~ (.*)-([0-9]+)$ ]]
+    then
+        NAME=${BASH_REMATCH[1]}
+        ORD=${BASH_REMATCH[2]}
+        NODE_OFFSET=$((ORD + 1))
+        NODE_ID="${NODE_OFFSET}/${K8S_REPLICA_COUNT}"
+
+        echo "Setting node id to ${NODE_ID}"
+        patch_conf ".local.chord.node_id" "\"${NODE_ID}\""
+
+        BOOTSTRAP_PEERS=$(bootstrap_peers ${DOMAIN} ${NAME} ${ORD})
+
+        echo "Setting bootstrap peers to ${BOOTSTRAP_PEERS}"
+        patch_conf ".local.chord.bootstrapping_peers" "${BOOTSTRAP_PEERS}"
+
+    else
+        echo "Failed to parse name and ordinal of Pod: ${HOST}"
+        exit 1
+    fi
 fi
 
 echo "Launching qdb with arguments: ${QDB_LAUNCH_ARGS}"

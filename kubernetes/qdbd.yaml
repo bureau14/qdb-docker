@@ -1,0 +1,102 @@
+# Per k8s docs, define headless service for identity of pods.
+# https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
+# https://kubernetes.io/docs/concepts/services-networking/service/#headless-services
+apiVersion: v1
+kind: Service
+metadata:
+  name: qdb-hs
+  labels:
+    app: qdb
+spec:
+  ports:
+  - port: 2836
+    name: client
+  - port: 2837
+    name: control
+  clusterIP: None
+  selector:
+    app: qdb
+
+---
+
+# Clients should use this service to connect
+apiVersion: v1
+kind: Service
+metadata:
+  name: qdb-cs
+  labels:
+    app: qdb
+spec:
+  ports:
+  - port: 2836
+    name: client
+  - port: 2837
+    name: control
+  selector:
+    app: qdb
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: quasardb
+
+spec:
+  selector:
+    matchLabels:
+      app: qdb
+
+  serviceName: qdb-hs
+  replicas: 3
+  podManagementPolicy: OrderedReady
+
+  template:
+    metadata:
+      labels:
+        app: qdb
+
+    spec:
+      containers:
+      - name: qdbd
+        image: bureau14/qdb:k8s
+        imagePullPolicy: "Always"
+        ports:
+          - containerPort: 2836
+            name: client
+          - containerPort: 2837
+            name: control
+        resources:
+          limits:
+            memory: "2Gi"
+        volumeMounts:
+          - name: datadir
+            mountPath: /opt/qdb/db
+        env:
+          - name: K8S_REPLICA_COUNT
+            value: "3"
+
+        readinessProbe:
+          tcpSocket:
+            port: 2836
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 2836
+          initialDelaySeconds: 15
+          periodSeconds: 20
+
+        securityContext:
+          runAsUser: 999
+
+  volumeClaimTemplates:
+  - metadata:
+      name: datadir
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      volumeMode: Filesystem
+      resources:
+        requests:
+          storage: 10Gi
+      storageClassName: manual

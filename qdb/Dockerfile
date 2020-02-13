@@ -21,7 +21,7 @@ ENV        DEBIAN_FRONTEND teletype
 # apt-utils also fix warnings from debconfig
 RUN        apt-get clean \
         && apt-get update \
-        && apt-get install -y --no-install-recommends apt-utils iproute2 jq less locales net-tools wget
+        && apt-get install -y --no-install-recommends apt-utils iproute2 jq less locales net-tools dnsutils telnet wget
 RUN        locale-gen en_US.UTF-8
 
 # Install qdb-server package
