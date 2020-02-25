@@ -38,7 +38,10 @@ spec:
 ---
 
 # create secret:
-# kubectl create secret generic qdb-secrets --from-file=./qube.key
+# kubectl create secret generic qdb-secrets --from-file=/my/path/to/quasardb.key
+#
+# log in:
+# kubectl run --generator=run-pod/v1 -ti qdbsh --image=bureau14/qdbsh:3.6 -- --cluster qdb://qdb-cs:2836/
 
 apiVersion: apps/v1
 kind: StatefulSet
@@ -66,7 +69,7 @@ spec:
           secretName: qdb-secrets
       containers:
       - name: qdbd
-        image: bureau14/qdb:k8s
+        image: bureau14/qdb:3.6
         imagePullPolicy: "Always"
         ports:
           - containerPort: 2836
@@ -75,7 +78,7 @@ spec:
             name: control
         resources:
           limits:
-            memory: "64Gi"
+            memory: "2Gi"
         volumeMounts:
           - name: datadir
             mountPath: /opt/qdb/db
