@@ -10,7 +10,9 @@ RUN        locale-gen en_US.UTF-8
 
 # Install packages
 ADD     qdb-*-linux-64bit-utils.tar.gz /opt/qdb/
-ADD     qdb-*-linux-64bit-c-api.tar.gz /opt/qdb/
+ADD     qdb-*-linux-64bit-c-api.tar.gz /usr
+
+RUN     ldconfig
 
 # Always launch qdb process
 ENTRYPOINT ["/opt/qdb/bin/qdbsh"]
