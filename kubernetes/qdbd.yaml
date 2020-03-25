@@ -102,8 +102,9 @@ spec:
           initialDelaySeconds: 15
           periodSeconds: 20
 
-        securityContext:
-          runAsUser: 999
+      securityContext:
+        runAsUser: 999
+        fsGroup: 999
 
   volumeClaimTemplates:
   - metadata:
