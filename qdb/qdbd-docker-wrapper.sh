@@ -118,6 +118,25 @@ then
 fi
 
 
+if [[ ! -z ${QDB_REPLICATION} ]]
+then
+    echo "Enabling QuasarDB replication factor ${QDB_REPLICATION}"
+    patch_conf ".global.cluster.replication_factor" "${QDB_REPLICATION}"
+fi
+
+if [[ ! -z ${QDB_MEMORY_LIMIT_SOFT} ]]
+then
+    echo "Setting soft memory limit to ${QDB_MEMORY_LIMIT_SOFT}"
+    patch_conf ".local.limiter.max_bytes_soft" "${QDB_MEMORY_LIMIT_SOFT}"
+fi
+
+if [[ ! -z ${QDB_MEMORY_LIMIT_HARD} ]]
+then
+    echo "Setting hard memory limit to ${QDB_MEMORY_LIMIT_HARD}"
+    patch_conf ".local.limiter.max_bytes_hard" "${QDB_MEMORY_LIMIT_HARD}"
+fi
+
+
 if [[ ! -z ${K8S_REPLICA_COUNT} ]]
 then
     # Logic below inspired by official kubernetes Zookeeper image:

@@ -13,6 +13,9 @@ ENV        QDB_USER_LIST=""
 ENV        QDB_USER_LIST_FILE=""
 ENV        QDB_LICENSE=""
 ENV        QDB_LICENSE_FILE=""
+ENV        QDB_REPLICATION=""
+ENV        QDB_MEMORY_LIMIT_SOFT=""
+ENV        QDB_MEMORY_LIMIT_HARD=""
 
 # Fixing debconf warning about TERM
 ENV        DEBIAN_FRONTEND teletype
