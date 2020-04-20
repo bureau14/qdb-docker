@@ -180,4 +180,4 @@ fi
 
 echo "Launching qdb with arguments: ${QDB_LAUNCH_ARGS}"
 
-${QDB_SERVER} --config ${QDB_CONFIG} ${QDB_LAUNCH_ARGS} $@
+exec ${QDB_SERVER} --config ${QDB_CONFIG} ${QDB_LAUNCH_ARGS} $@
