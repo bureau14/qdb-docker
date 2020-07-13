@@ -5,6 +5,7 @@ RUN        groupadd -r qdb && useradd -r -g qdb qdb
 ARG        QDB_DEB_VERSION=1
 
 ENV        QDB_PORT=2836
+ENV        QDB_ADVERTISED_ADDRESS=""
 ENV        QDB_ENABLE_SECURITY="false"
 ENV        QDB_CONFIG_PATH="/opt/qdb/etc/qdbd.conf"
 ENV        QDB_CLUSTER_PRIVATE_KEY=""
