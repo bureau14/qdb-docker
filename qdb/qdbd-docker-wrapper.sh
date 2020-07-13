@@ -106,6 +106,12 @@ then
     patch_conf ".global.security.cluster_private_file" "\"${PRIVKEY}\""
     patch_conf ".global.security.user_list" "\"${ULIST}\""
 fi
+if [[ ! -z ${QDB_ADVERTISED_ADDRESS} ]]
+then
+    echo "Setting advertised address"
+    QDB_LAUNCH_ARGS="${QDB_LAUNCH_ARGS} --advertised-address ${QDB_ADVERTISED_ADDRESS}"
+fi
+
 
 if [[ ! -z ${QDB_LICENSE} ]]
 then
