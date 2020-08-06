@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-const btcusd_query = "select $timestamp, close, high, low, open, volume from fx.btcusd in range(2016-01-09T13:55:00Z, 2016-01-09T16:00:00Z);";
+const btcusd_query = "select $timestamp, close, high, low, open, volume from \"fx.btcusd\" in range(2016-01-09T13:55:00Z, 2016-01-09T16:00:00Z);";
 
 context("Performing btcusd Query", () => {
   before(() => {
