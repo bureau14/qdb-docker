@@ -13,7 +13,7 @@ source "files.sh"
 #   https://stackoverflow.com/a/14203146
 ##
 POSITIONAL=()
-TAGS=("nightly")
+TAGS=("3.9" "3.9.4" "3" "latest" "stable")
 while [[ $# -gt 0 ]]
 do
     key="$1"
