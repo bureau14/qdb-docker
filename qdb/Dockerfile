@@ -42,6 +42,7 @@ ENTRYPOINT ["/opt/qdb/scripts/qdbd-docker-wrapper.sh"]
 
 # Expose the port qdbd is listening at
 EXPOSE     2836
+EXPOSE     2837
 
 # Add default qdbd.conf
 ADD        qdbd.conf /opt/qdb/etc/
