@@ -5,6 +5,12 @@ function find_file {
     local expanded=$(echo ${file})
     local count=$(ls -lq ${expanded} | wc -l)
 
+    if [ "$count" -eq "0" ]
+    then
+        echo "File not found: ${file}"
+        exit -1
+    fi
+
     if [ "$count" -ne "1" ]
     then
         echo "Found multiple matches for ${file}: ${expanded}"
