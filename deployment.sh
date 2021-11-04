@@ -34,6 +34,9 @@ ACTION=$1
 
 set_files
 
+add_container qdb-kinesis-connector \
+    $JAR_QDB_KINESIS_CONNECTOR
+
 add_container qdb \
     $TARBALL_QDB
 
