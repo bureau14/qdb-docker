@@ -32,6 +32,8 @@ ENV PARSER=
 ENV STOP_AFTER_MS=0
 ENV RECORD_REJECTION_AGE_MS=0
 
+ENV KINESIS_PLUGIN_PATH="/opt/qdb/kinesis/lib/"
+
 RUN yum install -y shadow-utils && \
     groupadd -r qdb && \
     useradd -r -g qdb qdb  && \
@@ -45,7 +47,10 @@ COPY log4j2.xml /opt/qdb/kinesis/resources/log4j2.xml
 
 RUN mkdir -p /opt/qdb/kinesis/log && \
     chown -R qdb:qdb /opt/qdb/kinesis && \
-    chmod +x /opt/qdb/kinesis/bin/docker-wrapper.sh
+    chmod +x /opt/qdb/kinesis/bin/docker-wrapper.sh && \
+    \
+    mkdir -p ${KINESIS_PLUGIN_PATH} && \
+    chown -R qdb:qdb ${KINESIS_PLUGIN_PATH}
 
 USER qdb
 
