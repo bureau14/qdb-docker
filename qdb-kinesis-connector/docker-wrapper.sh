@@ -203,6 +203,12 @@ then
     JAVA_KINESIS_OPTS+="--parser ${PARSER} "
 fi
 
+if [[ ! -z ${KINESIS_PLUGIN_PATH} ]]
+then
+    echo "Setting plugin path: ${KINESIS_PLUGIN_PATH}"
+    JAVA_KINESIS_OPTS+="--plugin-path ${KINESIS_PLUGIN_PATH} "
+fi
+
 if [[ ! -z ${STOP_AFTER_MS} ]]
 then
     echo "Setting stop-after: ${STOP_AFTER_MS}ms"
