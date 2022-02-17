@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends locales &&  apt
 RUN locale-gen en_US.UTF-8
 
 # Install packages
-ADD qdb-*-linux-64bit-utils.tar.gz /opt/qdb/
+ADD qdb-*-utils.tar.gz /opt/qdb/
 
 # Always launch qdb process
 ENTRYPOINT ["/opt/qdb/bin/qdb_replicate"]

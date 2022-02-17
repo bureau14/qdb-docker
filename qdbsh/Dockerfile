@@ -9,8 +9,8 @@ RUN        apt-get update && apt-get install -y --no-install-recommends locales 
 RUN        locale-gen en_US.UTF-8
 
 # Install packages
-ADD     qdb-*-linux-64bit-utils.tar.gz /opt/qdb/
-ADD     qdb-*-linux-64bit-c-api.tar.gz /usr
+ADD     qdb-*-utils.tar.gz /opt/qdb/
+ADD     qdb-*-c-api.tar.gz /usr
 
 RUN     ldconfig
 

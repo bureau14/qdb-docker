@@ -1,4 +1,4 @@
-FROM       ubuntu:bionic
+FROM       docker.io/ubuntu:bionic
 
 RUN        groupadd -r qdb && useradd -r -g qdb qdb
 
@@ -29,7 +29,7 @@ RUN        apt-get clean \
 RUN        locale-gen en_US.UTF-8
 
 # Install qdb-server package
-ADD        qdb-*-linux-64bit-server.tar.gz /opt/qdb/
+ADD        qdb-*-server.tar.gz /opt/qdb/
 
 # Add the wrapper script
 ADD        qdbd-docker-wrapper.sh /opt/qdb/scripts/
