@@ -50,9 +50,9 @@ add_container qdbsh \
 add_container qdb-replicate \
     $TARBALL_QDB_UTILS
 
-add_container qdb-dashboard \
-    $TARBALL_QDB_API \
-    $TARBALL_QDB_REST
+# add_container qdb-dashboard \
+#     $TARBALL_QDB_API \
+#     $TARBALL_QDB_REST
 
 
 echo "Number of container: ${#CONTAINERS_NAMES[@]}"
