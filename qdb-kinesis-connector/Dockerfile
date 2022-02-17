@@ -1,4 +1,4 @@
-FROM amazoncorretto:17
+FROM docker.io/amazonlinux:latest
 
 ENV JVM_GC_MAX_PARALLEL_THREADS=4
 ENV JVM_GC_MAX_PAUSE_MS=15000
@@ -34,7 +34,10 @@ ENV RECORD_REJECTION_AGE_MS=0
 
 ENV KINESIS_PLUGIN_PATH="/opt/qdb/kinesis/lib/"
 
-RUN yum install -y shadow-utils && \
+RUN yum update -y && \
+    yum upgrade -y && \
+    yum install -y java-17-amazon-corretto-headless \
+                   shadow-utils && \
     groupadd -r qdb && \
     useradd -r -g qdb qdb  && \
     yum remove -y shadow-utils && \
