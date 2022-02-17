@@ -12,8 +12,8 @@ RUN apt-get update && \
         apt-get clean
 
 # Install our C api and dashboard
-ADD     qdb-*-linux-64bit-c-api.tar.gz /opt/qdb/
-ADD     qdb-*-linux-64bit-rest.tar.gz /opt/qdb/
+ADD     qdb-*-c-api.tar.gz /opt/qdb/
+ADD     qdb-*-rest.tar.gz /opt/qdb/
 
 COPY docker-wrapper.sh /docker-wrapper.sh
 
