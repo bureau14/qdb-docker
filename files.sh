@@ -22,9 +22,9 @@ function find_file {
 }
 
 function set_files {
-    TARBALL_QDB=$(find_file 'qdb-*-linux-64bit-server.tar.gz')
-    TARBALL_QDB_API=$(find_file 'qdb-*-linux-64bit-c-api.tar.gz')
-    TARBALL_QDB_REST=$(find_file 'qdb-*-linux-64bit-rest.tar.gz')
-    TARBALL_QDB_UTILS=$(find_file 'qdb-*-linux-64bit-utils.tar.gz')
+    TARBALL_QDB=$(find_file 'qdb-*-server.tar.gz')
+    TARBALL_QDB_API=$(find_file 'qdb-*-c-api.tar.gz')
+    # TARBALL_QDB_REST=$(find_file 'qdb-*-rest.tar.gz')
+    TARBALL_QDB_UTILS=$(find_file 'qdb-*-utils.tar.gz')
     JAR_QDB_KINESIS_CONNECTOR=$(find_file 'kinesis-*-jar-with-dependencies.jar')
 }
