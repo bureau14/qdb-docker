@@ -142,6 +142,17 @@ then
     patch_conf ".local.limiter.max_bytes_hard" "${QDB_MEMORY_LIMIT_HARD}"
 fi
 
+if [[ ! -z ${QDB_COLUMN_FAMILY_OPTIONS} ]]
+then
+    echo "Setting rocksdb column family options to '${QDB_COLUMN_FAMILY_OPTIONS}'"
+    patch_conf ".local.depot.rocksdb.column_family_options" "\"${QDB_COLUMN_FAMILY_OPTIONS}\""
+fi
+
+if [[ ! -z ${QDB_SST_PARTITIONER_THRESHOLD} ]]
+then
+    echo "Setting rocksdb SST partitioner threshold to ${QDB_SST_PARTITIONER_THRESHOLD}"
+    patch_conf ".local.depot.rocksdb.sst_partitionner_threshold" "${QDB_SST_PARTITIONER_THRESHOLD}"
+fi
 
 if [[ ! -z ${K8S_REPLICA_COUNT} ]]
 then

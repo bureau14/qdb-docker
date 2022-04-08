@@ -17,6 +17,8 @@ ENV        QDB_LICENSE_FILE=""
 ENV        QDB_REPLICATION=""
 ENV        QDB_MEMORY_LIMIT_SOFT=""
 ENV        QDB_MEMORY_LIMIT_HARD=""
+ENV        QDB_COLUMN_FAMILY_OPTIONS=""
+ENV        QDB_SST_PARTITIONER_THRESHOLD=""
 
 # Fixing debconf warning about TERM
 ENV        DEBIAN_FRONTEND teletype
