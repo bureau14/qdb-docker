@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="INFO">
+<Configuration status="warn" name="qdb-kinesis-connector" packages="">
   <Appenders>
-    <RollingFile name="RollingFile" fileName="{{QDB_KINESIS_LOG_PATH}}/kinesis.log" filePattern="/home/ec2-user/kinesis/logs/kinesis-%d{MM-dd-yyyy}.log.gz"
+    <RollingFile name="RollingFile"
+                 fileName="{{QDB_KINESIS_LOG_PATH}}/kinesis.log"
+                 filePattern="{{QDB_KINESIS_LOG_PATH}}/kinesis-%d{yyyy-MM-dd-HH-mm}.log.gz"
                  ignoreExceptions="false">
       <PatternLayout>
         <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
       </PatternLayout>
-      <TimeBasedTriggeringPolicy />
+      <Policies>
+        <TimeBasedTriggeringPolicy />
+        <SizeBasedTriggeringPolicy size="128 MB"/>
+      </Policies>
     </RollingFile>
   </Appenders>
   <Loggers>
