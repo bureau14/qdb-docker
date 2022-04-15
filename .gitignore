@@ -1,5 +1,8 @@
 build/
 *.deb
+*.rpm
+*.zip
 *.tar.gz
+*.jar
 *.tgz
 *.egg
