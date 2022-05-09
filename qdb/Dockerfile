@@ -24,6 +24,8 @@ RUN        groupadd -r qdb && useradd -r -g qdb qdb
 
 # Quasardb
 ENV        QDB_PORT=2836
+ENV        QDB_LOG_LEVEL=1
+ENV        QDB_LOG_PATH="/opt/qdb/log"
 ENV        QDB_ADVERTISED_ADDRESS=""
 ENV        QDB_ENABLE_SECURITY="false"
 ENV        QDB_CONFIG_PATH="/opt/qdb/etc/qdbd.conf"

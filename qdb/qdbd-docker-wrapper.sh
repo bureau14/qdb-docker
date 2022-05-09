@@ -162,6 +162,20 @@ then
     patch_conf ".local.limiter.max_bytes_hard" "${QDB_MEMORY_LIMIT_HARD}"
 fi
 
+###
+# Logging
+###
+if [[ ! -z ${QDB_LOG_LEVEL} ]]
+then
+    echo "Setting log level ${QDB_LOG_LEVEL}"
+    patch_conf ".local.logger.log_level" "${QDB_LOG_LEVEL}"
+fi
+
+if [[ ! -z ${QDB_LOG_PATH} ]]
+then
+    echo "Setting log path to ${QDB_LOG_PATH}"
+    patch_conf ".local.logger.log_directory" "\"${QDB_LOG_PATH}\""
+fi
 
 ###
 # Rocksdb
