@@ -162,6 +162,18 @@ then
     patch_conf ".local.limiter.max_bytes_hard" "${QDB_MEMORY_LIMIT_HARD}"
 fi
 
+if [[ ! -z ${QDB_TOTAL_SERVER_SESSIONS} ]]
+then
+    echo "Setting total server sessions to ${QDB_TOTAL_SERVER_SESSIONS}"
+    patch_conf ".local.network.total_server_sessions" "${QDB_TOTAL_SERVER_SESSIONS}"
+fi
+
+if [[ ! -z ${QDB_PARALLELISM} ]]
+then
+    echo "Setting server parallelism ${QDB_PARALLELISM}"
+    patch_conf ".local.network.parallelism" "${QDB_PARALLELISM}"
+fi
+
 ###
 # Logging
 ###
@@ -185,6 +197,12 @@ if [[ ! -z ${QDB_DEPOT_PATH} ]]
 then
     echo "Setting rocksdb depot path to '${QDB_DEPOT_PATH}'"
     patch_conf ".local.depot.rocksdb.root" "\"${QDB_DEPOT_PATH}\""
+fi
+
+if [[ ! -z ${QDB_ROCKSDB_TABLE_MEMORY_BUDGET} ]]
+then
+    echo "Setting table memory budget to ${QDB_ROCKSDB_TABLE_MEMORY_BUDGET} bytes"
+    patch_conf ".local.depot.rocksdb.table_memory_budget" "${QDB_ROCKSDB_TABLE_MEMORY_BUDGET}"
 fi
 
 if [[ ! -z ${QDB_ROCKSDB_COLUMN_FAMILY_OPTIONS} ]]
