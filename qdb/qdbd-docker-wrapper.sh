@@ -17,6 +17,12 @@ IP=`${IP} route get 8.8.8.8 | grep -oh 'src [0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+' 
 echo "Launching qdbd bound to ${IP}:2836"
 QDB_LAUNCH_ARGS="${QDB_LAUNCH_ARGS} -a ${IP}:2836"
 
+if [[ -z ${QDB_FIREHOSE_ENDPOINT} ]]
+then
+    QDB_FIREHOSE_ENDPOINT="${IP}:3836"
+fi
+
+
 function die {
     echo "" >> /dev/stderr
     echo "******************"  >> /dev/stderr
@@ -172,6 +178,18 @@ if [[ ! -z ${QDB_PARALLELISM} ]]
 then
     echo "Setting server parallelism ${QDB_PARALLELISM}"
     patch_conf ".local.network.parallelism" "${QDB_PARALLELISM}"
+fi
+
+if [[ ! -z ${QDB_FIREHOSE_ENDPOINT} ]]
+then
+    echo "Setting firehose endpoint to \"${QDB_FIREHOSE_ENDPOINT}\""
+    patch_conf ".local.network.firehose_endpoint" "\"${QDB_FIREHOSE_ENDPOINT}\""
+fi
+
+if [[ ! -z ${QDB_FIREHOSE_PUBLISHING_THREADS} ]]
+then
+    echo "Setting firehose publishing threads to \"${QDB_FIREHOSE_PUBLISHING_THREADS}\""
+    patch_conf ".local.network.firehose_publishing_threads" "\"${QDB_FIREHOSE_PUBLISHING_THREADS}\""
 fi
 
 ###
