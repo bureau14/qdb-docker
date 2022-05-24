@@ -38,8 +38,11 @@ ENV        QDB_LICENSE_FILE=""
 ENV        QDB_REPLICATION=""
 ENV        QDB_TOTAL_SERVER_SESSIONS=""
 ENV        QDB_PARALLELISM=""
+ENV        QDB_FIREHOSE_ENDPOINT=""
+ENV        QDB_FIREHOSE_PUBLISHING_THREADS=""
 ENV        QDB_MEMORY_LIMIT_SOFT=""
 ENV        QDB_MEMORY_LIMIT_HARD=""
+
 
 # Rocksdb
 ENV        QDB_ROCKSDB_COLUMN_FAMILY_OPTIONS=""
@@ -89,6 +92,7 @@ ENTRYPOINT ["/opt/qdb/scripts/qdbd-docker-wrapper.sh"]
 # Expose the port qdbd is listening at
 EXPOSE     2836
 EXPOSE     2837
+EXPOSE     3836
 
 # Add default qdbd.conf
 ADD        qdbd.conf /opt/qdb/etc/
