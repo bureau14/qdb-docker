@@ -180,6 +180,12 @@ then
     patch_conf ".local.network.parallelism" "${QDB_PARALLELISM}"
 fi
 
+if [[ ! -z ${QDB_PUBLISH_FIREHOSE} ]]
+then
+    echo "Enabling firehose"
+    patch_conf ".global.cluster.publish_firehose" "true"
+fi
+
 if [[ ! -z ${QDB_FIREHOSE_ENDPOINT} ]]
 then
     echo "Setting firehose endpoint to \"${QDB_FIREHOSE_ENDPOINT}\""
