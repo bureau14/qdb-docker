@@ -23,24 +23,24 @@ RUN        locale-gen en_US.UTF-8
 RUN        groupadd -r qdb && useradd -r -g qdb qdb
 
 # Quasardb
+ENV        QDB_LICENSE=""
+ENV        QDB_LICENSE_FILE=""
 ENV        QDB_PORT=2836
+ENV        QDB_ADVERTISED_ADDRESS=""
 ENV        QDB_LOG_LEVEL=1
 ENV        QDB_LOG_PATH="/opt/qdb/log"
-ENV        QDB_ADVERTISED_ADDRESS=""
+ENV        QDB_DEPOT_PATH="/depot"
 ENV        QDB_ENABLE_SECURITY="false"
 ENV        QDB_CONFIG_PATH="/opt/qdb/etc/qdbd.conf"
-ENV        QDB_DEPOT_PATH="/depot"
 ENV        QDB_CLUSTER_PRIVATE_KEY=""
 ENV        QDB_CLUSTER_PRIVATE_KEY_FILE=""
 ENV        QDB_USER_LIST=""
 ENV        QDB_USER_LIST_FILE=""
-ENV        QDB_LICENSE=""
-ENV        QDB_LICENSE_FILE=""
 ENV        QDB_REPLICATION=""
 ENV        QDB_TOTAL_SERVER_SESSIONS=""
 ENV        QDB_PARALLELISM=""
 ENV        QDB_PUBLISH_FIREHOSE=""
-ENV        QDB_FIREHOSE_ENDPOINT=""
+ENV        QDB_FIREHOSE_PORT=""
 ENV        QDB_FIREHOSE_PUBLISHING_THREADS=""
 ENV        QDB_MEMORY_LIMIT_SOFT=""
 ENV        QDB_MEMORY_LIMIT_HARD=""

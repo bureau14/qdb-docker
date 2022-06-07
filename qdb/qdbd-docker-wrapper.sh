@@ -17,10 +17,7 @@ IP=`${IP} route get 8.8.8.8 | grep -oh 'src [0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+' 
 echo "Launching qdbd bound to ${IP}:2836"
 QDB_LAUNCH_ARGS="${QDB_LAUNCH_ARGS} -a ${IP}:2836"
 
-if [[ -z ${QDB_FIREHOSE_ENDPOINT} ]]
-then
-    QDB_FIREHOSE_ENDPOINT="${IP}:3836"
-fi
+QDB_FIREHOSE_ENDPOINT="${IP}:${QDB_FIREHOSE_PORT}"
 
 
 function die {
@@ -186,7 +183,7 @@ then
     patch_conf ".global.cluster.publish_firehose" "true"
 fi
 
-if [[ ! -z ${QDB_FIREHOSE_ENDPOINT} ]]
+if [[ ! -z ${QDB_FIREHOSE_PORT} ]]
 then
     echo "Setting firehose endpoint to \"${QDB_FIREHOSE_ENDPOINT}\""
     patch_conf ".local.network.firehose_endpoint" "\"${QDB_FIREHOSE_ENDPOINT}\""
