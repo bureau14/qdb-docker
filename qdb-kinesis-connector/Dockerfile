@@ -23,6 +23,7 @@ ENV RELAY_RESET_INTERVAL_MS=3600000
 ENV RELAY_QUEUE_SIZE=500
 ENV RELAY_POOL_SIZE=10
 ENV THREADS=10
+ENV METRICS_TAGS=""
 
 ENV PUSH_MODE=
 ENV BLACKLIST_FILE=/opt/qdb/kinesis/blacklist.conf
@@ -40,7 +41,6 @@ RUN yum update -y && \
                    shadow-utils && \
     groupadd -r qdb && \
     useradd -r -g qdb qdb  && \
-    yum remove -y shadow-utils && \
     yum clean all && \
     rm -rf /var/cache/yum
 

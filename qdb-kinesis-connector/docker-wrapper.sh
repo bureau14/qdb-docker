@@ -191,6 +191,18 @@ then
     JAVA_KINESIS_OPTS+="--blacklist-file ${BLACKLIST_FILE} "
 fi
 
+
+if [[ ! -z ${METRICS_TAGS} ]]
+then
+    IFS=',' read -ra TAGS <<< "${METRICS_TAGS}"
+    for TAG in "${TAGS[@]}"
+    do
+        echo "Setting metrics tag: ${TAG}"
+        JAVA_KINESIS_OPTS+="--metrics-tag ${TAG} "
+    done
+fi
+
+
 if [[ ! -z ${STREAM_NAME} ]]
 then
     echo "Setting Kinesis stream name: ${STREAM_NAME}"
