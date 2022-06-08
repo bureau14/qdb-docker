@@ -1,0 +1,9 @@
+ARG        BASE
+FROM       ${BASE}
+
+ADD        {{ env.qdb_api_c_url }} /opt/qdb/
+ADD        {{ env.qdb_api_rest_url }} /opt/qdb/
+
+COPY docker-wrapper.sh /docker-wrapper.sh
+
+ENTRYPOINT ["/docker-wrapper.sh"]

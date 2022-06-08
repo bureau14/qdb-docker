@@ -1,0 +1,27 @@
+#
+# NOTE: THIS DOCKERFILE IS GENERATED VIA "apply-templates.sh"
+#
+# PLEASE DO NOT EDIT IT DIRECTLY.
+#
+
+FROM  docker.io/redhat/ubi9:latest
+
+ENV   QDB_HOME="/opt/qdb"
+
+LABEL maintainer="support@quasar.ai"
+
+RUN    echo "fastestmirror=true" >> /etc/dnf/dnf.conf        \
+    && echo "deltarpm=true" >> /etc/dnf/dnf.conf             \
+    && echo "max_parallel_downloads=10" >> /etc/dnf/dnf.conf
+
+RUN dnf install   --assumeyes \
+                  --best      \
+                  jq          \
+                  iproute     \
+                  less
+
+RUN    groupadd -r qdb              \
+    && useradd  -r -g qdb qdb       \
+                                    \
+    && mkdir -p ${QDB_HOME}         \
+    && chown -R qdb:qdb ${QDB_HOME}

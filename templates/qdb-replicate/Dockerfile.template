@@ -1,0 +1,6 @@
+ARG        BASE
+FROM       ${BASE}
+
+ADD        {{ env.qdb_utils_url }} /opt/qdb/
+
+ENTRYPOINT ["/opt/qdb/bin/qdb_replicate"]

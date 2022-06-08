@@ -1,0 +1,41 @@
+
+build-base:
+	podman build \
+		--tag base-{{ env.version }} \
+		-f Dockerfile \
+		.
+
+build-qdbsh:
+	podman build \
+		--tag "qdbsh:{{ env.version }}" \
+		--build-arg BASE="base-{{ env.version}}" \
+		-f qdbsh/Dockerfile \
+		qdbsh/
+
+build-qdb-replicate:
+	podman build \
+		--tag "qdb-replicate:{{ env.version }}" \
+		--build-arg BASE="base-{{ env.version}}" \
+		-f qdb-replicate/Dockerfile \
+		qdb-replicate/
+
+build-qdb-kinesis-connector:
+	podman build \
+		--tag "qdb-kinesis-connector:{{ env.version }}" \
+		-f qdb-kinesis-connector/Dockerfile \
+		qdb-kinesis-connector/
+
+build-qdb:
+	podman build \
+		--build-arg BASE="base-{{ env.version}}" \
+		--tag "qdbsh:{{ env.version }}" \
+		-f qdb/Dockerfile \
+		qdb/
+
+build:		build-base \
+		build-qdb \
+		build-qdbsh \
+		build-qdb-replicate \
+		build-qdb-kinesis-connector
+
+all:		build
