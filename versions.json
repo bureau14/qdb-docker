@@ -1,7 +1,8 @@
 {
     "3.10": {
-
-        "version": "3.10.2",
+        "tags": ["stable"],
+        "xyz": "3.10.2",
+        "xy": "3.10",
         "files": {
             "qdb-server": "http://download.quasar.ai/quasardb/3.10/3.10.2/server/qdb-3.10.2-linux-64bit-server.tar.gz",
             "qdb-utils": "http://download.quasar.ai/quasardb/3.10/3.10.2/utils/qdb-3.10.2-linux-64bit-utils.tar.gz",
@@ -10,9 +11,10 @@
             "qdb-kinesis-connector": "http://download.quasar.ai/quasardb/3.10/3.10.2/api/kinesis/kinesis-3.10.2-jar-with-dependencies.jar"
         }
     },
-
     "3.13": {
-        "version": "3.13.3",
+        "tags": ["beta", "latest"],
+        "xyz": "3.13.3",
+        "xy": "3.13",
         "files": {
             "qdb-server": "http://download.quasar.ai/quasardb/3.13/3.13.3/server/qdb-3.13.3-linux-64bit-server.tar.gz",
             "qdb-utils": "http://download.quasar.ai/quasardb/3.13/3.13.3/utils/qdb-3.13.3-linux-64bit-utils.tar.gz",

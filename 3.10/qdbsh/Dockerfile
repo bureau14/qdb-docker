@@ -5,8 +5,13 @@
 #
 
 ARG        BASE
-FROM       ${BASE}
+FROM       ${BASE} AS build
+ARG        BASE
 
-ADD        http://download.quasar.ai/quasardb/3.10/3.10.2/utils/qdb-3.10.2-linux-64bit-utils.tar.gz /opt/qdb/
+ADD --chown=qdb:qdb http://download.quasar.ai/quasardb/3.10/3.10.2/utils/qdb-3.10.2-linux-64bit-utils.tar.gz /opt/qdb/
+RUN cd /opt/qdb && tar -xzvf ./*.tar.gz
+
+FROM       ${BASE}
+COPY --chown=qdb:qdb --from=build /opt/qdb/bin/qdbsh /opt/qdb/bin/qdbsh
 
 ENTRYPOINT ["/opt/qdb/bin/qdbsh"]

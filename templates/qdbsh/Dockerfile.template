@@ -1,6 +1,11 @@
 ARG        BASE
-FROM       ${BASE}
+FROM       ${BASE} AS build
+ARG        BASE
 
-ADD        {{ env.qdb_utils_url }} /opt/qdb/
+ADD --chown=qdb:qdb {{ env.qdb_utils_url }} /opt/qdb/
+RUN cd /opt/qdb && tar -xzvf ./*.tar.gz
+
+FROM       ${BASE}
+COPY --chown=qdb:qdb --from=build /opt/qdb/bin/qdbsh /opt/qdb/bin/qdbsh
 
 ENTRYPOINT ["/opt/qdb/bin/qdbsh"]

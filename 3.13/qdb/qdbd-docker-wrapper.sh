@@ -14,6 +14,11 @@ JQ=`which jq`
 
 IP=`${IP} route get 8.8.8.8 | grep -oh 'src [0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+' | awk '{print $2}'`
 
+if [[ ! -z ${QDB_BIND_ADDRESS} ]]
+then
+    IP="${QDB_BIND_ADDRESS}"
+fi
+
 echo "Launching qdbd bound to ${IP}:2836"
 QDB_LAUNCH_ARGS="${QDB_LAUNCH_ARGS} -a ${IP}:2836"
 

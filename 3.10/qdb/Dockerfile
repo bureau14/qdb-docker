@@ -7,9 +7,6 @@
 ARG        BASE
 FROM       ${BASE}
 
-
-ENV       QDB_VERSION 3.10.2
-
 ##########################################################
 #
 # Configuration variable declaration + default definitions
@@ -22,12 +19,13 @@ ENV       QDB_VERSION 3.10.2
 ENV        QDB_LICENSE=""
 ENV        QDB_LICENSE_FILE=""
 ENV        QDB_PORT=2836
+ENV        QDB_BIND_ADDRESS=""
 ENV        QDB_ADVERTISED_ADDRESS=""
 ENV        QDB_LOG_LEVEL=1
 ENV        QDB_LOG_PATH="/opt/qdb/log"
-ENV        QDB_DEPOT_PATH="/depot"
-ENV        QDB_ENABLE_SECURITY="false"
+ENV        QDB_DEPOT_PATH="/opt/qdb/depot"
 ENV        QDB_CONFIG_PATH="/opt/qdb/etc/qdbd.conf"
+ENV        QDB_ENABLE_SECURITY="false"
 ENV        QDB_CLUSTER_PRIVATE_KEY=""
 ENV        QDB_CLUSTER_PRIVATE_KEY_FILE=""
 ENV        QDB_USER_LIST=""
@@ -72,27 +70,27 @@ ENV        QDB_CLOUD_AWS_SECRET_ACCESS_KEY=""
 #
 ENV        QDB_CLOUD_LOCAL_SST_CACHE=""
 
-# Install qdb-server package
-ADD        http://download.quasar.ai/quasardb/3.10/3.10.2/server/qdb-3.10.2-linux-64bit-server.tar.gz /opt/qdb/
+ADD --chown=${QDB_USER}:${QDB_GROUP} http://download.quasar.ai/quasardb/3.10/3.10.2/server/qdb-3.10.2-linux-64bit-server.tar.gz /opt/qdb/
+ADD --chown=${QDB_USER}:${QDB_GROUP} qdbd-docker-wrapper.sh   /opt/qdb/scripts/
+ADD --chown=${QDB_USER}:${QDB_GROUP} qdbd.conf                /opt/qdb/etc/
 
-# Add the wrapper script
-ADD        qdbd-docker-wrapper.sh /opt/qdb/scripts/
+RUN    cd /opt/qdb                 \
+    && tar -xzf ./*.tar.gz            \
+    && rm -f ./*.tar.gz               \
+                                      \
+    && mkdir -p ${QDB_DEPOT_PATH}     \
+    && mkdir -p ${QDB_LOG_PATH}       \
+                                      \
+    && /opt/qdb/bin/qdbd --version
 
-# Define working directory
-WORKDIR    /opt/qdb
 
-# Always launch qdb process
-ENTRYPOINT ["/opt/qdb/scripts/qdbd-docker-wrapper.sh"]
-
-# Expose the port qdbd is listening at
+# required: normal port - high-traffic
 EXPOSE     2836
+
+# required: control     - low-traffic, important
 EXPOSE     2837
+
+# optional: continuous queries
 EXPOSE     3836
 
-# Add default qdbd.conf
-ADD        qdbd.conf /opt/qdb/etc/
-
-RUN        mkdir /depot
-RUN        chown -R qdb:qdb /opt/qdb
-RUN        chown -R qdb:qdb /depot
-USER       qdb
+ENTRYPOINT ["/opt/qdb/scripts/qdbd-docker-wrapper.sh"]

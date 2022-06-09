@@ -123,7 +123,7 @@ END {
 	append_jq(agg_jq)
 	agg_jq = ""
 
-	jq_expr = "if env.version then .[env.version] else . end | (\n" jq_expr "\n)"
+	jq_expr = "if env.subdir then .[env.subdir] else . end | (\n" jq_expr "\n)"
 	jq_expr = jq_expr_defs jq_expr
 
 	if (ENVIRON["DEBUG"]) {

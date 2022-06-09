@@ -1,21 +1,45 @@
-FROM  docker.io/redhat/ubi9:latest
-
-ENV   QDB_HOME="/opt/qdb"
+FROM  docker.io/debian:11
 
 LABEL maintainer="support@quasar.ai"
 
-RUN    echo "fastestmirror=true" >> /etc/dnf/dnf.conf        \
-    && echo "deltarpm=true" >> /etc/dnf/dnf.conf             \
-    && echo "max_parallel_downloads=10" >> /etc/dnf/dnf.conf
+ARG   QDB_UID=1000
+ARG   QDB_GID=1000
 
-RUN dnf install   --assumeyes \
-                  --best      \
-                  jq          \
-                  iproute     \
-                  less
+ENV   QDB_VERSION="{{ env.version }}"
+ENV   QDB_USER="qdb"
+ENV   QDB_GROUP="qdb"
+ENV   QDB_HOME="/opt/qdb"
 
-RUN    groupadd -r qdb              \
-    && useradd  -r -g qdb qdb       \
-                                    \
-    && mkdir -p ${QDB_HOME}         \
-    && chown -R qdb:qdb ${QDB_HOME}
+ENV   DEBIAN_FRONTEND="noninteractive"
+
+RUN        apt-get update &&                       \
+           apt-get upgrade -y  &&                  \
+           apt-get install -y                      \
+                           --no-install-recommends \
+                           apt-utils               \
+                           dnsutils                \
+                           iproute2                \
+                           jq                      \
+                           locales                 \
+                           net-tools               \
+                           curl &&                 \
+           apt-get clean &&                        \
+    rm -rf /var/lib/apt/lists/*                    \
+                                                   \
+    && locale-gen en_US.UTF-8                      \
+                                                   \
+    && groupadd --system                           \
+                --gid ${QDB_GID}                   \
+                ${QDB_GROUP}                       \
+    && useradd  --system                           \
+                --uid ${QDB_UID}                   \
+                --home-dir ${QDB_HOME}             \
+                --gid ${QDB_GROUP}                 \
+                ${QDB_USER}                        \
+                                                   \
+    && mkdir --parents ${QDB_HOME}                 \
+    && chown --recursive                           \
+             ${QDB_USER}:${QDB_GROUP}              \
+             ${QDB_HOME}
+
+USER  ${QDB_USER}:${QDB_GROUP}

@@ -7,8 +7,11 @@
 ARG        BASE
 FROM       ${BASE}
 
-ADD        http://download.quasar.ai/quasardb/3.10/3.10.2/api/c/qdb-3.10.2-linux-64bit-c-api.tar.gz /opt/qdb/
-ADD        http://download.quasar.ai/quasardb/3.10/3.10.2/rest/qdb-3.10.2-linux-64bit-rest.tar.gz /opt/qdb/
+ADD --chown=${QDB_USER}:${QDB_GROUP} http://download.quasar.ai/quasardb/3.10/3.10.2/utils/qdb-3.10.2-linux-64bit-utils.tar.gz /opt/qdb/
+ADD --chown=${QDB_USER}:${QDB_GROUP} http://download.quasar.ai/quasardb/3.10/3.10.2/api/c/qdb-3.10.2-linux-64bit-c-api.tar.gz /opt/qdb/
+RUN    cd /opt/qdb                    \
+    && find . -name "*.tar.gz" -exec tar -xvzf {} \; \
+    && rm -f ./*.tar.gz               \
 
 COPY docker-wrapper.sh /docker-wrapper.sh
 
