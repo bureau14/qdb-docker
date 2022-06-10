@@ -4,7 +4,7 @@ image       := $(target):{{ .xyz }}
 all_tags    := {{ .tags + [.xyz, .xy] | map(. = "docker.io/bureau14/" + env.component + ":" + .) | join (" ") }}
 
 build:
-	docker buildx build --build-arg BASE=base:{{ .xyz }} --tag $(image) .
+	docker build --build-arg BASE=base:{{ .xyz }} --tag $(image) .
 
 tag:    build
 	docker tag $(image) $(all_tags)

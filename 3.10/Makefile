@@ -8,7 +8,7 @@
 SUBDIRS := $(shell find . -mindepth 1 -maxdepth 1 -type d)
 
 build-base:	Dockerfile
-	docker buildx build \
+	docker build \
 		--tag base:3.10.2 \
 		-f Dockerfile \
 		.
