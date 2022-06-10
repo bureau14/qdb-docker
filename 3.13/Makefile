@@ -9,7 +9,6 @@ SUBDIRS := $(shell find . -mindepth 1 -maxdepth 1 -type d)
 
 build-base:	Dockerfile
 	docker build \
-                --squash \
 		--tag base:3.13.3 \
 		-f Dockerfile \
 		.

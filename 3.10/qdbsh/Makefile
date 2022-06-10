@@ -10,7 +10,7 @@ image       := $(target):3.10.2
 all_tags    := docker.io/bureau14/qdbsh:stable docker.io/bureau14/qdbsh:3.10.2 docker.io/bureau14/qdbsh:3.10
 
 build:
-	docker build --squash --build-arg BASE=base:3.10.2 --tag $(image) .
+	docker build --build-arg BASE=base:3.10.2 --tag $(image) .
 
 tag:    build
 	docker tag $(image) $(all_tags)
