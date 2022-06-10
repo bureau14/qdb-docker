@@ -4,16 +4,16 @@ SUBDIRS := $(shell jq -r 'keys | map(@sh) | join(" ")' versions.json)
 clean:		$(SUBDIRS)
 	rm -rf $(SUBDIRS)
 
-templates:	versions.json $(TEMPLATES)
+apply-templates:	versions.json $(TEMPLATES)
 	./apply-templates.sh
 
-build:     	$(SUBDIRS)
+build:     		$(SUBDIRS)
 
-tag:		$(SUBDIRS)
+tag:			$(SUBDIRS)
 
-test:           $(SUBDIRS)
+test:           	$(SUBDIRS)
 
-push:      	$(SUBDIRS)
+push:      		$(SUBDIRS)
 
 $(SUBDIRS):
 	$(MAKE) -C $@ $(MAKECMDGOALS)
