@@ -1,0 +1,9 @@
+ARG        BASE
+FROM       ${BASE}
+
+ADD --chown=${QDB_USER}:${QDB_GROUP} {{ env.qdb_utils_url }} /opt/qdb/
+RUN    cd /opt/qdb                    \
+    && tar -xzvf ./*.tar.gz           \
+    && rm -f ./*.tar.gz               \
+
+ENTRYPOINT ["/opt/qdb/bin/qdb_replicate"]

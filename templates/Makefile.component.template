@@ -1,0 +1,21 @@
+repo      	:= docker.io
+org       	:= bureau14
+component 	:= {{ env.component }}
+build-image	:= build-$(component)
+build-tag       := {{ .xyz }}
+target-image    := $(repo)/$(org)/$(component)
+
+build:
+	docker build --build-arg BASE=base:{{ .xyz }} --tag $(build-image):$(build-tag) .
+
+tag:
+	{{ .tags + [.xyz, .xy] | map(. = "docker tag $(build-image):$(build-tag) $(target-image):" + .) | join ("\n\t") }}
+
+push:   build tag
+	{{ .tags + [.xyz, .xy] | map(. = "docker push $(target-image):" + .) | join ("\n\t") }}
+
+clean:
+	docker rmi --force $(build-image)
+	docker rmi --force $(target-image)
+
+.PHONY: clean build tag push
