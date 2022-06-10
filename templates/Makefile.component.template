@@ -1,19 +1,20 @@
-target      := {{ env.component }}
-image       := $(target):{{ .xyz }}
-
-all_tags    := {{ .tags + [.xyz, .xy] | map(. = "docker.io/bureau14/" + env.component + ":" + .) | join (" ") }}
+repo      	:= docker.io
+org       	:= bureau14
+component 	:= {{ env.component }}
+build-image	:= build-$(component)
+target-image    := $(repo)/$(org)/$(component)
 
 build:
-	docker build --build-arg BASE=base:{{ .xyz }} --tag $(image) .
+	docker build --build-arg BASE=base:{{ .xyz }} --tag $(build-image) .
 
-tag:    build
-	docker tag $(image) $(all_tags)
+tag:
+	{{ .tags + [.xyz, .xy] | map(. = "docker tag $(build-image) $(target-image):" + .) | join ("\n\t") }}
 
 push:   build tag
-        {{ .tags + [.xyz, .xy] | map(. = "docker push docker.io/bureau14/" + env.component + ":" + .) | join ("\n        ") }}
+	{{ .tags + [.xyz, .xy] | map(. = "docker push $(target-image):" + .) | join ("\n\t") }}
 
 clean:
-	docker rmi --force --ignore $(image)
-	docker rmi --force --ignore docker.io/bureau14/{{ env.component }}
+	docker rmi --force --ignore $(build-image)
+	docker rmi --force --ignore $(target-image)
 
 .PHONY: clean build tag push

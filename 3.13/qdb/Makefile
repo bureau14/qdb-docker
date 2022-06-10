@@ -4,25 +4,29 @@
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
 
-target      := qdb
-image       := $(target):3.13.3
-
-all_tags    := docker.io/bureau14/qdb:beta docker.io/bureau14/qdb:latest docker.io/bureau14/qdb:3.13.3 docker.io/bureau14/qdb:3.13
+repo      	:= docker.io
+org       	:= bureau14
+component 	:= qdb
+build-image	:= build-$(component)
+target-image    := $(repo)/$(org)/$(component)
 
 build:
-	docker build --build-arg BASE=base:3.13.3 --tag $(image) .
+	docker build --build-arg BASE=base:3.13.3 --tag $(build-image) .
 
-tag:    build
-	docker tag $(image) $(all_tags)
+tag:
+	docker tag $(build-image) $(target-image):beta
+	docker tag $(build-image) $(target-image):latest
+	docker tag $(build-image) $(target-image):3.13.3
+	docker tag $(build-image) $(target-image):3.13
 
 push:   build tag
-        docker push docker.io/bureau14/qdb:beta
-        docker push docker.io/bureau14/qdb:latest
-        docker push docker.io/bureau14/qdb:3.13.3
-        docker push docker.io/bureau14/qdb:3.13
+	docker push $(target-image):beta
+	docker push $(target-image):latest
+	docker push $(target-image):3.13.3
+	docker push $(target-image):3.13
 
 clean:
-	docker rmi --force --ignore $(image)
-	docker rmi --force --ignore docker.io/bureau14/qdb
+	docker rmi --force --ignore $(build-image)
+	docker rmi --force --ignore $(target-image)
 
 .PHONY: clean build tag push

@@ -15,7 +15,7 @@ test:           $(SUBDIRS)
 
 push:      	$(SUBDIRS)
 
-$(SUBDIRS):	templates
+$(SUBDIRS):
 	$(MAKE) -C $@ $(MAKECMDGOALS)
 
 all: $(SUBDIRS)

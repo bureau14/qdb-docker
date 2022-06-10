@@ -4,24 +4,27 @@
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
 
-target      := qdb-replicate
-image       := $(target):3.10.2
-
-all_tags    := docker.io/bureau14/qdb-replicate:stable docker.io/bureau14/qdb-replicate:3.10.2 docker.io/bureau14/qdb-replicate:3.10
+repo      	:= docker.io
+org       	:= bureau14
+component 	:= qdb-replicate
+build-image	:= build-$(component)
+target-image    := $(repo)/$(org)/$(component)
 
 build:
-	docker build --build-arg BASE=base:3.10.2 --tag $(image) .
+	docker build --build-arg BASE=base:3.10.2 --tag $(build-image) .
 
-tag:    build
-	docker tag $(image) $(all_tags)
+tag:
+	docker tag $(build-image) $(target-image):stable
+	docker tag $(build-image) $(target-image):3.10.2
+	docker tag $(build-image) $(target-image):3.10
 
 push:   build tag
-        docker push docker.io/bureau14/qdb-replicate:stable
-        docker push docker.io/bureau14/qdb-replicate:3.10.2
-        docker push docker.io/bureau14/qdb-replicate:3.10
+	docker push $(target-image):stable
+	docker push $(target-image):3.10.2
+	docker push $(target-image):3.10
 
 clean:
-	docker rmi --force --ignore $(image)
-	docker rmi --force --ignore docker.io/bureau14/qdb-replicate
+	docker rmi --force --ignore $(build-image)
+	docker rmi --force --ignore $(target-image)
 
 .PHONY: clean build tag push
