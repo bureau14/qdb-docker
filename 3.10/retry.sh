@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 TIMES=$1
 shift;
 

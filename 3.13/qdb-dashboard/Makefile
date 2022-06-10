@@ -10,7 +10,7 @@ image       := $(target):3.13.3
 all_tags    := docker.io/bureau14/qdb-dashboard:beta docker.io/bureau14/qdb-dashboard:latest docker.io/bureau14/qdb-dashboard:3.13.3 docker.io/bureau14/qdb-dashboard:3.13
 
 build:
-	docker build --build-arg BASE=base:3.13.3 --tag $(image) .
+	docker buildx build --build-arg BASE=base:3.13.3 --tag $(image) .
 
 tag:    build
 	docker tag $(image) $(all_tags)
