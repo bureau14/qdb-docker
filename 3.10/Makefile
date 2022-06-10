@@ -22,7 +22,7 @@ clean-base:
 build:	build-base $(SUBDIRS)
 
 clean-test:
-	docker rm --force --ignore test-qdb-server test-qdbsh
+	docker rm --force test-qdb-server test-qdbsh
 
 clean:  clean-base clean-test $(SUBDIRS)
 
@@ -36,7 +36,7 @@ $(SUBDIRS):
 
 test:   clean-test
 	docker run --detach --network=host -e QDB_BIND_ADDRESS="127.0.0.1"  --rm --name test-qdb-server qdb:3.10.2
-	./retry.sh 10 docker run --tty --rm --interactive --name test-qdbsh --network=host qdbsh:3.10.2 -c "int_put sonmi 451"
-	docker rm --force --ignore test-qdbsh test-qdb-server
+	./retry.sh 10 docker run --tty --rm --interactive --name test-qdbsh --network=host qdbsh:3.10.2 --command cluster_trim
+	docker rm --force test-qdbsh test-qdb-server
 
 .PHONY: clean build tag test push $(SUBDIRS)
