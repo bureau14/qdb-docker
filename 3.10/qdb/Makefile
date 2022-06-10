@@ -25,7 +25,7 @@ push:   build tag
 	docker push $(target-image):3.10
 
 clean:
-	docker rmi --force --ignore $(build-image)
-	docker rmi --force --ignore $(target-image)
+	docker rmi --force $(build-image)
+	docker rmi --force $(target-image)
 
 .PHONY: clean build tag push

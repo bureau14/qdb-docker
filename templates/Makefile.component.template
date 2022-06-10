@@ -15,7 +15,7 @@ push:   build tag
 	{{ .tags + [.xyz, .xy] | map(. = "docker push $(target-image):" + .) | join ("\n\t") }}
 
 clean:
-	docker rmi --force --ignore $(build-image)
-	docker rmi --force --ignore $(target-image)
+	docker rmi --force $(build-image)
+	docker rmi --force $(target-image)
 
 .PHONY: clean build tag push

@@ -10,7 +10,6 @@ build-base:	Dockerfile
 clean-base:
 	docker rmi \
 		--force \
-		--ignore \
 		base:{{ .xyz }}
 
 build:	build-base $(SUBDIRS)

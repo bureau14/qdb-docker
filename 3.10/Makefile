@@ -16,7 +16,6 @@ build-base:	Dockerfile
 clean-base:
 	docker rmi \
 		--force \
-		--ignore \
 		base:3.10.2
 
 build:	build-base $(SUBDIRS)
