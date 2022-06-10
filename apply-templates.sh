@@ -48,7 +48,7 @@ do
 	gawk -f "${JQT}" "${INDIR}/Makefile.template"
     } > "${OUTDIR}/Makefile"
 
-    cp -v ${INDIR}/retry.sh ${OUTDIR}/retry.sh
+    cp ${INDIR}/retry.sh ${OUTDIR}/retry.sh
 
 
     qdb_server_url=$(jq -r '.[env.subdir].files."qdb-server"' versions.json)
