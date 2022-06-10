@@ -35,8 +35,8 @@ $(SUBDIRS):
 
 
 test:   clean-test
-	docker run --detach --network=host -e QDB_BIND_ADDRESS="127.0.0.1"  --rm --name test-qdb-server qdb:3.10.2
-	./retry.sh 10 docker run --rm --name test-qdbsh --network=host qdbsh:3.10.2 --command cluster_trim
+	docker run --detach --network=host -e QDB_BIND_ADDRESS="127.0.0.1"  --rm --name test-qdb-server build-qdb:3.10.2
+	./retry.sh 10 docker run --rm --name test-qdbsh --network=host build-qdbsh:3.10.2 --command cluster_trim
 	docker rm --force test-qdbsh test-qdb-server
 
 .PHONY: clean build tag test push $(SUBDIRS)
