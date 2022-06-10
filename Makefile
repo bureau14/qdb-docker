@@ -7,6 +7,9 @@ clean:		$(SUBDIRS)
 apply-templates:	versions.json $(TEMPLATES)
 	./apply-templates.sh
 
+check-templates:
+	./check-templates.sh
+
 build:     		$(SUBDIRS)
 
 tag:			$(SUBDIRS)
