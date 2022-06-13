@@ -1,9 +1,16 @@
 repo      	:= docker.io
 org       	:= bureau14
 component 	:= {{ env.component }}
+variant         := {{ env.variant }}
 build-image	:= build-$(component)
-build-tag       := {{ .xyz }}
+build-tag       := {{ .xyz }}-$(variant)
 target-image    := $(repo)/$(org)/$(component)
+
+{{ if env.variant != "default" then ( -}}
+variant-tag     := {{ env.variant }}
+{{ ) else ( -}}
+variant-tag     := ""
+{{ ) end -}}
 
 build:
 	docker build --build-arg BASE=base:{{ .xyz }} --tag $(build-image):$(build-tag) .
@@ -12,7 +19,7 @@ tag:
 	{{ .tags + [.xyz, .xy] | map(. = "docker tag $(build-image):$(build-tag) $(target-image):" + .) | join ("\n\t") }}
 
 push:   build tag
-	{{ .tags + [.xyz, .xy] | map(. = "docker push $(target-image):" + .) | join ("\n\t") }}
+	{{ .tags + [.xyz, .xy] | map(. = "docker push $(target-image):" + . + "-$(variant-tag)") | join ("\n\t") }}
 
 clean:
 	docker rmi --force $(build-image)

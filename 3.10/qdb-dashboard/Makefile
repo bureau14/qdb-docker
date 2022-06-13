@@ -7,9 +7,12 @@
 repo      	:= docker.io
 org       	:= bureau14
 component 	:= qdb-dashboard
+variant         := default
 build-image	:= build-$(component)
-build-tag       := 3.10.2
+build-tag       := 3.10.2-$(variant)
 target-image    := $(repo)/$(org)/$(component)
+
+variant-tag     := ""
 
 build:
 	docker build --build-arg BASE=base:3.10.2 --tag $(build-image):$(build-tag) .
@@ -20,9 +23,9 @@ tag:
 	docker tag $(build-image):$(build-tag) $(target-image):3.10
 
 push:   build tag
-	docker push $(target-image):stable
-	docker push $(target-image):3.10.2
-	docker push $(target-image):3.10
+	docker push $(target-image):stable-$(variant-tag)
+	docker push $(target-image):3.10.2-$(variant-tag)
+	docker push $(target-image):3.10-$(variant-tag)
 
 clean:
 	docker rmi --force $(build-image)
