@@ -2,8 +2,8 @@
 set -eu -o pipefail
 
 BASEDIR=$(dirname "$(readlink -f "${BASH_SOURCE}")")
-CONFIG_FILE="${BASEDIR}/versions.json"
-SUBDIRS_="$(jq -r 'keys | map(@sh) | join(" ")' ${CONFIG_FILE})"
+CONFIG_FILE="${BASEDIR}/config.json"
+SUBDIRS_="$(jq -r '.versions | keys | map(@sh) | join(" ")' ${CONFIG_FILE})"
 eval "SUBDIRS=( $SUBDIRS_ )"
 
 BEFORE=$(find ${SUBDIRS} -type f -exec sha256sum {} \; | sort | sha256sum)
