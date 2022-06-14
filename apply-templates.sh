@@ -3,17 +3,16 @@ set -eu -o pipefail
 
 BASEDIR=$(dirname "$(readlink -f "${BASH_SOURCE}")")
 
-CONFIG_FILE="${BASEDIR}/versions.json"
+CONFIG_FILE="${BASEDIR}/config.json"
 TEMPLATE_DIR="${BASEDIR}/templates/"
 JQT="scripts/jq-template.awk"
 
 [ -f "${CONFIG_FILE}" ] && [ -d "${TEMPLATE_DIR}" ]
 
 IFS=$'\n'
-COMPONENTS=$(find templates/ -mindepth 1 -maxdepth 1 -type d | awk -F/ '{ print $2 }')
-COMPONENTS=($COMPONENTS)
 
-VERSIONS="$(jq -r 'keys | map(@sh) | join(" ")' ${CONFIG_FILE})"
+COMPONENTS="$(jq -r '.components | keys | map(@sh) | join(" ")' ${CONFIG_FILE})"
+VERSIONS="$(jq -r '.versions | keys | map(@sh) | join(" ")' ${CONFIG_FILE})"
 
 generated_warning() {
 	cat <<-EOH
@@ -33,7 +32,7 @@ generated_warning() {
 # Yields empty result if key not found.
 get_file_url() {
     local key="${1}"
-    local value="$(jq -r '.[env.version] | .[env.variant] | ."'${key}'"' ${CONFIG_FILE})"
+    local value="$(jq -r '.versions | .[env.version] | .[env.variant] | ."'${key}'"' ${CONFIG_FILE})"
 
     if [[ "${value}" == "null" ]]
     then
@@ -46,25 +45,35 @@ get_file_url() {
 eval "set -- $VERSIONS"
 for version
 do
+    rm -rf "${version}"
+done
+
+eval "set -- $VERSIONS"
+for version
+do
+
     export version
-    VARIANTS="$(jq -r '.[env.version].variants | map(@sh) | join(" ")' ${CONFIG_FILE})"
+    echo "+   ${version}"
+    mkdir -p "${version}"
+
+    {
+        generated_warning
+	gawk -f "${JQT}" "templates/Makefile.template"
+    } > "${version}/Makefile"
+
+
+    VARIANTS="$(jq -r '.variants | map(@sh) | join(" ")' ${CONFIG_FILE})"
     eval "set -- $VARIANTS"
     for variant
     do
         export variant
 
-        if [[ "${variant}" == "default" ]]
-        then
-            subdir="${version}"
-        else
-            subdir="${version}-${variant}"
-        fi
-        echo "+  $subdir"
+        subdir="${version}/${variant}"
+        echo "++  $subdir"
 
         export subdir
-        rm -rf "$subdir"
 
-        INDIR="templates"
+        INDIR="templates/variant"
         OUTDIR="${subdir}"
         mkdir -p "$OUTDIR"
 
@@ -78,7 +87,7 @@ do
 	    gawk -f "${JQT}" "${INDIR}/Makefile.template"
         } > "${OUTDIR}/Makefile"
 
-        cp ${INDIR}/retry.sh ${OUTDIR}/retry.sh
+        # cp ${INDIR}/retry.sh ${OUTDIR}/retry.sh
 
         qdb_server_url=$(get_file_url "qdb-server")
         qdb_utils_url=$(get_file_url "qdb-utils")
@@ -92,7 +101,9 @@ do
         export qdb_api_rest_url
         export qdb_kinesis_connector_url
 
-        for component in "${COMPONENTS[@]}"
+        eval "set -- $COMPONENTS"
+
+        for component
         do
             ###
             # TODO(leon): A bit of a hack to put this in here, because this effectively
@@ -107,11 +118,11 @@ do
                 continue
             fi
 
-            echo "++ ${subdir}/${component}"
+            echo "+++ ${subdir}/${component}"
 
             export component
 
-            INDIR="templates/$component"
+            INDIR="templates/variant/component/$component"
             [ -d "${INDIR}" ]
 
 	    OUTDIR="$subdir/$component"
@@ -119,7 +130,7 @@ do
 
             {
                 generated_warning
-	        gawk -f "${JQT}" "templates/Makefile.component.template"
+	        gawk -f "${JQT}" "templates/variant/component/Makefile.template"
             } > "${OUTDIR}/Makefile"
 
             {

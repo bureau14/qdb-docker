@@ -123,14 +123,14 @@ END {
 	append_jq(agg_jq)
 	agg_jq = ""
 
-	jq_expr = "if env.subdir then .[env.subdir] else . end | (\n" jq_expr "\n)"
+	jq_expr = "if env.subdir then .versions | .[env.version] else . end | (\n" jq_expr "\n)"
 	jq_expr = jq_expr_defs jq_expr
 
 	if (ENVIRON["DEBUG"]) {
 		print jq_expr > "/dev/stderr"
 	}
 
-	prog = "jq --join-output --from-file /dev/stdin versions.json"
+	prog = "jq --join-output --from-file /dev/stdin config.json"
 	printf "%s", jq_expr | prog
 
 	e = close(prog)

@@ -1,10 +1,10 @@
 TEMPLATES := $(shell find templates/ -type f)
-SUBDIRS := $(shell jq -r 'keys | map(@sh) | join(" ")' versions.json)
+SUBDIRS := $(shell find . -mindepth 1 -maxdepth 1 -type d -name '[0-9].*' -print0 |  xargs -0 ls -Fd   | sed 's/\(.*\)/"\1"/')
 
 clean:		$(SUBDIRS)
 	rm -rf $(SUBDIRS)
 
-apply-templates:	versions.json $(TEMPLATES)
+apply-templates:	config.json $(TEMPLATES)
 	./apply-templates.sh
 
 check-templates:

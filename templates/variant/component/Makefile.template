@@ -1,0 +1,27 @@
+repo      	:= docker.io
+org       	:= bureau14
+component 	:= {{ env.component }}
+variant         := {{ env.variant }}
+build-image	:= build-$(component)
+build-tag       := {{ .version }}-$(variant)
+target-base     := base:$(build-tag)
+target-image    := $(repo)/$(org)/$(component)
+
+{{ if env.variant != "default" then ( -}}
+variant-tag     := -{{ env.variant }}
+{{ ) else "" end -}}
+
+build:
+	docker build --squash --build-arg BASE=$(target-base) --tag $(build-image):$(build-tag) .
+
+tag:
+	{{ .tags | map(. = "docker tag $(build-image):$(build-tag) $(target-image):" + . + "$(variant-tag)") | join ("\n\t") }}
+
+push:   build tag
+	{{ .tags | map(. = "docker push $(target-image):" + . + "$(variant-tag)") | join ("\n\t") }}
+
+clean:
+	docker rmi --force $(build-image)
+	docker rmi --force $(target-image)
+
+.PHONY: clean build tag push
