@@ -70,7 +70,7 @@ ENV        QDB_CLOUD_AWS_SECRET_ACCESS_KEY=""
 #
 ENV        QDB_CLOUD_LOCAL_SST_CACHE=""
 
-ADD --chown=${QDB_USER}:${QDB_GROUP} http://download.quasar.ai/quasardb/3.13/3.13.4/server/qdb-3.13.4-linux-64bit-server.tar.gz /opt/qdb/
+ADD --chown=${QDB_USER}:${QDB_GROUP} http://download.quasar.ai/quasardb/3.13/3.13.4/server/qdb-3.13.4-linux-64bit-relwithdebinfo-server.tar.gz /opt/qdb/
 ADD --chown=${QDB_USER}:${QDB_GROUP} qdbd-docker-wrapper.sh   /opt/qdb/scripts/
 ADD --chown=${QDB_USER}:${QDB_GROUP} qdbd.conf                /opt/qdb/etc/
 
