@@ -7,7 +7,7 @@
 ARG        BASE
 FROM       ${BASE}
 
-ADD --chown=${QDB_USER}:${QDB_GROUP} http://download.quasar.ai/quasardb/3.13/3.13.3/utils/qdb-3.13.3-linux-64bit-utils.tar.gz /opt/qdb/
+ADD --chown=${QDB_USER}:${QDB_GROUP} http://download.quasar.ai/quasardb/3.13/3.13.4/utils/qdb-3.13.4-linux-64bit-utils.tar.gz /opt/qdb/
 RUN    cd /opt/qdb                    \
     && tar -xzvf ./*.tar.gz           \
     && rm -f ./*.tar.gz               \
