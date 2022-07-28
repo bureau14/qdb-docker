@@ -52,7 +52,7 @@ RUN yum update -y && \
 
 COPY docker-wrapper.sh /opt/qdb/kinesis/bin/docker-wrapper.sh
 COPY log4j2.xml /opt/qdb/kinesis/resources/log4j2.xml
-ADD  http://download.quasar.ai/quasardb/3.13/3.13.4/api/kinesis/kinesis-3.13.4-jar-with-dependencies.jar /opt/qdb/kinesis/bin/app.jar
+ADD  http://download.quasar.ai/quasardb/3.13/3.13.5/api/kinesis/kinesis-3.13.5-jar-with-dependencies.jar /opt/qdb/kinesis/bin/app.jar
 
 RUN mkdir -p /opt/qdb/kinesis/log && \
     chown -R qdb:qdb /opt/qdb/kinesis && \
