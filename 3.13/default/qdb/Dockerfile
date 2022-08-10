@@ -46,6 +46,7 @@ ENV        QDB_ROCKSDB_COLUMN_FAMILY_OPTIONS=""
 ENV        QDB_ROCKSDB_SST_PARTITIONER_THRESHOLD=""
 ENV        QDB_ROCKSDB_THREADS=""
 ENV        QDB_ROCKSDB_HI_THREADS=""
+ENV        QDB_ROCKSDB_TABLE_MEMORY_BUDGET=""
 
 ###
 # Rocksdb cloud
@@ -61,6 +62,8 @@ ENV        QDB_CLOUD_BUCKET_PATH_PREFIX="qdb-docker"
 ENV        QDB_CLOUD_AWS_ENABLE_INSTANCE_AUTH="true"
 ENV        QDB_CLOUD_AWS_ACCESS_KEY_ID=""
 ENV        QDB_CLOUD_AWS_SECRET_ACCESS_KEY=""
+ENV        QDB_CLOUD_AWS_TRANSFER_MANAGER_THREADS=""
+ENV        QDB_CLOUD_AWS_TRANSFER_MANAGER_BUFFER_SIZE=""
 
 ###
 # Rocksdb cloud
@@ -69,6 +72,11 @@ ENV        QDB_CLOUD_AWS_SECRET_ACCESS_KEY=""
 # Performance-related configurations
 #
 ENV        QDB_CLOUD_LOCAL_SST_CACHE=""
+
+###
+# Kubernetes 
+##
+ENV        K8S_REPLICA_COUNT=""
 
 ADD --chown=${QDB_USER}:${QDB_GROUP} http://download.quasar.ai/quasardb/3.13/3.13.5/server/qdb-3.13.5-linux-64bit-relwithdebinfo-server.tar.gz /opt/qdb/
 ADD --chown=${QDB_USER}:${QDB_GROUP} qdbd-docker-wrapper.sh   /opt/qdb/scripts/
