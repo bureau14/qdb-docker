@@ -81,7 +81,7 @@ spec:
             memory: "2Gi"
         volumeMounts:
           - name: datadir
-            mountPath: /opt/qdb/db
+            mountPath: /opt/qdb/depot
           - name: secrets
             mountPath: "/var/secret/"
             readOnly: true
