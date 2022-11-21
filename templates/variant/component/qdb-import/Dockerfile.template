@@ -1,0 +1,22 @@
+ARG        BASE
+FROM       ${BASE} AS build
+ARG        BASE
+
+ADD --chown=${QDB_USER}:${QDB_GROUP} {{ env.qdb_api_c_url }} /opt/qdb/
+RUN cd /opt/qdb && tar -xzvf ./qdb-*c-api.tar.gz
+ADD --chown=${QDB_USER}:${QDB_GROUP} {{ env.qdb_utils_url }} /opt/qdb/
+RUN cd /opt/qdb && tar -xzvf ./qdb-*utils.tar.gz
+
+FROM       ${BASE}
+COPY --from=build /opt/qdb/lib/libqdb_api.so /usr/local/lib/libqdb_api.so
+COPY --chown=qdb:qdb --from=build /opt/qdb/bin/qdb_import /opt/qdb/bin/qdb_import
+
+# We need root to run ldconfig
+USER root
+RUN ldconfig
+USER  ${QDB_USER}:${QDB_GROUP}
+
+RUN /opt/qdb/bin/qdb_import --version
+
+
+ENTRYPOINT ["/opt/qdb/bin/qdb_import"]

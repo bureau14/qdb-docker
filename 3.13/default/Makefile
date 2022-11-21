@@ -12,6 +12,7 @@ target-base          := base:$(build-tag)
 target-qdb           := build-qdb:$(build-tag)
 target-qdb-dashboard := build-qdb-dashboard:$(build-tag)
 target-qdbsh         := build-qdbsh:$(build-tag)
+target-qdb-import    := build-qdb-import:$(build-tag)
 
 build-base:	Dockerfile
 	docker build \

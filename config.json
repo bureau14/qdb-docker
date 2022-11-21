@@ -5,6 +5,7 @@
         "qdb-dashboard": ["qdb-api-c", "qdb-api-rest"],
         "qdb-kinesis-connector": ["qdb-kinesis-connector"],
         "qdbsh": ["qdb-utils"],
+        "qdb-import": ["qdb-api-c", "qdb-utils"],
         "qdb-replicate": ["qdb-utils"]
     },
     "versions": {
