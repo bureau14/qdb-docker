@@ -17,9 +17,10 @@ FROM       ${BASE}
 COPY --from=build /opt/qdb/lib/libqdb_api.so /usr/local/lib/libqdb_api.so
 COPY --chown=qdb:qdb --from=build /opt/qdb/bin/qdb_import /opt/qdb/bin/qdb_import
 
+# We need root to run ldconfig
 USER root
 RUN ldconfig
-USER ${QDB_USER}
+USER  ${QDB_USER}:${QDB_GROUP}
 
 RUN /opt/qdb/bin/qdb_import --version
 
