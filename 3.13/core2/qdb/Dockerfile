@@ -78,7 +78,7 @@ ENV        QDB_CLOUD_LOCAL_SST_CACHE=""
 ##
 ENV        K8S_REPLICA_COUNT=""
 
-ADD --chown=${QDB_USER}:${QDB_GROUP} http://download.quasar.ai/quasardb/3.13/3.13.5/server/qdb-3.13.5-linux-64bit-core2-server.tar.gz /opt/qdb/
+ADD --chown=${QDB_USER}:${QDB_GROUP} http://download.quasar.ai/quasardb/3.13/3.13.6/server/qdb-3.13.6-linux-64bit-core2-server.tar.gz /opt/qdb/
 ADD --chown=${QDB_USER}:${QDB_GROUP} qdbd-docker-wrapper.sh   /opt/qdb/scripts/
 ADD --chown=${QDB_USER}:${QDB_GROUP} qdbd.conf                /opt/qdb/etc/
 

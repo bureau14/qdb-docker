@@ -5,7 +5,7 @@
 #
 
 SUBDIRS              := $(shell find . -mindepth 1 -maxdepth 1 -type d)
-version              := 3.13.5
+version              := 3.13.6
 variant              := default
 build-tag            := $(version)-$(variant)
 target-base          := base:$(build-tag)
