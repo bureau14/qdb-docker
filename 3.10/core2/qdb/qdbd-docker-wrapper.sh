@@ -303,18 +303,11 @@ then
     patch_conf ".local.depot.rocksdb.cloud.bucket.region" "\"${QDB_CLOUD_BUCKET_REGION}\""
 fi
 
-if [[ ! -z ${QDB_CLOUD_BUCKET_PREFIX} ]]
+if [[ ! -z ${QDB_CLOUD_BUCKET} ]]
 then
-    echo "Setting s3 bucket prefix to ${QDB_CLOUD_BUCKET_PREFIX}"
-    patch_conf ".local.depot.rocksdb.cloud.bucket.source_prefix" "\"${QDB_CLOUD_BUCKET_PREFIX}\""
-    patch_conf ".local.depot.rocksdb.cloud.bucket.destination_prefix" "\"${QDB_CLOUD_BUCKET_PREFIX}\""
-fi
-
-if [[ ! -z ${QDB_CLOUD_BUCKET_SUFFIX} ]]
-then
-    echo "Setting s3 bucket suffix to ${QDB_CLOUD_BUCKET_SUFFIX}"
-    patch_conf ".local.depot.rocksdb.cloud.bucket.source_suffix" "\"${QDB_CLOUD_BUCKET_SUFFIX}\""
-    patch_conf ".local.depot.rocksdb.cloud.bucket.destination_suffix" "\"${QDB_CLOUD_BUCKET_SUFFIX}\""
+    echo "Setting s3 bucket to ${QDB_CLOUD_BUCKET}"
+    patch_conf ".local.depot.rocksdb.cloud.bucket.destination_bucket" "\"${QDB_CLOUD_BUCKET}\""
+    patch_conf ".local.depot.rocksdb.cloud.bucket.source_bucket" "\"${QDB_CLOUD_BUCKET}\""
 fi
 
 if [[ ! -z ${QDB_CLOUD_BUCKET_PATH_PREFIX} ]]
