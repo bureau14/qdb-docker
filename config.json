@@ -10,7 +10,7 @@
     },
     "versions": {
         "3.10": {
-            "tags": ["3.10", "stable"],
+            "tags": ["3.10", "3.10.2", "stable"],
             "version": "3.10.2",
             "default": {
                 "qdb-server": "http://download.quasar.ai/quasardb/3.10/3.10.2/server/qdb-3.10.2-linux-64bit-server.tar.gz",

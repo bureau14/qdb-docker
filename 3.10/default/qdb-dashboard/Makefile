@@ -19,10 +19,12 @@ build:
 
 tag:
 	docker tag $(build-image):$(build-tag) $(target-image):3.10$(variant-tag)
+	docker tag $(build-image):$(build-tag) $(target-image):3.10.2$(variant-tag)
 	docker tag $(build-image):$(build-tag) $(target-image):stable$(variant-tag)
 
 push:   build tag
 	docker push $(target-image):3.10$(variant-tag)
+	docker push $(target-image):3.10.2$(variant-tag)
 	docker push $(target-image):stable$(variant-tag)
 
 clean:
