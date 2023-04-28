@@ -64,7 +64,7 @@ get_available_memory () {
 }
 
 export JVM_MEMORY_MB=${JVM_MEMORY_MB:-$(get_available_memory)}
-export JVM_HEAP_SIZE_RATIO=${JVM_HEAP_SIZE_RATIO:-"25"}
+export JVM_HEAP_SIZE_RATIO=${JVM_HEAP_SIZE_RATIO:-"75"}
 export JVM_HEAP_SIZE_MB=${JVM_HEAP_SIZE_MB:-$(expr ${JVM_MEMORY_MB} \* ${JVM_HEAP_SIZE_RATIO} / 100)}
 
 export JAVA_HEAP_OPTS=${JAVA_HEAP_OPTS:-"-Xms${JVM_HEAP_SIZE_MB}M -Xmx${JVM_HEAP_SIZE_MB}M"}
