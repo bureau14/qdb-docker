@@ -9,25 +9,25 @@
         "qdb-replicate": ["qdb-utils"]
     },
     "versions": {
-        "3.10": {
-            "tags": ["3.10", "3.10.2", "stable"],
-            "version": "3.10.2",
+        "3.14": {
+            "tags": ["3.14", "3.14.0", "stable", "latest"],
+            "version": "3.14.0",
             "default": {
-                "qdb-server": "http://download.quasar.ai/quasardb/3.10/3.10.2/server/qdb-3.10.2-linux-64bit-server.tar.gz",
-            "qdb-utils": "http://download.quasar.ai/quasardb/3.10/3.10.2/utils/qdb-3.10.2-linux-64bit-utils.tar.gz",
-            "qdb-api-c": "http://download.quasar.ai/quasardb/3.10/3.10.2/api/c/qdb-3.10.2-linux-64bit-c-api.tar.gz",
-            "qdb-api-rest": "http://download.quasar.ai/quasardb/3.10/3.10.2/rest/qdb-3.10.2-linux-64bit-rest.tar.gz",
-            "qdb-kinesis-connector": "http://download.quasar.ai/quasardb/3.10/3.10.2/api/kinesis/kinesis-3.10.2-jar-with-dependencies.jar"
+                "qdb-server": "http://download.quasar.ai/quasardb/3.14/3.14.0/server/qdb-3.14.0-linux-64bit-server.tar.gz",
+            "qdb-utils": "http://download.quasar.ai/quasardb/3.14/3.14.0/utils/qdb-3.14.0-linux-64bit-utils.tar.gz",
+            "qdb-api-c": "http://download.quasar.ai/quasardb/3.14/3.14.0/api/c/qdb-3.14.0-linux-64bit-c-api.tar.gz",
+            "qdb-api-rest": "http://download.quasar.ai/quasardb/3.14/3.14.0/rest/qdb-3.14.0-linux-64bit-rest.tar.gz",
+            "qdb-kinesis-connector": "http://download.quasar.ai/quasardb/3.14/3.14.0/api/kinesis/kinesis-3.14.0-jar-with-dependencies.jar"
             },
             "core2": {
-                "qdb-server": "http://download.quasar.ai/quasardb/3.10/3.10.2/server/qdb-3.10.2-linux-64bit-core2-server.tar.gz",
-                "qdb-utils": "http://download.quasar.ai/quasardb/3.10/3.10.2/utils/qdb-3.10.2-linux-64bit-core2-utils.tar.gz",
-                "qdb-api-c": "http://download.quasar.ai/quasardb/3.10/3.10.2/api/c/qdb-3.10.2-linux-64bit-core2-c-api.tar.gz",
-                "qdb-api-rest": "http://download.quasar.ai/quasardb/3.10/3.10.2/rest/qdb-3.10.2-linux-64bit-rest.tar.gz"
+                "qdb-server": "http://download.quasar.ai/quasardb/3.14/3.14.0/server/qdb-3.14.0-linux-64bit-core2-server.tar.gz",
+                "qdb-utils": "http://download.quasar.ai/quasardb/3.14/3.14.0/utils/qdb-3.14.0-linux-64bit-core2-utils.tar.gz",
+                "qdb-api-c": "http://download.quasar.ai/quasardb/3.14/3.14.0/api/c/qdb-3.14.0-linux-64bit-core2-c-api.tar.gz",
+                "qdb-api-rest": "http://download.quasar.ai/quasardb/3.14/3.14.0/rest/qdb-3.14.0-linux-64bit-rest.tar.gz"
             }
         },
         "3.13": {
-            "tags": ["3.13", "3.13.7", "beta", "latest"],
+            "tags": ["3.13", "3.13.7", "beta"],
             "version": "3.13.7",
             "default": {
                 "qdb-server": "http://download.quasar.ai/quasardb/3.13/3.13.7/server/qdb-3.13.7-linux-64bit-server.tar.gz",
