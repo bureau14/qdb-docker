@@ -9,7 +9,7 @@ org       	:= bureau14
 component 	:= qdb-dashboard
 variant         := core2
 build-image	:= build-$(component)
-build-tag       := 3.14.0-$(variant)
+build-tag       := 3.14.1-$(variant)
 target-base     := base:$(build-tag)
 target-image    := $(repo)/$(org)/$(component)
 
@@ -20,13 +20,13 @@ build:
 
 tag:
 	docker tag $(build-image):$(build-tag) $(target-image):3.14$(variant-tag)
-	docker tag $(build-image):$(build-tag) $(target-image):3.14.0$(variant-tag)
+	docker tag $(build-image):$(build-tag) $(target-image):3.14.1$(variant-tag)
 	docker tag $(build-image):$(build-tag) $(target-image):stable$(variant-tag)
 	docker tag $(build-image):$(build-tag) $(target-image):latest$(variant-tag)
 
 push:   build tag
 	docker push $(target-image):3.14$(variant-tag)
-	docker push $(target-image):3.14.0$(variant-tag)
+	docker push $(target-image):3.14.1$(variant-tag)
 	docker push $(target-image):stable$(variant-tag)
 	docker push $(target-image):latest$(variant-tag)
 

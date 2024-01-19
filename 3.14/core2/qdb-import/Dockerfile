@@ -8,9 +8,9 @@ ARG        BASE
 FROM       ${BASE} AS build
 ARG        BASE
 
-ADD --chown=${QDB_USER}:${QDB_GROUP} http://download.quasar.ai/quasardb/3.14/3.14.0/api/c/qdb-3.14.0-linux-64bit-core2-c-api.tar.gz /opt/qdb/
+ADD --chown=${QDB_USER}:${QDB_GROUP} http://download.quasar.ai/quasardb/3.14/3.14.1/api/c/qdb-3.14.1-linux-64bit-core2-c-api.tar.gz /opt/qdb/
 RUN cd /opt/qdb && tar -xzvf ./qdb-*c-api.tar.gz
-ADD --chown=${QDB_USER}:${QDB_GROUP} http://download.quasar.ai/quasardb/3.14/3.14.0/utils/qdb-3.14.0-linux-64bit-core2-utils.tar.gz /opt/qdb/
+ADD --chown=${QDB_USER}:${QDB_GROUP} http://download.quasar.ai/quasardb/3.14/3.14.1/utils/qdb-3.14.1-linux-64bit-core2-utils.tar.gz /opt/qdb/
 RUN cd /opt/qdb && tar -xzvf ./qdb-*utils.tar.gz
 
 FROM       ${BASE}
