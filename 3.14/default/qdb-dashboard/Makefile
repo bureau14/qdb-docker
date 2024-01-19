@@ -18,12 +18,14 @@ build:
 	docker build --squash --build-arg BASE=$(target-base) --tag $(build-image):$(build-tag) .
 
 tag:
+	docker tag $(build-image):$(build-tag) $(target-image):3$(variant-tag)
 	docker tag $(build-image):$(build-tag) $(target-image):3.14$(variant-tag)
 	docker tag $(build-image):$(build-tag) $(target-image):3.14.1$(variant-tag)
 	docker tag $(build-image):$(build-tag) $(target-image):stable$(variant-tag)
 	docker tag $(build-image):$(build-tag) $(target-image):latest$(variant-tag)
 
 push:   build tag
+	docker push $(target-image):3$(variant-tag)
 	docker push $(target-image):3.14$(variant-tag)
 	docker push $(target-image):3.14.1$(variant-tag)
 	docker push $(target-image):stable$(variant-tag)
