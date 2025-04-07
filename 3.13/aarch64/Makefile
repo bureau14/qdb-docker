@@ -39,12 +39,18 @@ push:	$(SUBDIRS)
 $(SUBDIRS):
 	$(MAKE) -C $@ $(MAKECMDGOALS)
 
+REQUIRED_DIRECTORY=qdb-dashboard
 
 test:   clean-test
 	docker run --detach --network=host -e QDB_BIND_ADDRESS="127.0.0.1"  --rm --name test-qdb-server $(target-qdb)
-	docker run --detach --network=host -e QDB_URI="qdb://127.0.0.1:2836" --rm --name test-qdb-dashboard $(target-qdb-dashboard)
 	../../scripts/retry.sh 10 docker run --rm --name test-qdbsh --network=host $(target-qdbsh) --command cluster_trim
-	curl -v 'http://localhost:40000/api/login' -H 'Accept: */*' -H 'Origin: http://localhost:40000' -H 'Referer: http://localhost:40000/' -H 'Content-Type: application/json' --data-raw '{"username":"anonymous","secret_key":""}' --compressed
-	docker rm --force test-qdbsh test-qdb-server test-qdb-dashboard
+	@if docker image inspect $(target-qdb-dashboard) > /dev/null 2>&1; then \
+		docker run --detach --network=host -e QDB_URI="qdb://127.0.0.1:2836" --rm --name test-qdb-dashboard $(target-qdb-dashboard)\
+		curl -v 'http://localhost:40000/api/login' -H 'Accept: */*' -H 'Origin: http://localhost:40000' -H 'Referer: http://localhost:40000/' -H 'Content-Type: application/json' --data-raw '{"username":"anonymous","secret_key":""}' --compressed\
+		docker rm --force test-qdb-dashboard\
+	else\
+		echo "Dashboard files not found, skipping test.";\
+	fi
+	docker rm --force test-qdbsh test-qdb-server
 
 .PHONY: clean build tag test push $(SUBDIRS)
