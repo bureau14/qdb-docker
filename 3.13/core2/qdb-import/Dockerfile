@@ -3,7 +3,6 @@
 #
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
-
 ARG        BASE
 FROM       ${BASE} AS build
 ARG        BASE

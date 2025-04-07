@@ -1,9 +1,8 @@
 #
-# NOTE: THIS DOCKERFILE IS GENERATED VIA "apply-templates.sh"
+# NOTE: THIS MAKEFILE IS GENERATED VIA "apply-templates.sh"
 #
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
-
 SUBDIRS              := $(shell find . -mindepth 1 -maxdepth 1 -type d)
 version              := 3.14.1
 variant              := default

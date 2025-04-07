@@ -15,13 +15,13 @@ COMPONENTS="$(jq -r '.components | keys | map(@sh) | join(" ")' ${CONFIG_FILE})"
 VERSIONS="$(jq -r '.versions | keys | map(@sh) | join(" ")' ${CONFIG_FILE})"
 
 generated_warning() {
-	cat <<-EOH
+    local file_type="$1"
+    cat <<-EOH
 		#
-		# NOTE: THIS DOCKERFILE IS GENERATED VIA "apply-templates.sh"
+		# NOTE: THIS ${file_type^^} IS GENERATED VIA "apply-templates.sh"
 		#
 		# PLEASE DO NOT EDIT IT DIRECTLY.
 		#
-
 	EOH
 }
 
@@ -57,7 +57,7 @@ do
     mkdir -p "${version}"
 
     {
-        generated_warning
+        generated_warning Makefile
 	gawk -f "${JQT}" "templates/Makefile.template"
     } > "${version}/Makefile"
 
@@ -78,12 +78,12 @@ do
         mkdir -p "$OUTDIR"
 
         {
-            generated_warning
+            generated_warning Dockerfile
 	    gawk -f "${JQT}" "${INDIR}/Dockerfile.template"
         } > "${OUTDIR}/Dockerfile"
 
         {
-            generated_warning
+            generated_warning Makefile
 	    gawk -f "${JQT}" "${INDIR}/Makefile.template"
         } > "${OUTDIR}/Makefile"
 
@@ -129,12 +129,12 @@ do
 	    mkdir -p "$OUTDIR"
 
             {
-                generated_warning
+                generated_warning Makefile
 	        gawk -f "${JQT}" "templates/variant/component/Makefile.template"
             } > "${OUTDIR}/Makefile"
 
             {
-                generated_warning
+                generated_warning Dockerfile
 	        gawk -f "${JQT}" "${INDIR}/Dockerfile.template"
             } > "${OUTDIR}/Dockerfile"
 

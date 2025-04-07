@@ -1,10 +1,19 @@
 #
-# NOTE: THIS DOCKERFILE IS GENERATED VIA "apply-templates.sh"
+# NOTE: THIS MAKEFILE IS GENERATED VIA "apply-templates.sh"
 #
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
+ARCH := $(shell uname -m)
 
-SUBDIRS := $(shell find . -mindepth 1 -maxdepth 1 -type d)
+ifeq ($(ARCH),x86_64)
+	ARCH_DIR_REGEX := ^\./.*\(core2\|default\)$
+else ifeq ($(ARCH),aarch64)
+	ARCH_DIR_REGEX := ^\./.*aarch64$
+else
+	$(error Unsupported architecture: $(ARCH))
+endif
+
+SUBDIRS := $(shell find . -mindepth 1 -maxdepth 1 -type d -regex "$(ARCH_DIR_REGEX)")
 
 clean:  $(SUBDIRS)
 

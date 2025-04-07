@@ -3,7 +3,6 @@
 #
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
-
 FROM docker.io/amazonlinux:latest
 
 ENV JVM_GC_MAX_PARALLEL_THREADS=4

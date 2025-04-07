@@ -3,7 +3,6 @@
 #
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
-
 FROM  docker.io/debian:11
 
 LABEL maintainer="support@quasar.ai"
