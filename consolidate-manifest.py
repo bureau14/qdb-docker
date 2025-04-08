@@ -1,6 +1,7 @@
 import json
 import subprocess
 import logging
+import click
 
 
 def _check_if_variant_has_required_binaries(
@@ -25,23 +26,33 @@ def consolidate_manifest(config: dict) -> None:
                 manifest_images = []
 
                 for variant in build_variants:
+                    # we skip core2 variant from the manifest
+                    # core2 is meant for very old hosts, docker won't see difference between core2 and haswell
+                    if variant == "core2":
+                        logging.info("Skipping %s variant for %s image", variant, image)
+                        continue
+
+                    # we can't add variant to the manifest which doesn't exist
                     # not every variant for every image exists, e.g aarch64 for 3.13 doesn't have rest api image
-                    # before creating manifest we need to check if the variant exists - has all the required binaries
-                    # if not we skip this adding (non existing) variant to the manifest
+                    # before creating manifest we need to check if the variant exists
                     if not _check_if_variant_has_required_binaries(
                         config["versions"][version][variant].keys(), required_binaries
                     ):
-                        logging.warning("%s image for %s with tag %s not found", variant, image, tag)
+                        logging.warning(
+                            "%s image for %s with tag %s not found", variant, image, tag
+                        )
                         continue
 
-                    logging.info("Found %s image for %s with tag %s", variant, image, tag)
+                    logging.info(
+                        "Found %s image for %s with tag %s", variant, image, tag
+                    )
                     if variant == "default":
                         manifest_images.append(f"--amend bureau14/{image}:{tag}")
                     else:
                         manifest_images.append(
                             f"--amend bureau14/{image}:{tag}-{variant}"
                         )
-                
+
                 delete_command = f"docker manifest rm bureau14/{image}:{tag}"
                 create_command = (
                     f"docker manifest create bureau14/{image}:{tag} "
@@ -62,9 +73,14 @@ def consolidate_manifest(config: dict) -> None:
     logging.info("Manifest consolidation completed successfully.")
 
 
-if __name__ == "__main__":
+@click.command()
+@click.option("--config-file", type=str, default="config.json")
+def main(config_file):
     logging.basicConfig(level=logging.INFO)
-    config_file = "config.json"
     with open(config_file, "r") as file:
         config = json.load(file)
         consolidate_manifest(config)
+
+
+if __name__ == "__main__":
+    main()
