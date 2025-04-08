@@ -3,6 +3,10 @@
 #
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
+
+# depending on host arch we want to build compatible images only
+# we filter SUBDIRS to select compatible targets for host arch
+
 ARCH := $(shell uname -m)
 
 ifeq ($(ARCH),x86_64)
