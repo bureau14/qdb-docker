@@ -5,7 +5,7 @@
 #
 SUBDIRS              := $(shell find . -mindepth 1 -maxdepth 1 -type d)
 version              := 3.14.1
-variant              := default
+variant              := haswell
 build-tag            := $(version)-$(variant)
 target-base          := base:$(build-tag)
 target-qdb           := build-qdb:$(build-tag)

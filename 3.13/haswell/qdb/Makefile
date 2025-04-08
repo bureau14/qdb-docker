@@ -5,13 +5,14 @@
 #
 repo      	:= docker.io
 org       	:= bureau14
-component 	:= qdbsh
-variant         := default
+component 	:= qdb
+variant         := haswell
 build-image	:= build-$(component)
 build-tag       := 3.13.7-$(variant)
 target-base     := base:$(build-tag)
 target-image    := $(repo)/$(org)/$(component)
 
+variant-tag     := -haswell
 
 build:
 	docker build --squash --build-arg BASE=$(target-base) --tag $(build-image):$(build-tag) .
