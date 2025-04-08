@@ -31,24 +31,25 @@ def consolidate_manifest(config: dict) -> None:
                     if not _check_if_variant_has_required_binaries(
                         config["versions"][version][variant].keys(), required_binaries
                     ):
-                        logging.info("No avilable image for %s with tag %s", image, tag)
+                        logging.warning("%s image for %s with tag %s not found", variant, image, tag)
                         continue
 
-                    logging.info("Found image for %s with tag %s", image, tag)
+                    logging.info("Found %s image for %s with tag %s", variant, image, tag)
                     if variant == "default":
                         manifest_images.append(f"--amend bureau14/{image}:{tag}")
                     else:
                         manifest_images.append(
                             f"--amend bureau14/{image}:{tag}-{variant}"
                         )
-
+                
+                delete_command = f"docker manifest rm bureau14/{image}:{tag}"
                 create_command = (
                     f"docker manifest create bureau14/{image}:{tag} "
                     + " ".join(manifest_images)
                 )
                 push_command = f"docker manifest push bureau14/{image}:{tag}"
 
-                for command in [create_command, push_command]:
+                for command in [delete_command, create_command, push_command]:
                     logging.info("Executing command: %s", command)
                     output = subprocess.run(
                         command.split(), capture_output=True, text=True
