@@ -14,7 +14,7 @@ build:     		$(SUBDIRS)
 
 tag:			$(SUBDIRS)
 
-test:           	$(SUBDIRS)
+test:           $(SUBDIRS)
 
 push:      		$(SUBDIRS)
 
