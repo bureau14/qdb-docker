@@ -1,9 +1,8 @@
 #
-# NOTE: THIS DOCKERFILE IS GENERATED VIA "apply-templates.sh"
+# NOTE: THIS MAKEFILE IS GENERATED VIA "apply-templates.sh"
 #
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
-
 repo      	:= docker.io
 org       	:= bureau14
 component 	:= qdb-replicate

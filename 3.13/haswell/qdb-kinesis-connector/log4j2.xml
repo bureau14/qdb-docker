@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" name="qdb-kinesis-connector" packages="">
+  <Appenders>
+    <RollingFile name="RollingFile"
+                 fileName="{{QDB_KINESIS_LOG_PATH}}/kinesis.log"
+                 filePattern="{{QDB_KINESIS_LOG_PATH}}/kinesis-%d{yyyy-MM-dd-HH-mm}.log.gz"
+                 ignoreExceptions="false">
+      <PatternLayout>
+        <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+      </PatternLayout>
+      <Policies>
+        <SizeBasedTriggeringPolicy size="128 MB"/>
+      </Policies>
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+    <Root level="info">
+      <AppenderRef ref="RollingFile"/>
+    </Root>
+  </Loggers>
+</Configuration>
