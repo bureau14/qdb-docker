@@ -15,7 +15,7 @@ target-image    := $(repo)/$(org)/$(component)
 variant-tag     := -aarch64
 
 build:
-	docker build --squash --build-arg BASE=$(target-base) --tag $(build-image):$(build-tag) .
+	docker buildx build --load --squash --build-arg BASE=$(target-base) --tag $(build-image):$(build-tag) .
 
 tag:
 	docker tag $(build-image):$(build-tag) $(target-image):3.13$(variant-tag)
