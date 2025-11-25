@@ -40,14 +40,10 @@ for version in "${versions[@]}"; do
             
             manifest_images=""
             for arch in ${image_arch_map["$image"]}; do
-                # The arch-specific tags (e.g., bureau14/qdb-replicate:3.13-haswell) are now OCI Image Indexes,
-                # which the modern imagetools create command can handle correctly.
                 manifest_images+=" bureau14/$image:$tag-$arch "
             done
 
             echo Executing: docker buildx imagetools create --tag "$full_tag" ${manifest_images}
-            # NOTE: docker buildx imagetools create replaces the functionality of docker manifest rm/create/push.
-            # The --force flag ensures an existing manifest list is overwritten.
             docker buildx imagetools create --tag "$full_tag" ${manifest_images}
         done
     done
