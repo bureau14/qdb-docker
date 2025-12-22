@@ -7,7 +7,7 @@ ARG        BASE
 FROM       ${BASE} AS build
 ARG        BASE
 
-ADD --chown=qdb:qdb http://download.quasar.ai/quasardb/3.14/3.14.1/utils/qdb-3.14.1-linux-64bit-utils.tar.gz /opt/qdb/
+ADD --chown=qdb:qdb http://download.quasar.ai/quasardb/3.14/3.14.2/utils/qdb-3.14.2-linux-64bit-utils.tar.gz /opt/qdb/
 RUN cd /opt/qdb && tar -xzvf ./*.tar.gz
 
 FROM       ${BASE}
