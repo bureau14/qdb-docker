@@ -4,7 +4,7 @@
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
 SUBDIRS              := $(shell find . -mindepth 1 -maxdepth 1 -type d)
-version              := 3.14.1
+version              := 3.14.2
 variant              := aarch64
 build-tag            := $(version)-$(variant)
 target-base          := base:$(build-tag)

@@ -92,7 +92,7 @@ ENV        QDB_CLOUD_LOCAL_SST_CACHE=""
 # Install qdb-server package
 ADD        qdb-*-server.tar.gz /opt/qdb/
 ========
-ADD --chown=${QDB_USER}:${QDB_GROUP} http://download.quasar.ai/quasardb/3.14/3.14.1/server/qdb-3.14.1-linux-64bit-server.tar.gz /opt/qdb/
+ADD --chown=${QDB_USER}:${QDB_GROUP} http://download.quasar.ai/quasardb/3.14/3.14.2/server/qdb-3.14.2-linux-64bit-server.tar.gz /opt/qdb/
 ADD --chown=${QDB_USER}:${QDB_GROUP} qdbd-docker-wrapper.sh   /opt/qdb/scripts/
 ADD --chown=${QDB_USER}:${QDB_GROUP} qdbd.conf                /opt/qdb/etc/
 >>>>>>>> 92be760 (QDB-16322 - Add support for aarch64 docker containers):3.14/haswell/qdb/Dockerfile
