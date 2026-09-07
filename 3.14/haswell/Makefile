@@ -44,10 +44,15 @@ test:   clean-test
 	../../scripts/retry.sh 10 docker run --rm --name test-qdbsh --network=host $(target-qdbsh) --command cluster_trim
 	# as for 3.13 aarch64 there is no compatible dashboard binary, we skip testing if there is no local image
 	@if docker image inspect $(target-qdb-dashboard) > /dev/null 2>&1; then \
-		docker run --detach --network=host -e QDB_URI="qdb://127.0.0.1:2836" --rm --name test-qdb-dashboard $(target-qdb-dashboard)\
-		curl -v 'http://localhost:40000/api/login' -H 'Accept: */*' -H 'Origin: http://localhost:40000' -H 'Referer: http://localhost:40000/' -H 'Content-Type: application/json' --data-raw '{"username":"anonymous","secret_key":""}' --compressed\
-		docker rm --force test-qdb-dashboard\
-	else\
+		docker run --detach --network=host -e QDB_URI="qdb://127.0.0.1:2836" --rm --name test-qdb-dashboard $(target-qdb-dashboard); \
+		trap 'docker rm --force test-qdb-dashboard > /dev/null 2>&1 || true' EXIT; \
+		attempts=0; \
+		until curl --fail --silent --show-error --output /dev/null --request POST 'http://localhost:40000/api/login' -H 'Accept: */*' -H 'Origin: http://localhost:40000' -H 'Referer: http://localhost:40000/' -H 'Content-Type: application/json' --data-raw '{"username":"anonymous","secret_key":""}' --compressed; do \
+			attempts=$$((attempts + 1)); \
+			[ $$attempts -lt 10 ] || exit 1; \
+			sleep 1; \
+		done; \
+	else \
 		echo "Dashboard image not found, skipping test.";\
 	fi
 	docker rm --force test-qdbsh test-qdb-server
