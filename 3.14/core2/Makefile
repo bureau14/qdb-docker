@@ -4,7 +4,7 @@
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
 SUBDIRS              := $(shell find . -mindepth 1 -maxdepth 1 -type d)
-version              := 3.14.2
+version              := 3.14.3
 variant              := core2
 build-tag            := $(version)-$(variant)
 target-base          := base:$(build-tag)
